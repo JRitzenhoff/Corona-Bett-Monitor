@@ -1,0 +1,25 @@
+{
+  "name": "corona-bett-monitor",
+  "version": "0.0.1",
+  "description": "see how many beds are free for coronvirus patients",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JRitzenhoff/Corona-Bett-Monitor.git"
+  },
+  "keywords": [
+    "corona",
+    "beds",
+    "monitoring",
+    "status"
+  ],
+  "author": "we",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JRitzenhoff/Corona-Bett-Monitor/issues"
+  },
+  "homepage": "https://github.com/JRitzenhoff/Corona-Bett-Monitor#readme"
+}
