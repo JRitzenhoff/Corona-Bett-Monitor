@@ -119,7 +119,7 @@ const incrementHospitalBedsByName = (request, response) => {
 }
 
 const incrementFreeHospitalBedsByName = (request, response) => {
-    // curl -w '\n' -X PUT --data "change=-200" http://localhost:3000/incrementBettenanzahl/Klinkum%20Rechts%20der%20Isar
+    // curl -w '\n' -X PUT --data "change=560" http://localhost:3000/incrementBettenanzahl/Klinkum%20Rechts%20der%20Isar
     incrementAttributeOfHospital("FreeBeds", request, response);
 }
 
