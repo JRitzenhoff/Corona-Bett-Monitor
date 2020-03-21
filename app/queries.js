@@ -113,13 +113,13 @@ const getFreeHospitalBedsByName = (request, response) => {
 }
 
 const getTopTenHospitalBedCounts = (request, response) => {
-    console.log("Getting top ten beds");
+    // console.log("Getting top ten beds");
     // http://localhost:3000/top10FullBeds
     topValsOfHospitalAttribute(10, "BedCount", request, response);
 }
 
 const getTopTenHospitalFreeBedCounts = (request, response) => {
-    console.log("Getting top ten FREE beds");
+    // console.log("Getting top ten FREE beds");
     // http://localhost:3000/top10FreeBeds
     topValsOfHospitalAttribute(10, "FreeBeds", request, response);
 }

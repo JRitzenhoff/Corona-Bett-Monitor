@@ -1,12 +1,38 @@
 <!DOCTYPE html>
 
+<!-- 
+    NOTE: File based heavily off of
+    https://codelabs.developers.google.com/codelabs/your-first-pwapp/#4 
+-->
+
+<!-- Added a bunch of links for the Progressive Web App -->
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Log In</title>
 
+    <!-- Link the Manifest -->
     <link rel="manifest" href="/manifest.json">
+
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Weather PWA">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+
+    <!-- Add meta description here... Same thing as in Manifest -->
+    <meta name="description" content="Application that lets you see how many beds are free for coronvirus patients">
+
+    <!-- Add meta theme-color... Same thing as in Manifest -->
+    <meta name="theme-color" content="#2F3BA2" />
 </head>
+
+
+
+
+
+
+
 
 <body>
     <form action="/login" method="POST">
@@ -16,6 +42,25 @@
         <input type="text" id="lname" name="lname" value="Doe"><br><br>
         <input type="submit" value="Submit">
     </form>
+
+    <!-- Is suppossed to initialize the view -->
+    <script src="/scripts/app.js"></script>
+
+    <!-- Add a serviceworker that can take care of offline rendering -->
+    <script>
+
+        // Register service worker.
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((reg) => {
+                console.log('Service worker registered.', reg);
+                });
+        });
+        }
+    </script>
+
+    
 </body>
 
 </html>
