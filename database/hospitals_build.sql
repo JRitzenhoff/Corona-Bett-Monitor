@@ -12,7 +12,7 @@ CREATE TABLE cities (
     CityID INTEGER PRIMARY KEY,
     Name TEXT NOT NULL,
     State TEXT NOT NULL,
-    CountryID REFERENCES countries
+    CountryID INTEGER REFERENCES countries
 );
 
 CREATE TABLE hospitals (
