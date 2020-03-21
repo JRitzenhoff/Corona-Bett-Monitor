@@ -48,9 +48,9 @@ const setAttributeOfHospital = (attribute, request, response) => {
     pool.query(strPost, [amount, name], (err, res) => {
         if (err) {
             // response.redirect("/internalServerError")
-            redirectToError(response)
+            redirectToError(response);
         } else {
-            response.status(200).send(`Hospital modified with name: ${name}`)
+            response.status(200).send(`Hospital modified with name: ${name}`);
         }
     });
 }
@@ -77,13 +77,13 @@ const incrementAttributeOfHospital = (attribute, request, response) => {
 
 const topValsOfHospitalAttribute = (numVals, attribute, request, response) => {
     // If I don't create the limitStr first, there is an attribute error...
-    const limitStr = 'LIMIT ' + numVals;
+    const limitStr = 'LIMIT ' + numVals + ';';
     const getTopValsStr = 'SELECT * FROM hospitals ORDER BY ' + attribute + ' DESC ' + limitStr;
 
     pool.query(getTopValsStr, (err, res) => {
         if (err) {
-            console.error(err)
-            // redirectToError(response);
+            // console.error(err)
+            redirectToError(response);
         }
         else {
             response.status(200);
