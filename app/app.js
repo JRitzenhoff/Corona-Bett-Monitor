@@ -29,10 +29,17 @@ app.use(express.static('public'));
 
 
 app.get('/test', db.getHospitals);
-app.get('/getBettenanzahl/:hospitalName', db.getHospital)
+app.get('/getBettenanzahl/:hospitalName', db.getTotalHospitalBeds)
+app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBeds)
+
+// app.put('/ib/:hospitalName', db.incrementUsedBeds)
+
+app.put('/setBettenanzahl/:hospitalName', db.setTotalBeds)
+app.put('/setFreieBetten/:hospitalName', db.setFreeBeds)
 
 // 404 response for all unspecified routes
 app.all('*', (request, response) => {
+	console.log(request)
 	response.status(404);
 	response.send("Wait, that's illegal!");
 });
