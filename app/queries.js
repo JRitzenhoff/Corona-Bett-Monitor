@@ -17,6 +17,25 @@ const getHospitals = (request, response) => {
     });
 }
 
+const getHostpital = (request, response) => {
+    // get the field from the reqeust
+    const { name } = request.body
+
+    // Actually make the SQL query
+    //  This should only return a single element (within a list though)
+    pool.query('SELECT * FROM hospitals WHERE name == $1', [ name ], 
+    (error, results) => {
+        if (error) {
+            throw error;
+        }
+        
+        // Results will be a matrix?
+        response.status(200).json(results.rows);
+    });
+
+}
+
 module.exports = {
-    getHospitals
+    getHospitals,
+    getHostpital
 }

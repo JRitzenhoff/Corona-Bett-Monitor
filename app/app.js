@@ -29,6 +29,7 @@ app.use(express.static('public'));
 
 
 app.get('/test', db.getHospitals);
+app.get('/getBettenanzahl/:hospitalName', db.getHospital)
 
 // 404 response for all unspecified routes
 app.all('*', (request, response) => {
