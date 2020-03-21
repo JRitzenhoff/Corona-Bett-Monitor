@@ -27,12 +27,18 @@ app.get('/favicon.ico', (req, res) => {
 // tells express to serve static files from the directory named "public"
 app.use(express.static('public'));
 
-// just an example. Should be removed alter
-app.get('/getHospitals', db.getHospitals);
-app.put('/setBettanzahl', db.setBettanzahl);
+
+app.get('/getBettenanzahl/:hospitalName', db.getHospitalBedsByName);
+app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBedsByName);
+
+// app.put('/ib/:hospitalName', db.incrementUsedBeds)
+
+app.put('/setBettenanzahl/:hospitalName', db.setTotalBeds)
+app.put('/setFreieBetten/:hospitalName', db.setFreeBeds)
 
 // 404 response for all unspecified routes
 app.all('*', (request, response) => {
+	console.log(request)
 	response.status(404);
 	response.send("Wait, that's illegal!");
 });
