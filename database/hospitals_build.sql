@@ -1,0 +1,35 @@
+DROP TABLE IF EXISTS hospitals CASCADE;
+DROP TABLE IF EXISTS countries CASCADE;
+DROP TABLE IF EXISTS cities CASCADE;
+DROP TABLE IF EXISTS employee CASCADE;
+
+CREATE TABLE countries (
+    CountryID INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL
+);
+
+CREATE TABLE cities (
+    CityID INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL,
+    State TEXT NOT NULL,
+    CountryID REFERENCES countries
+);
+
+CREATE TABLE hospitals (
+    HospitalID INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Address TEXT NOT NULL,
+    CityID INTEGER REFERENCES cities ON DELETE SET NULL,
+    Website TEXT NOT NULL,
+    BedCount INTEGER,
+    FreeBeds INTEGER
+);
+
+CREATE TABLE employee (
+    EmployeeID INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Address TEXT,
+    EMail TEXT NOT NULL,
+    PasswordHash TEXT NOT NULL,
+    HospitalID INTEGER REFERENCES hospitals ON DELETE CASCADE
+);
