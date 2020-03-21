@@ -86,7 +86,7 @@ const incrementUsedBeds = (request, response) => {
 
     // curl -X PUT -d "name=Easy" -d "change=1" http://localhost:3000/users/1
     // curl -X PUT -d "change=2" http://localhost:3000/incrementBettenanzahl/Easy
-
+        curl -X PUT -d "amount=2" http://localhost:3000/setBettenanzahl/Klinkum%20Rechts%20der%20Isar
     // Get the number of used beds currently in the database
     const raw_used_beds = getFreeHospitalBeds({
             "hospitalName": name

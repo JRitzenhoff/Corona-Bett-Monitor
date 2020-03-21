@@ -33,8 +33,8 @@ app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBedsByName);
 
 // app.put('/ib/:hospitalName', db.incrementUsedBeds)
 
-app.put('/setBettenanzahl/:hospitalName', db.setTotalBeds)
-app.put('/setFreieBetten/:hospitalName', db.setFreeBeds)
+app.put('/setBettenanzahl/:hospitalName', db.setTotalBeds);
+app.put('/setFreieBetten/:hospitalName', db.setFreeBeds);
 
 // 404 response for all unspecified routes
 app.all('*', (request, response) => {
