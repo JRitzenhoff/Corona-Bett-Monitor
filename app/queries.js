@@ -17,7 +17,7 @@ const getHospitals = (request, response) => {
     });
 }
 
-const getHostpital = (request, response) => {
+const getHospital = (request, response) => {
     // get the field from the reqeust
     const { name } = request.body
 
@@ -37,5 +37,5 @@ const getHostpital = (request, response) => {
 
 module.exports = {
     getHospitals,
-    getHostpital
+    getHospital
 }
