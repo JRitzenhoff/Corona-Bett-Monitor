@@ -61,7 +61,7 @@ const incrementAttributeOfHospital = (attribute, request, response) => {
         change
     } = request.body;
 
-    const strIncrement = 'UPDATE hospitals SET ' + attribute + ' = ' + attribute + ' + $1 WHERE name = $2' 
+    const strIncrement = 'UPDATE hospitals SET ' + attribute + ' = ' + attribute + ' + $1 WHERE name = $2;';
 
     pool.query(strIncrement, [change, name], (err, res) => {
         if (err) {
@@ -75,22 +75,53 @@ const incrementAttributeOfHospital = (attribute, request, response) => {
 }
 
 
+const topValsOfHospitalAttribute = (numVals, attribute, request, response) => {
+    // If I don't create the limitStr first, there is an attribute error...
+    const limitStr = 'LIMIT ' + numVals;
+    const getTopValsStr = 'SELECT * FROM hospitals ORDER BY ' + attribute + ' DESC ' + limitStr;
+
+    pool.query(getTopValsStr, (err, res) => {
+        if (err) {
+            console.error(err)
+            // redirectToError(response);
+        }
+        else {
+            response.status(200);
+            // console.log(res.rows);
+            response.send(res.rows);
+        }
+    });
+}
+
+
 
 /* GET METHODS:
 ------------
 
-Can call with browser hits to: https://localhost:3000/<method>/Klinkum%20Rechts%20der%20Isar
+Can call with browser hits to: http://localhost:3000/<method>/Klinkum%20Rechts%20der%20Isar
 
 NOTE: %20 == ' ' in URL formatting
 */
 const getHospitalBedsByName = (request, response) => {
-    // https://localhost:3000/getBettenanzahl/Klinkum%20Rechts%20der%20Isar
+    // http://localhost:3000/getBettenanzahl/Klinkum%20Rechts%20der%20Isar
     getAttributeOfHospital("BedCount", request, response);
 }
 
 const getFreeHospitalBedsByName = (request, response) => {
-    // https://localhost:3000/getFreieBetten/Klinkum%20Rechts%20der%20Isar
+    // http://localhost:3000/getFreieBetten/Klinkum%20Rechts%20der%20Isar
     getAttributeOfHospital("FreeBeds", request, response);
+}
+
+const getTopTenHospitalBedCounts = (request, response) => {
+    console.log("Getting top ten beds");
+    // http://localhost:3000/top10FullBeds
+    topValsOfHospitalAttribute(10, "BedCount", request, response);
+}
+
+const getTopTenHospitalFreeBedCounts = (request, response) => {
+    console.log("Getting top ten FREE beds");
+    // http://localhost:3000/top10FreeBeds
+    topValsOfHospitalAttribute(10, "FreeBeds", request, response);
 }
 
 /* PUT METHODS:
@@ -127,6 +158,10 @@ const incrementFreeHospitalBedsByName = (request, response) => {
 module.exports = {
     getHospitalBedsByName,
     getFreeHospitalBedsByName,
+
+    getTopTenHospitalBedCounts,
+    getTopTenHospitalFreeBedCounts,
+
 
     setHospitalBedsByName,
     setFreeHospitalBedsByName,

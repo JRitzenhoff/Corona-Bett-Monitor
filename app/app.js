@@ -30,6 +30,9 @@ app.use(express.static('public'));
 app.get('/getBettenanzahl/:hospitalName', db.getHospitalBedsByName);
 app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBedsByName);
 
+app.get('/top10FullBeds', db.getTopTenHospitalBedCounts);
+app.get('/top10FreeBeds', db.getTopTenHospitalFreeBedCounts);
+
 app.put('/setBettenanzahl/:hospitalName', db.setHospitalBedsByName);
 app.put('/setFreieBetten/:hospitalName', db.setFreeHospitalBedsByName);
 
