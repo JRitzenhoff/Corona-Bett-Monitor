@@ -1,16 +1,7 @@
 # Corona-Bett-Monitor
 Hackathon Built Monitor for Hospital Bed Occupancy
 
-
-## Run webserver on localhost:3000
-
-~node app/app.js~
-
-```
-cd app
-node app.js
-```
-
-It is essential to run the program from within the app directory... According to the tests I ran
-
-
+## This contains two directories
+1. The actual code for the app
+    * Click [app](./app/) for more information
+1. The initialization scripts for the database
