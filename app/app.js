@@ -34,12 +34,12 @@ app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBeds)
 
 // app.put('/ib/:hospitalName', db.incrementUsedBeds)
 
-app.put('/setBettenanzahl/:hospitalName', db.setTotalBeds)
-app.put('/setFreieBetten/:hospitalName', db.setFreeBeds)
+app.put('/setBettenanzahl/:hospitalName', db.setTotalHospitalBeds)
+app.put('/setFreieBetten/:hospitalName', db.setFreeHospitalBeds)
 
 // 404 response for all unspecified routes
 app.all('*', (request, response) => {
-	console.log(request)
+	// console.log(request)
 	response.status(404);
 	response.send("Wait, that's illegal!");
 });
