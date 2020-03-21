@@ -38,7 +38,7 @@ app.put('/setFreieBetten/:hospitalName', db.setFreeBeds);
 
 // 404 response for all unspecified routes
 app.all('*', (request, response) => {
-	console.log(request)
+	// console.log(request)
 	response.status(404);
 	response.send("Wait, that's illegal!");
 });
