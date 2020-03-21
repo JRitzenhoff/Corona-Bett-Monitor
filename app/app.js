@@ -27,8 +27,9 @@ app.get('/favicon.ico', (req, res) => {
 // tells express to serve static files from the directory named "public"
 app.use(express.static('public'));
 
-
-app.get('/test', db.getHospitals);
+// just an example. Should be removed alter
+app.get('/getHospitals', db.getHospitals);
+app.put('/setBettanzahl', db.setBettanzahl);
 
 // 404 response for all unspecified routes
 app.all('*', (request, response) => {
