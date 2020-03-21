@@ -27,14 +27,15 @@ app.get('/favicon.ico', (req, res) => {
 // tells express to serve static files from the directory named "public"
 app.use(express.static('public'));
 
-
 app.get('/getBettenanzahl/:hospitalName', db.getHospitalBedsByName);
 app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBedsByName);
 
-// app.put('/ib/:hospitalName', db.incrementUsedBeds)
+app.put('/setBettenanzahl/:hospitalName', db.setHospitalBedsByName);
+app.put('/setFreieBetten/:hospitalName', db.setFreeHospitalBedsByName);
 
-app.put('/setBettenanzahl/:hospitalName', db.setTotalBeds);
-app.put('/setFreieBetten/:hospitalName', db.setFreeBeds);
+app.put('/incrementBettenanzahl/:hospitalName', db.incrementHospitalBedsByName);
+app.put('/incrementFreieBetten/:hospitalName', db.incrementFreeHospitalBedsByName);
+
 
 // 404 response for all unspecified routes
 app.all('*', (request, response) => {

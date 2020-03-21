@@ -9,97 +9,128 @@ const pool = new Pool({
 });
 
 
+const redirectToError = (response) => {
+    response.redirect("/internalServerError");
+}
+
+
 const getAttributeOfHospital = (attribute, request, response) => {
+    // This is assuming that the 'hospitalName' is part of the endpoint
     const name = request.params.hospitalName;
 
-    // create the select statement that works for both keys
+    // SELECT statement that allows you to GET any attribute from a hospital by name
     const strQuery = 'SELECT ' + attribute + ' FROM hospitals WHERE name = $1;';
-    console.log(strQuery)
 
     pool.query(strQuery,
         [name],
         (err, res) => {
             if (err) {
-                console.error(err);
-                response.redirect("/internalServerError");
+                // response.redirect("/internalServerError");
+                redirectToError(response);
             } else {
-                console.log(res);
                 response.status(200).json(res.rows);
             }
         });
 }
 
-
-const getHospitalBedsByName = (request, response) => {
-    getAttributeOfHospital("BedCount", request, response)
-}
-
-const getFreeHospitalBedsByName = (request, response) => {
-    getAttributeOfHospital("FreeBeds", request, response);
-}
-
-
 const setAttributeOfHospital = (attribute, request, response) => {
+    // Assume that 'hospitalName' is part of the endpoint (see expanded explanation in 'getAttributeOfHospital' function)
     const name = request.params.hospitalName;
+
+    // Assume that 'amount' is part of the body/passed in data (see expanded explanation in 'setFreeHospitalBedsByName')
     const {
         amount
     } = request.body;
 
-    // Generate the post string
-    /*const strPost = 'UPDATE hospitals SET ' + attribute + ' = $1 WHERE name = $2;';
+    // UPDATE statement that allows you to SET any attribute of a hospital by name
+    const strPost = 'UPDATE hospitals SET ' + attribute + ' = $1 WHERE name = $2;';
 
-    pool.query(str_post, [amount, name], (err, res) => {
+    pool.query(strPost, [amount, name], (err, res) => {
         if (err) {
-            console.error(err)
+            // response.redirect("/internalServerError")
+            redirectToError(response)
         } else {
             response.status(200).send(`Hospital modified with name: ${name}`)
-        }
-    });*/
-
-    const strPost = 'UPDATE hospitals SET $1 = $2 WHERE name = $3;';
-
-    pool.query(strPost, [attribute, amount, name], (err, res) => {
-        if (err) {
-            response.redirect("/internalServerError");
-        } else {
-            response.status(200);
-            response.send('Successfully set ' + attribute + ' of ' + name + ' to ' + amount);
         }
     });
 }
 
-const setTotalBeds = (request, response) => {
-    setAttributeOfHospital("BedCount", request, response);
-}
-
-const setFreeBeds = (request, response) => {
-    setAttributeOfHospital("FreeBeds", request, response)
-
-}
-
-/*
-const incrementUsedBeds = (request, response) => {
+const incrementAttributeOfHospital = (attribute, request, response) => {
     const name = request.params.hospitalName;
     const {
         change
-    } = request.body
+    } = request.body;
 
-    // curl -X PUT -d "name=Easy" -d "change=1" http://localhost:3000/users/1
-    // curl -X PUT -d "change=2" http://localhost:3000/incrementBettenanzahl/Easy
-        curl -X PUT -d "amount=2" http://localhost:3000/setBettenanzahl/Klinkum%20Rechts%20der%20Isar
-    // Get the number of used beds currently in the database
-    const raw_used_beds = getFreeHospitalBeds({
-            "hospitalName": name
-        },
-        response)
+    const strIncrement = 'UPDATE hospitals SET ' + attribute + ' = ' + attribute + ' + $1 WHERE name = $2' 
 
-    const used_beds = parseInt(raw_used_beds)
-}*/
+    pool.query(strIncrement, [change, name], (err, res) => {
+        if (err) {
+            redirectToError(response);
+        }
+        else {
+            response.status(200);
+            response.send('Successfully incremented ' + attribute + ' of ' + name + ' by ' + change);
+        }
+    });
+}
+
+
+
+/* GET METHODS:
+------------
+
+Can call with browser hits to: https://localhost:3000/<method>/Klinkum%20Rechts%20der%20Isar
+
+NOTE: %20 == ' ' in URL formatting
+*/
+const getHospitalBedsByName = (request, response) => {
+    // https://localhost:3000/getBettenanzahl/Klinkum%20Rechts%20der%20Isar
+    getAttributeOfHospital("BedCount", request, response);
+}
+
+const getFreeHospitalBedsByName = (request, response) => {
+    // https://localhost:3000/getFreieBetten/Klinkum%20Rechts%20der%20Isar
+    getAttributeOfHospital("FreeBeds", request, response);
+}
+
+/* PUT METHODS:
+------------
+
+curl -w '\n' -X PUT --data "amount=5" http://localhost:3000/<method>/Klinkum%20Rechts%20der%20Isar
+
+    -w '\n'             : Adds an endline to the return on the console (just for formatting response)
+    -X PUT              : Defines what kind of a query it is
+    --data "amount=5"   : Populates the body of the request
+    http://...          : Is the endpoint to hit
+*/
+const setHospitalBedsByName = (request, response) => {
+    // curl -w '\n' -X PUT --data "amount=1161" http://localhost:3000/setBettenanzahl/Klinkum%20Rechts%20der%20Isar
+    setAttributeOfHospital("BedCount", request, response);
+}
+    
+const setFreeHospitalBedsByName = (request, response) => {
+    // curl -w '\n' -X PUT --data "amount=5" http://localhost:3000/setFreieBetten/Klinkum%20Rechts%20der%20Isar
+    setAttributeOfHospital("FreeBeds", request, response);
+}
+
+const incrementHospitalBedsByName = (request, response) => {
+    // curl -w '\n' -X PUT --data "change=7" http://localhost:3000/incrementBettenanzahl/Klinkum%20Rechts%20der%20Isar
+    incrementAttributeOfHospital("BedCount", request, response);
+}
+
+const incrementFreeHospitalBedsByName = (request, response) => {
+    // curl -w '\n' -X PUT --data "change=-200" http://localhost:3000/incrementBettenanzahl/Klinkum%20Rechts%20der%20Isar
+    incrementAttributeOfHospital("FreeBeds", request, response);
+}
 
 
 module.exports = {
     getHospitalBedsByName,
     getFreeHospitalBedsByName,
-    setFreeBeds,
-    setTotalBeds
+
+    setHospitalBedsByName,
+    setFreeHospitalBedsByName,
+
+    incrementHospitalBedsByName,
+    incrementFreeHospitalBedsByName
 }
