@@ -15,12 +15,13 @@ app.use(
 	})
 );
 
+// ovverride static index.html preference
+app.get('/', (req, res) => {
+	res.send("this is home");
+})
+
 // tells express to serve static files from the directory named "public"
 app.use(express.static('public'));
-
-app.get('/', (req, res) => {
-	res.sendFile(path.resolve(__dirname) + '/public/index.html');
-})
 
 app.get('/favicon.ico', (req, res) => {
 	res.sendFile(path.resolve(__dirname) + '/favicon.ico');
