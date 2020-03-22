@@ -15,17 +15,17 @@ app.use(
 	})
 );
 
-// // Logging for each request
-// app.use((req, resp, next) => {
-// 	const now = new Date();
-// 	const time = `${now.toLocaleDateString()} - ${now.toLocaleTimeString()}`;
-// 	const path = `"${req.method} ${req.path}"`;
-// 	const m = `${req.ip} - ${time} - ${path}`;
+// Logging for each request
+app.use((req, resp, next) => {
+	const now = new Date();
+	const time = `${now.toLocaleDateString()} - ${now.toLocaleTimeString()}`;
+	const path = `"${req.method} ${req.path}"`;
+	const m = `${req.ip} - ${time} - ${path}`;
 	
-// 	// eslint-disable-next-line no-console
-// 	console.log(m);
-// 	next();
-// });
+	// eslint-disable-next-line no-console
+	console.log(m);
+	next();
+});
 
 app.get('/getBettenanzahl/:hospitalName', db.getHospitalBedsByName);
 app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBedsByName);

@@ -145,7 +145,7 @@ const getSpecificHospital = (request, response) => {
     const strDir = getDirection(direction);
     
     // localhost:3000/hospitals/Munich/asc/freebeds
-    const strQuery = 'SELECT * FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid WHERE cities.name = $1 ORDER BY ' + attribute + ' ' + strDir + ';';
+    const strQuery = 'SELECT hospitals.name, hospitals.bedcount, hospitals.freebeds FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid WHERE cities.name = $1 ORDER BY ' + attribute + ' ' + strDir + ';';
 
     pool.query(strQuery,
         [city],

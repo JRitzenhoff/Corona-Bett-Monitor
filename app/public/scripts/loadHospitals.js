@@ -11,7 +11,8 @@ const addDataToList = (listObj, data) => {
         var hospitalLink = document.createElement("a");
         hospitalLink.setAttribute("href", "https://www.mri.tum.de/");
         hospitalLink.setAttribute("class", "summary-title-link");
-        hospitalLink.innerHTML = data.name;
+        // console.log(hospital);
+        hospitalLink.innerHTML = hospital.name;
         hospitalName.appendChild(hospitalLink);
 
         var bedsData = document.createElement("div");
@@ -60,12 +61,24 @@ const getHospitalData = () => {
       });
 }
 
+const deleteDataInList = (valList) => {
+    if (valList) {
+        for (var child in valList.childNodes) {
+            valList.removeChild(child);
+        }
+    }
+}
+
 const updateList = () => {
     var hospitalList = document.getElementById("hospital-list");
 
     getHospitalData()
     .then(data => addDataToList(hospitalList, data))
-    .catch(err => console.error(err));
+    .catch(err => {
+        // console.error(err))
+        deleteDataInList(hospitalList);
+    });
+        
 }
 
 
