@@ -33,11 +33,16 @@ app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBedsByName);
 app.get('/top10FullBeds', db.getTopTenHospitalBedCounts);
 app.get('/top10FreeBeds', db.getTopTenHospitalFreeBedCounts);
 
+app.get('/hospitals/:city/:direction/:attribute', db.getSpecificHospital);
+
 app.put('/setBettenanzahl/:hospitalName', db.setHospitalBedsByName);
 app.put('/setFreieBetten/:hospitalName', db.setFreeHospitalBedsByName);
 
 app.put('/incrementBettenanzahl/:hospitalName', db.incrementHospitalBedsByName);
 app.put('/incrementFreieBetten/:hospitalName', db.incrementFreeHospitalBedsByName);
+
+
+
 
 
 /* NOTE:

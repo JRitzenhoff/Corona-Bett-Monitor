@@ -124,6 +124,47 @@ const getTopTenHospitalFreeBedCounts = (request, response) => {
     topValsOfHospitalAttribute(10, "FreeBeds", request, response);
 }
 
+const getSpecificHospital = (request, response) => {
+    const city = request.params.city;
+    const direction = request.params.direction;
+    const attribute = request.params.attribute;
+
+    // console.log(city + " | " + direction + " | " + attribute)
+
+    const getDirection = (strInp) => {
+        if (strInp == "asc") {
+            return "ASC";
+        }
+        else if (strInp == "desc") {
+            return "DESC"
+        }
+        return null;
+    }
+
+
+    const strDir = getDirection(direction);
+    
+    // localhost:3000/hospitals/Munich/asc/freebeds
+    const strQuery = 'SELECT * FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid WHERE cities.name = $1 ORDER BY ' + attribute + ' ' + strDir + ';';
+
+    pool.query(strQuery,
+        [city],
+        (err, res) => {
+            if (err) {
+                // response.redirect("/internalServerError");
+                redirectToError(response);
+                // console.error(err);
+            } else {
+                response.status(200).json(res.rows);
+            }
+        });
+}
+
+
+
+
+
+
 /* PUT METHODS:
 ------------
 
@@ -161,6 +202,8 @@ module.exports = {
 
     getTopTenHospitalBedCounts,
     getTopTenHospitalFreeBedCounts,
+
+    getSpecificHospital,
 
 
     setHospitalBedsByName,
