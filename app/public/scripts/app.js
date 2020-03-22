@@ -32,17 +32,20 @@ const addDataToTable = (listObj, data, dataTranslator) => {
     //     tableBody.appendChild(tableRow);
     // })
 
-    data.forEach((dataVal) => {
-        console.log(dataVal);
-        console.log("i am a dadasd");
+    data.forEach((hospital) => {
         var hospitalItem = document.createElement("li");
 
-        var hospitalName = document.createElement("h2");
-        hospitalName.innerHTML = dataVal.name;
+        var hospitalLink = document.createElement("a");
+        hospitalLink.setAttribute("href", hospital.website);
+
+        var hospitalHeading = document.createElement("h2");
+        hospitalHeading.innerHTML = hospital.name;
+        hospitalLink.appendChild(hospitalHeading);
+
         var bedsData = document.createElement("p");
-        bedsData.innerHTML = "Intensivbetten gesamt:" + dataVal.bedcount + "<br>Intensivbetten verfügbar:" + dataVal.freebeds;
+        bedsData.innerHTML = "Intensivbetten gesamt: " + hospital.bedcount + "<br>Intensivbetten verfügbar: " + hospital.freebeds;
         
-        hospitalItem.appendChild(hospitalName);
+        hospitalItem.appendChild(hospitalLink);
         hospitalItem.appendChild(bedsData);
 
         listObj.appendChild(hospitalItem);
