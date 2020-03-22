@@ -78,7 +78,7 @@ const incrementAttributeOfHospital = (attribute, request, response) => {
 const topValsOfHospitalAttribute = (numVals, attribute, request, response) => {
     // If I don't create the limitStr first, there is an attribute error...
     const limitStr = 'LIMIT ' + numVals + ';';
-    const getTopValsStr = 'SELECT * FROM hospitals ORDER BY ' + attribute + ' DESC ' + limitStr;
+    const getTopValsStr = 'SELECT name, website, bedcount, freebeds FROM hospitals ORDER BY ' + attribute + ' DESC ' + limitStr;
 
     pool.query(getTopValsStr, (err, res) => {
         if (err) {
@@ -113,16 +113,57 @@ const getFreeHospitalBedsByName = (request, response) => {
 }
 
 const getTopTenHospitalBedCounts = (request, response) => {
-    console.log("Getting top ten beds");
+    // console.log("Getting top ten beds");
     // http://localhost:3000/top10FullBeds
     topValsOfHospitalAttribute(10, "BedCount", request, response);
 }
 
 const getTopTenHospitalFreeBedCounts = (request, response) => {
-    console.log("Getting top ten FREE beds");
+    // console.log("Getting top ten FREE beds");
     // http://localhost:3000/top10FreeBeds
     topValsOfHospitalAttribute(10, "FreeBeds", request, response);
 }
+
+const getSpecificHospital = (request, response) => {
+    const city = request.params.city;
+    const direction = request.params.direction;
+    const attribute = request.params.attribute;
+
+    // console.log(city + " | " + direction + " | " + attribute)
+
+    const getDirection = (strInp) => {
+        if (strInp == "asc") {
+            return "ASC";
+        }
+        else if (strInp == "desc") {
+            return "DESC"
+        }
+        return null;
+    }
+
+
+    const strDir = getDirection(direction);
+    
+    // localhost:3000/hospitals/Munich/asc/freebeds
+    const strQuery = 'SELECT hospitals.name, hospitals.bedcount, hospitals.freebeds FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid WHERE cities.name = $1 ORDER BY ' + attribute + ' ' + strDir + ';';
+
+    pool.query(strQuery,
+        [city],
+        (err, res) => {
+            if (err) {
+                // response.redirect("/internalServerError");
+                redirectToError(response);
+                // console.error(err);
+            } else {
+                response.status(200).json(res.rows);
+            }
+        });
+}
+
+
+
+
+
 
 /* PUT METHODS:
 ------------
@@ -161,6 +202,8 @@ module.exports = {
 
     getTopTenHospitalBedCounts,
     getTopTenHospitalFreeBedCounts,
+
+    getSpecificHospital,
 
 
     setHospitalBedsByName,
