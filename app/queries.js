@@ -78,7 +78,7 @@ const incrementAttributeOfHospital = (attribute, request, response) => {
 const topValsOfHospitalAttribute = (numVals, attribute, request, response) => {
     // If I don't create the limitStr first, there is an attribute error...
     const limitStr = 'LIMIT ' + numVals + ';';
-    const getTopValsStr = 'SELECT * FROM hospitals ORDER BY ' + attribute + ' DESC ' + limitStr;
+    const getTopValsStr = 'SELECT name, website, bedcount, freebeds FROM hospitals ORDER BY ' + attribute + ' DESC ' + limitStr;
 
     pool.query(getTopValsStr, (err, res) => {
         if (err) {
