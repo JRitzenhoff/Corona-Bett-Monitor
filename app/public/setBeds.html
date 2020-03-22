@@ -47,7 +47,7 @@
       <input id="gesamtBetten"/>
       
       <p>
-        <button id="submitGesamt">Actualize</button>
+        <button id="submitGesamt" type="submit">Actualize</button>
       </p>
 
       <script type="text/javascript">
@@ -55,70 +55,57 @@
         const baseGetUrl = "/getBettenanzahl/";
 
         const getHospital = () => {
-          return document.getElementById("krankenhaus").innerHTML;
+          const hospString = document.getElementById("krankenhaus").innerHTML;
+          return encodeURI(hospString)
         }
 
-        // Get the input object
-        const bettenInp = document.getElementById("gesamtBetten");
+        const getBettenInp = () => {
+          return document.getElementById("gesamtBetten");
+        }
 
         // Fetch the data from the existing hospital
         const getDataValue = () => {
           const currHospital = getHospital();
-
           return fetch(baseGetUrl + currHospital).then((resp) => resp.json());
         }      
 
+        // accept the promise from the fetch and continue/catch it
         getDataValue()
         .then((resp) => {
           const { bedcount } = resp[0]
+          const bettenInp = getBettenInp();
           bettenInp.value = bedcount;
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {});
+
 
 
         // Do the SET
         const baseSetUrl = "/setBettenanzahl/"
 
-        const getSubmitValue = () => {
-          return document.getElementById("gesamtBetten").value
-        }
-
         const setDataValue = () => {
+          // Get the hospital (URL friendly)
           const currHospital = getHospital();
-          const newValue = getSubmitValue();
+          const bettenInp = getBettenInp();
 
-          return fetch(baseSetUrl + currHospital,
+          const newAmount = bettenInp.value;
+
+          // Make a PUT to the endpoint
+          fetch(baseSetUrl + currHospital,
             {
-              method: "POST",
-              body: JSON.stringify({amount: newValue})
+              method: "PUT",   
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({"amount" : newAmount})
             })
+            .then((resp) => {})
+            .catch((err) => {})
         };
 
-        document.getElementById("submitGesamt").click = setDataValue
-
+        document.getElementById("submitGesamt").onclick = setDataValue
       </script>
     </form>
-    <input for="krankenSubmit" type="text" id="krankenhaus" value="Kilnkum Rechts der Isar" />
-    
-    
-    <button id="krankenSubmit" type="submit">Actualize</button>
-    
-    <p>
-    <script type="text/javascript">
-      const printValue = () => {
-        const inp = document.getElementById("krankenhaus").value;
-        console.log(inp)
-      }
-
-      document.getElementById("krankenSubmit").onclick = printValue;
-
-
-    </script>
-    </p>
-
-    <div id="krankenhaus-div"></div>
-    
-    
     
     <!--display <p>
       Angemeldet als:<br>
