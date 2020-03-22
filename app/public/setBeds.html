@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title text>Set Beds</title>
+  </head>
+
+  <body>
+    <!-- Add a menu that will be shared by all .html files -->
+     <div class="vertical-menu">
+        <a href="/setBeds.html" class="active"></a>
+        <a href="/">Home</a>
+        <a href="/logIn.html">LogIn</a>
+    </div>
+​
+    <!--display Function-->
+    <p>
+      Angemeldet als:<br>
+      Intensivbetten gesamt:<br>
+      Intensivbetten verfügbar:<br>
+    <p>
+    <!-- Buttons -->
+​    <label for="krankenhaus">Krankenhaus</label>
+    <input id="k1" name="krankenhaus" maxlength="100"> <br>
+
+    <p>
+      <!-- 
+      <form method="post" autocomplete="off">
+        <label for="bettAnzahl">Intensivbetten gesamt</label>
+        <input id="bettAnzahl" name="bettAnzahl" maxlength="100"> <br>
+        <button type="aktualisieren" name="action" value="0">aktualisieren</button>
+
+      </form>
+
+      <br> <br>
+      -->
+
+      <form id="intensiveBett" autocomplete="off">
+        <label for="iBett">Intensivbetten verfügbar</label>
+        <input id="iBett" name="iBett" maxlength="100"> <br>
+​
+        <button id="iBettButton" name="iBettButton">aktualisieren</button>
+      </form>
+​
+      <kbd></kbd></p>
+
+      <!-- Initialize Calls Here. Need to somehow get the 'krankenhaus' field into the POST of the buttons -->
+      <script src="./scripts/setBeds.js"></script>
+  </body>
+</html>

@@ -7,11 +7,23 @@
 </head>
 
 <body>
+    <!-- Add a menu that will be shared by all .html files -->
+    <div class="vertical-menu">
+        <a href="/logIn.html" class="active"></a>
+        <a href="/">Home</a>
+        <a href="/setBeds.html">Update-Betten-Anzahl</a>
+    </div>
+    
+
+
+
     <form action="/login" method="POST">
         <label for="fname">Username:</label><br>
-        <input type="text" id="fname" name="fname" value="John"><br>
+        <input type="text" id="fname" name="firstName" value="John"><br>
+
         <label for="lname">Password</label><br>
-        <input type="text" id="lname" name="lname" value="Doe"><br><br>
+        <input type="text" id="lname" name="lastName" value="Doe"><br><br>
+        
         <input type="submit" value="Submit">
     </form>
 </body>

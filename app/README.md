@@ -34,3 +34,7 @@ NOTE: make sure you are in the `app` directory
 ## Running the code locally
 1. `node server.js`
     * Runs the code on _localhost:3000_
+
+# NOTE TO SELF:
+
+Don't forget to add/uncomment the service-worker link to index.html

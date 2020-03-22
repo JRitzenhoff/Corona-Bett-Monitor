@@ -17,8 +17,8 @@
     <!-- Add iOS meta tags and icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Weather PWA">
-    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <meta name="apple-mobile-web-app-title" content="CoronaBett PWA">
+    <link rel="apple-touch-icon" href="/images/icon_152.png">
 
     <!-- Add meta description here... Same thing as in Manifest -->
     <meta name="description" content="Application that lets you see how many beds are free for coronvirus patients">
@@ -28,25 +28,33 @@
 </head>
 
 
-
-
-
-
-
-
 <body>
-    <form action="/login" method="POST">
-        <label for="fname">Username:</label><br>
-        <input type="text" id="fname" name="fname" value="John"><br>
-        <label for="lname">Password</label><br>
-        <input type="text" id="lname" name="lname" value="Doe"><br><br>
-        <input type="submit" value="Submit">
-    </form>
+    <!-- Add a menu that will be shared by all .html files -->
+    <div class="vertical-menu">
+        <a href="/" class="active"></a>
+        <a href="/logIn.html">LogIn</a>
+        <a href="/setBeds.html">Update-Betten-Anzahl</a>
+    </div>
+
+    <table id="hospital-table">
+        <thead>
+            <!-- Initialize a TableRow with a series of TableHead(s) -->
+            <tr>
+            <th>Name</th>
+            <th>Intensivbetten gesamt</th>
+            <th>Intensivbetten verfügbar</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+
 
     <!-- Is suppossed to initialize the view -->
-    <script src="/scripts/app.js"></script>
+    <script src="./scripts/app.js"></script>
 
     <!-- Add a serviceworker that can take care of offline rendering -->
+    <!--
     <script>
 
         // Register service worker.
@@ -59,7 +67,7 @@
         });
         }
     </script>
-
+    -->
     
 </body>
 
