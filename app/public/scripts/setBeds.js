@@ -1,37 +1,84 @@
 
-const putIntensive = () => {
-    const krankenhaus = document.getElementsByName("krankenhaus");
+const getURLHospital = () => {
+    const hospString = document.getElementById("krankenhaus").innerHTML;
+    return encodeURI(hospString)
+}
 
-    krankenhaus.entries().forEach((arg, ind) => {
-        console.log(arg)});
-    console.log("The krank" + krankenhaus.entries())
+// Fetch the data from the existing hospital
+const getHospitalDataPromise = (baseURL) => {
+    const currHospital = getURLHospital();
+    return fetch(baseURL + currHospital).then((resp) => resp.json());
+}
 
-    alert("I want to see the output" + Array.from(krankenhaus)) 
 
-    const endpoint = '/setBettenanzahl' + krankenhaus.innerHTML
+const setHospitalDataPromise = (baseURL, value) => {
+    // Get the hospital (URL friendly)
+    const currHospital = getURLHospital();
 
-    return fetch(endpoint, {
-        method: 'POST',
-        body: formData
+    const numValue = parseInt(value);
+    const requestBody = JSON.stringify({"amount":numValue});
+    
+    // Make a PUT to the endpoint
+    return fetch(baseURL + currHospital, 
+        {
+            method: "PUT",   
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: requestBody
+        });
+}
+
+const initInputForm = (formData, getBaseURL, setBaseURL) => {
+    const getBedInput = () => { 
+        const inpVal = formData.getElementsByTagName("INPUT")[0];
+        console.log(inpVal.value)
+        return inpVal;
+    };
+
+    getHospitalDataPromise(getBaseURL)
+    .then((resp) => {
+        // pull out the dict from the response
+        const response = resp[0]
+
+        // pull out the value (do this because the key is different)
+        const bedcount = Object.keys(response).map((key) => response[key])
+
+        // set the value
+        const bedInp = getBedInput();
+        bedInp.value = bedcount;
     })
-    .then(response => response.json())
-    .catch(err => console.error(err))
+    .catch((err) => {
+        // gesamtBettenObj.value = "Unknown Data"
+    });
+
+
+    // Add the onclick handler for the button
+    const bedButton = formData.getElementsByTagName("BUTTON")[0];
+
+    console.log(bedButton);
+
+    const buttonOnClick = () => {
+        setHospitalDataPromise(setBaseURL, getBedInput().value)
+        .then((resp) => {}).catch((err) => {});
+    }
+
+    bedButton.onclick = buttonOnClick
 }
 
 const init = () => {
-    const bettButton = document.getElementById('iBettButton');
+    const gesamtForm = document.getElementById("gesamtForm");
 
-    const krankenhaus = document.getElementsByName("krankenhaus")[0];
-    console.log(krankenhaus.value)
-    // bettButton.addEventListener('click', putIntensive);
-    // console.log(bettButton);
+    const getGesamtBettenBaseURL = "/getBettenanzahl/";
+    const setGesamtBettenBaseURL = "/setBettenanzahl/"; 
+    initInputForm(gesamtForm, getGesamtBettenBaseURL, setGesamtBettenBaseURL);
 
-    // console.log(bettForm.childNodes);
-    // .addEventListener('action', putIntensive);
+    
+    const freiForm = document.getElementById("freiForm");
+    
+    const getFreiBettenBaseURL = "/getFreieBetten/";
+    const setFreiBettenBaseURL = "/setFreieBetten/"; 
+    initInputForm(freiForm, getFreiBettenBaseURL, setFreiBettenBaseURL);
 }
 
-// init();
-
-const userAction = () => { 
-    console.log("Button was pressed");
-}
+init();

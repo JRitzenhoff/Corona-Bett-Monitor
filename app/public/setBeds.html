@@ -42,105 +42,22 @@
 
     Generate a form so that elements are clumped together
     -->
-    <form>
+    <form id="gesamtForm">
       <label type="text">Intensivbetten gesamt</label>
       <input id="gesamtBetten"/>
       
-      <p>
-        <button id="submitGesamt" type="submit">Actualize</button>
-      </p>
-
-      <script type="text/javascript">
-        // You don't want your endpoints to be within the HTML
-        const baseGetUrl = "/getBettenanzahl/";
-
-        const getHospital = () => {
-          const hospString = document.getElementById("krankenhaus").innerHTML;
-          return encodeURI(hospString)
-        }
-
-        const getBettenInp = () => {
-          return document.getElementById("gesamtBetten");
-        }
-
-        // Fetch the data from the existing hospital
-        const getDataValue = () => {
-          const currHospital = getHospital();
-          return fetch(baseGetUrl + currHospital).then((resp) => resp.json());
-        }      
-
-        // accept the promise from the fetch and continue/catch it
-        getDataValue()
-        .then((resp) => {
-          const { bedcount } = resp[0]
-          const bettenInp = getBettenInp();
-          bettenInp.value = bedcount;
-        })
-        .catch((err) => {});
-
-
-
-        // Do the SET
-        const baseSetUrl = "/setBettenanzahl/"
-
-        const setDataValue = () => {
-          // Get the hospital (URL friendly)
-          const currHospital = getHospital();
-          const bettenInp = getBettenInp();
-
-          const newAmount = bettenInp.value;
-
-          // Make a PUT to the endpoint
-          fetch(baseSetUrl + currHospital,
-            {
-              method: "PUT",   
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({"amount" : newAmount})
-            })
-            .then((resp) => {})
-            .catch((err) => {})
-        };
-
-        document.getElementById("submitGesamt").onclick = setDataValue
-      </script>
+      <p> </p>
+      <button id="submitGesamt" type="submit">Actualize</button>
+     
     </form>
-    
-    <!--display <p>
-      Angemeldet als:<br>
-      Intensivbetten gesamt:<br>
-      Intensivbetten verfügbar:<br>
-    <p>
-    -->
-    <!-- Buttons -->
-    <!--
-​    <label for="krankenhaus">Krankenhaus</label>
-    <input id="k1" name="krankenhaus" maxlength="100"> <br>
 
-    <p>
-      -->
-
-      <!-- 
-      <form method="post" autocomplete="off">
-        <label for="bettAnzahl">Intensivbetten gesamt</label>
-        <input id="bettAnzahl" name="bettAnzahl" maxlength="100"> <br>
-        <button type="aktualisieren" name="action" value="0">aktualisieren</button>
-
-      </form>
-
-      <br> <br>
-      -->
-  <!--
-      <form id="intensiveBett" autocomplete="off">
-        <label for="iBett">Intensivbetten verfügbar</label>
-        <input id="iBett" name="iBett" maxlength="100"> <br>
-​
-        <button id="iBettButton" name="iBettButton">aktualisieren</button>
-      </form>
-​
-      <kbd></kbd></p>
-      -->
+    <form id="freiForm">
+      <label type="text">Freibettern gesamt</label>
+      <input id="freiBetten"/>
+      
+      <p> </p>
+      <button id="submitFrei" type="submit">Actualize</button>
+    </form>
 
       <!-- Initialize Calls Here. Need to somehow get the 'krankenhaus' field into the POST of the buttons -->
       <script src="./scripts/setBeds.js"></script>
