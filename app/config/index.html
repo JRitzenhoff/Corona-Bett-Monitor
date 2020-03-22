@@ -9,7 +9,7 @@
     <base href="">
     <meta charset="utf-8" />
     <title>BettenVerfügbarkeit</title>
-    <link rel="shortcut icon" type="image/x-icon" href="https://assets.squarespace.com/universal/default-favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://assets.squarespace.com/universal/default-favicon.ico" />
     <link rel="canonical" href="https://lion-triceratops-eaf5.squarespace.com" />
     <meta property="og:site_name" content="BettenVerfügbarkeit" />
     <meta property="og:title" content="BettenVerfügbarkeit" />
@@ -18,7 +18,7 @@
     <meta itemprop="name" content="BettenVerfügbarkeit" />
     <meta itemprop="url" content="https://lion-triceratops-eaf5.squarespace.com" />
     <meta name="twitter:title" content="BettenVerfügbarkeit" />
-    <meta name="twitter:url" content="https://lion-triceratops-eaf5.squarespace.com" />
+    <meta name="twitter:url" content="https://lion-triceratops-eaf5.squarespace.com" /> -->
     <meta name="twitter:card" content="summary" />
     <meta name="description" content="" />
     <link rel="stylesheet" type="text/css"
@@ -51,11 +51,7 @@
     <script crossorigin="anonymous"
         src="//assets.squarespace.com/universal/scripts-compressed/polyfills-a79c00f7c9b62706f127d-min.de-DE.js">
     </script>
-
-    <!-- THIS LINE CAUSED A LOT OF HARM
     <script data-name="static-context" src="scripts/sqpsaceContext.js"></script>
-    -->
-
     <script type="text/javascript">
         SquarespaceFonts.loadViaContext();
         Squarespace.load(window);
@@ -83,6 +79,7 @@
         type="text/javascript"></script>
 
 
+
     <!-- Added a bunch of links for the Progressive Web App -->
     <!-- Link the Manifest -->
     <link rel="manifest" href="/manifest.json">
@@ -98,6 +95,7 @@
 
     <!-- Add meta theme-color... Same thing as in Manifest -->
     <meta name="theme-color" content="#2F3BA2" />
+
 
     <meta name="viewport" content="initial-scale=1">
 </head>
@@ -127,7 +125,7 @@
 
                         <li class="page-collection">
 
-                            <a href="/new-page">LogIn</a>
+                            <a href="/logIn.html">LogIn</a>
 
                         </li>
 
@@ -145,7 +143,7 @@
                     <a href="/">BettenVerfügbarkeit</a>
                 </h1>
             </div>
-            <script>
+            <!-- <script>
                 if (parseInt(Y.one('body').getComputedStyle('width'), 10) <= 640) {
                     Y.use('squarespace-ui-base', function (Y) {
                         Y.one("#upper-logo .logo").plug(Y.Squarespace.TextShrink, {
@@ -153,7 +151,7 @@
                         });
                     });
                 }
-            </script>
+            </script> -->
 
             <div class="site-info" data-content-field="business-information">
                 <div class="site-address">Street Address</div>
@@ -184,13 +182,13 @@
             <div id="lower-logo">
                 <h1 class="logo" data-content-field="site-title"><a href="/">BettenVerfügbarkeit</a></h1>
             </div>
-            <script>
+            <!-- <script>
                 Y.use('squarespace-ui-base', function (Y) {
                     Y.one("#lower-logo .logo").plug(Y.Squarespace.TextShrink, {
                         parentEl: Y.one('#lower-logo')
                     });
                 });
-            </script>
+            </script> -->
 
             <div id="topNav">
                 <nav class="main-nav" data-content-field="navigation">
@@ -303,9 +301,9 @@
                                             Dies ist Beispielinhalt. Hier doppelklicken und Seite auswählen um deren
                                             Inhalt anzuzeigen.
 
-                                            <a class="sqs-blockStatus-box-kbArticleLink"
+                                            <!-- <a class="sqs-blockStatus-box-kbArticleLink"
                                                 href="https://support.squarespace.com/hc/articles/206543337"
-                                                target="_blank">Mehr erfahren</a>
+                                                target="_blank">Mehr erfahren</a> -->
 
                                         </div>
 
@@ -462,7 +460,7 @@
         })();
     </script>
     <script>
-        Squarespace.afterBodyLoad(Y);
+        // Squarespace.afterBodyLoad(Y);
     </script>
     <!-- Add a serviceworker that can take care of offline rendering -->
     <script>
@@ -476,7 +474,7 @@
         });
         }
     </script>
-    
+
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none" data-usage="social-icons-svg">
         <symbol id="facebook-icon" viewBox="0 0 64 64">
             <path
