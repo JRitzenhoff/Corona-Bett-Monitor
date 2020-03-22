@@ -13,18 +13,127 @@
         <a href="/">Home</a>
         <a href="/logIn.html">LogIn</a>
     </div>
+
+    <!-- Insert paragraph for spacing -->
+    <p></p>
 ​
-    <!--display Function-->
+    <!-- Display Label initialization
+    NOTE: The first label does not currently need to be 
+    referenced by the code, so it does not need an "id".
+
+    This might change once CSS and formatting is applied
+    -->
+    <label type="text"><u>Krankenhaus</u>: </label>
+    <label id="krankenhaus" type="text">Kilnkum Rechts der Isar</label>
+    <script type="text/javascript">
+    // Get the label
+    const lab = document.getElementById("krankenhaus")
+
+    // Set it's display value. 
+    //  -- This will eventually be modified by a login page
+    lab.innerHTML = "Klinkum Rechts der Isar"     
+    </script>
+
+    <!-- Insert paragraph for spacing -->
+    <p></p>
+
+
+    <!-- Input for updating numberOfBeds Endpoint
+
+    Generate a form so that elements are clumped together
+    -->
+    <form>
+      <label type="text">Intensivbetten gesamt</label>
+      <input id="gesamtBetten"/>
+      
+      <p>
+        <button id="submitGesamt">Actualize</button>
+      </p>
+
+      <script type="text/javascript">
+        // You don't want your endpoints to be within the HTML
+        const baseGetUrl = "/getBettenanzahl/";
+
+        const getHospital = () => {
+          return document.getElementById("krankenhaus").innerHTML;
+        }
+
+        // Get the input object
+        const bettenInp = document.getElementById("gesamtBetten");
+
+        // Fetch the data from the existing hospital
+        const getDataValue = () => {
+          const currHospital = getHospital();
+
+          return fetch(baseGetUrl + currHospital).then((resp) => resp.json());
+        }      
+
+        getDataValue()
+        .then((resp) => {
+          const { bedcount } = resp[0]
+          bettenInp.value = bedcount;
+        })
+        .catch((err) => console.error(err));
+
+
+        // Do the SET
+        const baseSetUrl = "/setBettenanzahl/"
+
+        const getSubmitValue = () => {
+          return document.getElementById("gesamtBetten").value
+        }
+
+        const setDataValue = () => {
+          const currHospital = getHospital();
+          const newValue = getSubmitValue();
+
+          return fetch(baseSetUrl + currHospital,
+            {
+              method: "POST",
+              body: JSON.stringify({amount: newValue})
+            })
+        };
+
+        document.getElementById("submitGesamt").click = setDataValue
+
+      </script>
+    </form>
+    <input for="krankenSubmit" type="text" id="krankenhaus" value="Kilnkum Rechts der Isar" />
+    
+    
+    <button id="krankenSubmit" type="submit">Actualize</button>
+    
     <p>
+    <script type="text/javascript">
+      const printValue = () => {
+        const inp = document.getElementById("krankenhaus").value;
+        console.log(inp)
+      }
+
+      document.getElementById("krankenSubmit").onclick = printValue;
+
+
+    </script>
+    </p>
+
+    <div id="krankenhaus-div"></div>
+    
+    
+    
+    <!--display <p>
       Angemeldet als:<br>
       Intensivbetten gesamt:<br>
       Intensivbetten verfügbar:<br>
     <p>
+    -->
     <!-- Buttons -->
+    <!--
 ​    <label for="krankenhaus">Krankenhaus</label>
     <input id="k1" name="krankenhaus" maxlength="100"> <br>
 
     <p>
+      -->
+
       <!-- 
       <form method="post" autocomplete="off">
         <label for="bettAnzahl">Intensivbetten gesamt</label>
@@ -35,7 +144,7 @@
 
       <br> <br>
       -->
-
+  <!--
       <form id="intensiveBett" autocomplete="off">
         <label for="iBett">Intensivbetten verfügbar</label>
         <input id="iBett" name="iBett" maxlength="100"> <br>
@@ -44,6 +153,7 @@
       </form>
 ​
       <kbd></kbd></p>
+      -->
 
       <!-- Initialize Calls Here. Need to somehow get the 'krankenhaus' field into the POST of the buttons -->
       <script src="./scripts/setBeds.js"></script>

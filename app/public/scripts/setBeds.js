@@ -30,4 +30,8 @@ const init = () => {
     // .addEventListener('action', putIntensive);
 }
 
-init();
+// init();
+
+const userAction = () => { 
+    console.log("Button was pressed");
+}
