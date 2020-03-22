@@ -1,6 +1,10 @@
 
 const getURLHospital = () => {
-    const hospString = document.getElementById("krankenhaus").innerHTML;
+    const hospInp = document.getElementById("krankenhaus");
+
+    console.log(hospInp)
+
+    const hospString = hospInp.value;
     return encodeURI(hospString)
 }
 
@@ -49,6 +53,8 @@ const initInputForm = (formData, getBaseURL, setBaseURL) => {
         bedInp.value = bedcount;
     })
     .catch((err) => {
+        const bedInp = getBedInput();
+        bedInp.value = null;
         // gesamtBettenObj.value = "Unknown Data"
     });
 
@@ -61,12 +67,15 @@ const initInputForm = (formData, getBaseURL, setBaseURL) => {
     const buttonOnClick = () => {
         setHospitalDataPromise(setBaseURL, getBedInput().value)
         .then((resp) => {}).catch((err) => {});
+
+        // this prevents the window from refreshing
+        return false;
     }
 
     bedButton.onclick = buttonOnClick
 }
 
-const init = () => {
+const initForms = () => {
     const gesamtForm = document.getElementById("gesamtForm");
 
     const getGesamtBettenBaseURL = "/getBettenanzahl/";
@@ -74,11 +83,18 @@ const init = () => {
     initInputForm(gesamtForm, getGesamtBettenBaseURL, setGesamtBettenBaseURL);
 
     
-    const freiForm = document.getElementById("freiForm");
+    const freiForm = document.getElementById("freieForm");
     
     const getFreiBettenBaseURL = "/getFreieBetten/";
     const setFreiBettenBaseURL = "/setFreieBetten/"; 
     initInputForm(freiForm, getFreiBettenBaseURL, setFreiBettenBaseURL);
+
+    return false;
+}
+
+const init = () => {
+    const hospButton = document.getElementById("krankenhausButt");
+    hospButton.onclick = initForms;
 }
 
 init();

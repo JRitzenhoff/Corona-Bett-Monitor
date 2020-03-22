@@ -17,33 +17,26 @@
     <!-- Insert paragraph for spacing -->
     <p></p>
 ​
-    <!-- Display Label initialization
-    NOTE: The first label does not currently need to be 
-    referenced by the code, so it does not need an "id".
-
-    This might change once CSS and formatting is applied
-    -->
-    <label type="text"><u>Krankenhaus</u>: </label>
-    <label id="krankenhaus" type="text">Kilnkum Rechts der Isar</label>
-    <script type="text/javascript">
-    // Get the label
-    const lab = document.getElementById("krankenhaus")
-
-    // Set it's display value. 
-    //  -- This will eventually be modified by a login page
-    lab.innerHTML = "Klinkum Rechts der Isar"     
-    </script>
+    <!-- Hospital Initialization -->
+    <form>
+      <label type="text"><u>Krankenhaus</u>: </label>
+      <!--
+      <label id="krankenhaus" type="text">Kilnkum Rechts der Isar</label>
+      -->
+      <input id="krankenhaus"/>
+      <p></p>
+      <button id="krankenhausButt" type="submit">Get Krankenhaus Datum</button>
+    </form>
 
     <!-- Insert paragraph for spacing -->
     <p></p>
 
 
-    <!-- Input for updating numberOfBeds Endpoint
-
-    Generate a form so that elements are clumped together
+    <!-- Form for GesamtBett manipulation
+    DON'T ADD ANY ADDITIONAL 'input' OR 'button' TYPES TO FORM
     -->
     <form id="gesamtForm">
-      <label type="text">Intensivbetten gesamt</label>
+      <label type="text">Intensivbetten gesamt: </label>
       <input id="gesamtBetten"/>
       
       <p> </p>
@@ -51,12 +44,18 @@
      
     </form>
 
-    <form id="freiForm">
-      <label type="text">Freibettern gesamt</label>
-      <input id="freiBetten"/>
+    <!-- Insert paragraph for spacing -->
+    <p></p>
+
+    <!-- Form for Freie manipulation
+    DON'T ADD ANY ADDITIONAL 'input' OR 'button' TYPES TO FORM
+    -->
+    <form id="freieForm">
+      <label type="text">Freibettern gesamt: </label>
+      <input id="freieBetten"/>
       
       <p> </p>
-      <button id="submitFrei" type="submit">Actualize</button>
+      <button id="submitFreie" type="submit">Actualize</button>
     </form>
 
       <!-- Initialize Calls Here. Need to somehow get the 'krankenhaus' field into the POST of the buttons -->
