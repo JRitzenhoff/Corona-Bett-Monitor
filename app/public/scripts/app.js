@@ -66,6 +66,9 @@ const updateHospitalTable = () => {
     // Get the body of the table... The head has already been initialized in the HTML
     var hospitalList = document.getElementById("hospital-list");
     
+    console.log(hospitalList);
+
+
     // Translate the TABLE values into QUERY values
     const hospitalTranslator = {
         "Name": "name",

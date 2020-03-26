@@ -35,6 +35,9 @@ app.get('/top10FreeBeds', db.getTopTenHospitalFreeBedCounts);
 
 app.get('/hospitals/:city/:direction/:attribute', db.getSpecificHospital);
 
+
+
+
 app.put('/setBettenanzahl/:hospitalName', db.setHospitalBedsByName);
 app.put('/setFreieBetten/:hospitalName', db.setFreeHospitalBedsByName);
 
@@ -88,6 +91,8 @@ app.all('*', (request, response) => {
 });
 
 // start the app
-app.listen(port, () => {
-	console.log('starting the boi up');
-});
+app.listen(port, 
+	
+	() => { console.log('starting the boi up'); }
+
+	);

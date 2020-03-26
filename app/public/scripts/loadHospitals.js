@@ -6,6 +6,9 @@ document.getElementById(...)
 */
 
 const addDataToList = (listObj, data) => {
+
+    deleteDataInList(listObj);
+
     data.forEach((hospital) => {
         var hospitalName = document.createElement("div");
         var hospitalLink = document.createElement("a");
@@ -63,14 +66,16 @@ const getHospitalData = () => {
 
 const deleteDataInList = (valList) => {
     if (valList) {
-        for (var child in valList.childNodes) {
-            valList.removeChild(child);
+        while (valList.firstChild) {
+            valList.removeChild(valList.firstChild);
         }
     }
 }
 
 const updateList = () => {
     var hospitalList = document.getElementById("hospital-list");
+
+    // console.log(hospitalList.childNodes);
 
     getHospitalData()
     .then(data => addDataToList(hospitalList, data))
