@@ -44,6 +44,9 @@ NOTE: make sure you are in the `app` directory
    NOTE: You can see what databases you have with the command `\db`
 
    NOTE: You can see what values are in the database with a SQL statement... Like: `SELECT * FROM hospitals;`
+
+* log out of PostGreSQL user postgres
+   * `\q`
    
     
 
