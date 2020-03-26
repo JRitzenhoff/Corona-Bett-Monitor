@@ -23,7 +23,7 @@ It is meant to be a platform where officials within the hospitals can easily and
 ### Initializing states
 NOTE: make sure you are in the `app` directory
 
-* npm install
+* `npm install`
 <br></br>
 * login into PostGreSQL
     * `sudo -u postgres psql`
