@@ -28,20 +28,22 @@ NOTE: make sure you are in the `app` directory
 * login into PostGreSQL
     * `sudo -u postgres psql`
 * create the public_user (FOLLOW EVERY LINE WITH `;`)
+
+   NOTE: You can see what users you have with the command `\du`
     * `CREATE ROLE public_user;`
     * `ALTER ROLE public_user WITH PASSWORD` actual_pass`;`
     
     NOTE: Currently the password for the public_user is saved within `queries.js`
     * `GRANT ALL PRIVILEGES ON TABLE postgress TO public_user;`
     
-NOTE: You can see what users you have with the command `\du`
+
 * update the database
    * `\i ` path to hospitals_build.sql (it's in the database folder)
    * `\i ` path to create_dummies.sql (it's in the database folder)
    
-NOTE: You can see what databases you have with the command `\db`
+   NOTE: You can see what databases you have with the command `\db`
 
-NOTE: You can see what values are in the database with a SQL statement... Like: `SELECT * FROM hospitals;`
+   NOTE: You can see what values are in the database with a SQL statement... Like: `SELECT * FROM hospitals;`
    
     
 
