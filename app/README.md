@@ -34,7 +34,8 @@ NOTE: make sure you are in the `app` directory
     * `ALTER ROLE public_user WITH PASSWORD` actual_pass`;`
     
     NOTE: Currently the password for the public_user is saved within `queries.js`
-    * `GRANT ALL PRIVILEGES ON TABLE postgres TO public_user;`
+    * `GRANT ALL PRIVILEGES ON TABLE hospitals TO public_user;`
+    * `GRANT ALL PRIVILEGES ON TABLE cities TO public_user;`
     
 
 * update the database
