@@ -145,7 +145,8 @@
                     <a href="/">BettenVerfügbarkeit</a>
                 </h1>
             </div>
-            <script>
+
+            <!-- <script>
                 if (parseInt(Y.one('body').getComputedStyle('width'), 10) <= 640) {
                     Y.use('squarespace-ui-base', function (Y) {
                         Y.one("#upper-logo .logo").plug(Y.Squarespace.TextShrink, {
@@ -153,7 +154,7 @@
                         });
                     });
                 }
-            </script>
+            </script> -->
 
             <div class="site-info" data-content-field="business-information">
                 <div class="site-address">Street Address</div>
@@ -184,13 +185,14 @@
             <div id="lower-logo">
                 <h1 class="logo" data-content-field="site-title"><a href="/">BettenVerfügbarkeit</a></h1>
             </div>
-            <script>
+
+            <!-- <script>
                 Y.use('squarespace-ui-base', function (Y) {
                     Y.one("#lower-logo .logo").plug(Y.Squarespace.TextShrink, {
                         parentEl: Y.one('#lower-logo')
                     });
                 });
-            </script>
+            </script> -->
 
             <div id="topNav">
                 <nav class="main-nav" data-content-field="navigation">
@@ -242,6 +244,7 @@
                                     <div class="sqs-block-content">
                                         <label for="Region" class="summary-title-link">Stadt auswählen</label>
 
+                                        <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
                                         <select style="font-family:Unna" id="selected-city" onchange="updateList();">
                                             <option value="Munich">München</option>
                                             <option value="Marburg">Marburg</option>
@@ -276,6 +279,7 @@
                                     <div class="sqs-block-content">
                                         <label for="filters">Sortieren nach:</label>
 
+                                        <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
                                         <select style="font-family:Unna" id="selected-filter" onchange="updateList();">
                                             <option value="Freie Betten aufsteigend">Freie Betten aufsteigend </option>
                                             <option value="Freie Betten absteigend">Freie Betten absteigend</option>
@@ -386,10 +390,13 @@
                                                         </div>
                                                     </div>
 
-                                                    <script src="scripts/loadHospitals.js"></script>
+                                                    
                                                     <!-- dynamic data -->
                                                     <div id="hospital-list">
                                                     </div>
+
+                                                    <!-- This needs to be AFTER the div declaration... Otherwise the object hasn't been created-->
+                                                    <script src="scripts/loadHospitals.js"></script>
 
 
                                                     <!-- Metadata (Below Content) -->
@@ -461,9 +468,14 @@
             }
         })();
     </script>
+
+    <!-- This just isn't necessary I think
     <script>
         Squarespace.afterBodyLoad(Y);
-    </script>
+    </script> 
+    -->
+
+
     <!-- Add a serviceworker that can take care of offline rendering -->
     <!-- <script>
         // Register service worker.

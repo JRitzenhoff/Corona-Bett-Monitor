@@ -1,4 +1,4 @@
-const db = require('./queries');
+const db = require('./queries');    // this is the same thing as an "#include" statement in C
 
 const express = require('express');
 const path = require('path');

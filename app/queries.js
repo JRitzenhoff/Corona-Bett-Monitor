@@ -13,7 +13,6 @@ const redirectToError = (response) => {
     response.redirect("/internalServerError");
 }
 
-
 const getAttributeOfHospital = (attribute, request, response) => {
     // This is assuming that the 'hospitalName' is part of the endpoint
     const name = request.params.hospitalName;
@@ -21,16 +20,22 @@ const getAttributeOfHospital = (attribute, request, response) => {
     // SELECT statement that allows you to GET any attribute from a hospital by name
     const strQuery = 'SELECT ' + attribute + ' FROM hospitals WHERE name = $1;';
 
-    pool.query(strQuery,
+    pool.query(
+        strQuery, 
         [name],
-        (err, res) => {
+        
+        (err, result) => {
             if (err) {
-                // response.redirect("/internalServerError");
                 redirectToError(response);
-            } else {
-                response.status(200).json(res.rows);
+                // console.error(err);
             }
-        });
+            else {
+                response.status(200);
+                response.json(result.rows);
+            }
+        }
+        
+        );
 }
 
 const setAttributeOfHospital = (attribute, request, response) => {
@@ -45,7 +50,10 @@ const setAttributeOfHospital = (attribute, request, response) => {
     // UPDATE statement that allows you to SET any attribute of a hospital by name
     const strPost = 'UPDATE hospitals SET ' + attribute + ' = $1 WHERE name = $2;';
 
-    pool.query(strPost, [amount, name], (err, res) => {
+    pool.query(strPost, 
+        [amount, name], 
+
+        (err, res) => {
         if (err) {
             // response.redirect("/internalServerError")
             redirectToError(response);
@@ -63,7 +71,10 @@ const incrementAttributeOfHospital = (attribute, request, response) => {
 
     const strIncrement = 'UPDATE hospitals SET ' + attribute + ' = ' + attribute + ' + $1 WHERE name = $2;';
 
-    pool.query(strIncrement, [change, name], (err, res) => {
+    pool.query(strIncrement, 
+        [change, name], 
+        
+        (err, res) => {
         if (err) {
             redirectToError(response);
         }
@@ -80,7 +91,9 @@ const topValsOfHospitalAttribute = (numVals, attribute, request, response) => {
     const limitStr = 'LIMIT ' + numVals + ';';
     const getTopValsStr = 'SELECT name, website, bedcount, freebeds FROM hospitals ORDER BY ' + attribute + ' DESC ' + limitStr;
 
-    pool.query(getTopValsStr, (err, res) => {
+    pool.query(getTopValsStr, 
+        
+        (err, res) => {
         if (err) {
             // console.error(err)
             redirectToError(response);
