@@ -23,7 +23,7 @@ It is meant to be a platform where officials within the hospitals can easily and
 ### Initializing states
 NOTE: make sure you are in the `app` directory
 
-* npm install
+* `npm install`
 <br></br>
 * login into PostGreSQL
     * `sudo -u postgres psql`
@@ -34,7 +34,7 @@ NOTE: make sure you are in the `app` directory
     * `ALTER ROLE public_user WITH PASSWORD` actual_pass`;`
     
     NOTE: Currently the password for the public_user is saved within `queries.js`
-    * `GRANT ALL PRIVILEGES ON TABLE postgress TO public_user;`
+    * `GRANT ALL PRIVILEGES ON TABLE postgres TO public_user;`
     
 
 * update the database
