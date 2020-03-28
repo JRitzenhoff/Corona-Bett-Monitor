@@ -32,6 +32,7 @@ NOTE: make sure you are in the `app` directory
    NOTE: You can see what users you have with the command `\du`
     * `CREATE ROLE public_user;`
     * `ALTER ROLE public_user WITH PASSWORD` actual_pass`;`
+    * `ALTER ROLE public_user WITH LOGIN;`
     
     NOTE: Currently the password for the public_user is saved within `queries.js`
     * `GRANT ALL PRIVILEGES ON TABLE hospitals TO public_user;`
