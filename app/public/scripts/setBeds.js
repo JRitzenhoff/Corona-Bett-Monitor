@@ -11,6 +11,7 @@ const getURLHospital = () => {
 // Fetch the data from the existing hospital
 const getHospitalDataPromise = (baseURL) => {
     const currHospital = getURLHospital();
+    console.log(baseURL + currHospital);
     return fetch(baseURL + currHospital).then((resp) => resp.json());
 }
 
