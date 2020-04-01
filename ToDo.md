@@ -1,5 +1,5 @@
 # General Todo:
-* Enable Functionalities with new html file (updateBetten.html)~
+* ~Enable Functionalities with new html file (updateBetten.html)~
 * Connect server to a URL and make it run (done)
 * Adapt the display in the mobile version
 * Clean up the folder/Delte unused fiels
