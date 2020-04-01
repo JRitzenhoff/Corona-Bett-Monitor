@@ -13,5 +13,3 @@ INSERT INTO hospitals VALUES (2,'Diakonie-Krankenhaus Wehrda','Hebronberg 5', 1,
 INSERT INTO hospitals VALUES (3,'Universitätsklinikum Gießen und Marburg','Baldingerstraße', 1, 'https://www.ukgm.de/home.html',200,100);
 INSERT INTO hospitals VALUES (4,'Uniklinik Köln','Kerpener Str. 62', 2, 'https://www.uk-koeln.de/',200,160);
 INSERT INTO hospitals VALUES (5,'Klinikum Stuttgart','Kriegsbergstraße 60', 3, 'https://www.klinikum-stuttgart.de/',80,75);
-
-

@@ -12,7 +12,9 @@ const addDataToList = (listObj, data) => {
     data.forEach((hospital) => {
         var hospitalName = document.createElement("div");
         var hospitalLink = document.createElement("a");
-        hospitalLink.setAttribute("href", "https://www.mri.tum.de/");
+        var currLink = hospital.website + "";
+
+        hospitalLink.setAttribute("href", currLink);
         hospitalLink.setAttribute("class", "summary-title-link");
         // console.log(hospital);
         hospitalLink.innerHTML = hospital.name;
@@ -58,7 +60,6 @@ const getHospitalData = () => {
 
     return fetch(fetch_url)
       .then((response) => {
-          console.log("THe response is: " + response.value);
         return response.json();
       })
       .catch(() => {
