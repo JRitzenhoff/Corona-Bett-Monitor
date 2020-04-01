@@ -1,9 +1,9 @@
 # General Todo:
 * ~Enable Functionalities with new html file (updateBetten.html)~
-* Connect server to a URL and make it run (done)
+* ~Connect server to a URL and make it run~
 * Adapt the display in the mobile version
 * Clean up the folder/Delte unused fiels
-* Adapt the header in "updateBetten.html" so that COVIDBed has the same size everywhere
+* ~Adapt the header in "updateBetten.html" so that COVIDBed has the same size everywhere~
 * Delte the numbers from the input field after they where commited/button pushed in "updateBetten.html"
 * "Slimmer" the files "index.html" and "LogIn.html"
 * Create a page for Update Betten when no user is loged in
