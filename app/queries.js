@@ -138,9 +138,14 @@ const getTopTenHospitalFreeBedCounts = (request, response) => {
 }
 
 const getSpecificHospital = (request, response) => {
-    const city = request.params.city;
+    console.log("HEEEEREEE enterd line 141" );
+    
+
+    const region = request.params.region;
+    
     const direction = request.params.direction;
     const attribute = request.params.attribute;
+
 
     // console.log(city + " | " + direction + " | " + attribute)
 
@@ -158,10 +163,10 @@ const getSpecificHospital = (request, response) => {
     const strDir = getDirection(direction);
     
     // localhost:3000/hospitals/Munich/asc/freebeds
-    const strQuery = 'SELECT hospitals.name, hospitals.bedcount, hospitals.freebeds FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid WHERE cities.name = $1 ORDER BY ' + attribute + ' ' + strDir + ';';
-
+    const strQuery = 'SELECT hospitals.name, hospitals.bedcount, hospitals.freebeds FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid WHERE cities.state = $1 ORDER BY ' + attribute + ' ' + strDir + ';';
+    console.log("the querry is: " + strQuery);
     pool.query(strQuery,
-        [city],
+        [region],
         (err, res) => {
             if (err) {
                 // response.redirect("/internalServerError");

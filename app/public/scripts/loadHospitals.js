@@ -31,8 +31,9 @@ const addDataToList = (listObj, data) => {
 }
 
 const getHospitalData = () => {
-    var citySelector = document.getElementById("selected-city");
-    var city = citySelector.options[citySelector.selectedIndex].value;
+    var regionSelector = document.getElementById("selected-region");
+    var region = regionSelector.options[regionSelector.selectedIndex].value;
+    console.log("The Region is:" + region);
     var filtersIndex = document.getElementById("selected-filter").selectedIndex;
 
     var direction = "";
@@ -52,11 +53,12 @@ const getHospitalData = () => {
         attribute = "bedcount";
     }
 
-    var fetch_url = '/hospitals/' + city + '/' + direction + '/' + attribute;
-    console.log(fetch_url)
+    var fetch_url = '/hospitals/' + region + '/' + direction + '/' + attribute;
+    console.log("The fetch URL is: " + fetch_url);
 
     return fetch(fetch_url)
       .then((response) => {
+          console.log("THe response is: " + response.value);
         return response.json();
       })
       .catch(() => {
@@ -76,7 +78,7 @@ const updateList = () => {
     var hospitalList = document.getElementById("hospital-list");
 
     // console.log(hospitalList.childNodes);
-
+    
     getHospitalData()
     .then(data => addDataToList(hospitalList, data))
     .catch(err => {

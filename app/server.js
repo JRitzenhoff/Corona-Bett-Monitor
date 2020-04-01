@@ -17,6 +17,7 @@ app.use(
 
 // Logging for each request
 app.use((req, resp, next) => {
+	
 	const now = new Date();
 	const time = `${now.toLocaleDateString()} - ${now.toLocaleTimeString()}`;
 	const path = `"${req.method} ${req.path}"`;
@@ -33,7 +34,7 @@ app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBedsByName);
 app.get('/top10FullBeds', db.getTopTenHospitalBedCounts);
 app.get('/top10FreeBeds', db.getTopTenHospitalFreeBedCounts);
 
-app.get('/hospitals/:city/:direction/:attribute', db.getSpecificHospital);
+app.get('/hospitals/:region/:direction/:attribute', db.getSpecificHospital);
 
 
 
@@ -79,6 +80,7 @@ app.post('/login', (request, response) => {
 app.use(express.static('public'));
 
 app.get('/favicon.ico', (req, res) => {
+	console.log("entered app.get");
 	res.sendFile(path.resolve(__dirname) + '/favicon.ico');
 });
 

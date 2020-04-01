@@ -10,7 +10,7 @@
     <meta charset="utf-8" />
     <title>BettenVerfügbarkeit</title>
    
-    
+
     
     <meta property="og:site_name" content="BettenVerfügbarkeit" />
     <meta property="og:title" content="BettenVerfügbarkeit" />
@@ -194,9 +194,30 @@
                                 <div class="sqs-block code-block sqs-block-code" data-block-type="23"
                                     id="block-yui_3_17_2_1_1584821334616_45897">
                                     <div class="sqs-block-content">
-                                        <label for="Region" class="summary-title-link">Stadt auswählen</label>
+                                        <label for="Region" class="summary-title-link">Region auswählen</label>
 
                                         <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
+                                        
+                                        <select style="font-family:Unna" id="selected-region" onchange="updateList();">
+                                            <option value="Baden-Württemberg">Baden-Württemberg</option>
+                                            <option value="Bayern">Bayern</option>
+                                            <option value="Berlin">Berlin</option>
+                                            <option value="Brandenburg">Brandenburg</option>
+                                            <option value="Bremen">Bremen</option>
+                                            <option value="Hamburg">Hamburg</option>
+                                            <option value="Hessen">Hessen</option>
+                                            <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</option>
+                                            <option value="Niedersachsen">Niedersachsen</option>
+                                            <option value="Nordrhein-Westfalen">Nordrhein-Westfalen</option>
+                                            <option value="Rheinland-Pfalz">Rheinland-Pfalz</option>
+                                            <option value="Saarland">Saarland</option>
+                                            <option value="Sachsen">Sachsen</option>
+                                            <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
+                                            <option value="Schleswig-Holstein">Schleswig-Holstein</option>
+                                            <option value="Thüringen">Thüringen</option>
+                                            <option value="Deutschland">Deutschland</option>
+                                        </select>
+                                            <!--
                                         <select style="font-family:Unna" id="selected-city" onchange="updateList();">
                                             <option value="Munich">München</option>
                                             <option value="Marburg">Marburg</option>
@@ -207,6 +228,7 @@
                                             <option value="Hamburg">Hamburg</option>
                                             <option value="Kiel">Kiel</option>
                                         </select>
+                                        -->
                                     </div>
                                 </div>
 
