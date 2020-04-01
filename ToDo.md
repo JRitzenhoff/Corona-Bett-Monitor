@@ -8,6 +8,6 @@
 * ~"Slimmer" the files "index.html" and "LogIn.html"~
 * Create a page for Update Betten when no user is loged in
 * Develop LogIn page
-* Change "Stadt auswählen" on "Kapazitäten" to "Region ausgwählen", add Germany and all Budesländer
+* ~Change "Stadt auswählen" on "Kapazitäten" to "Region ausgwählen", add Germany and all Budesländer~
 * Develop App interface with xcode and connect it to the API
-* Add the correct links
+* ~Add the correct links~
