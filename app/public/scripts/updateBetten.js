@@ -9,10 +9,17 @@ const getURLHospital = () => {
 }
 
 // Fetch the data from the existing hospital
-const getHospitalDataPromise = (baseURL) => {
+const getHospitalDataPromise2 = (baseURL) => {
     
     const currHospital = getURLHospital();
     return fetch(baseURL + currHospital).then((resp) => resp.json());
+}
+
+const getHospitalDataPromise = (baseURL) => {
+    return fetch(baseURL).then((resp) => resp.json());
+
+    // const currHospital = getURLHospital();
+    // return fetch(baseURL + currHospital).then((resp) => resp.json());
 }
 
 
@@ -97,10 +104,7 @@ const initInputForm = (formData, getBaseURL, setBaseURL) => {
         setHospitalDataPromise(setBaseURL, currBedInput)
         .then((resp) => {}).catch((err) => {});
 
-       
-
         // this prevents the window from refreshing
-        
         return true;
     }
 
@@ -108,7 +112,6 @@ const initInputForm = (formData, getBaseURL, setBaseURL) => {
 }
 
 const initForms = () => {
-    
     const gesamtForm = document.getElementById("gesamtForm");
     
     const getGesamtBettenBaseURL = "/getBettenanzahl/";
@@ -128,12 +131,11 @@ const initForms = () => {
 }
 
 const init = () => {
-    const hospButton = document.getElementById("krankenhausButt");
+    // const hospButton = document.getElementById("krankenhausButt");
     const currGesamt = document.getElementById("currGesamt");
     
-    
-    hospButton.onclick = initForms;
-    
+    initForms();
+    // hospButton.onclick = initForms;
 }
 
 init();

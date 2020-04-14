@@ -4,7 +4,7 @@ const pool = new Pool({
     user: 'public_user',
     host: 'localhost',
     database: 'postgres',
-    password: 'vUlv2BuDE0tYDY2D4A2q', // this is a terrible idea
+    password: 'vUlv2BuDE0tYDY2D4A2q', // this is a terrible idea (in production) as anyone with access to the github can access our database
     port: 5432,
 });
 
@@ -13,16 +13,13 @@ const redirectToError = (response) => {
     response.redirect("/internalServerError");
 }
 
-const getAttributeOfHospital = (attribute, request, response) => {
-    // This is assuming that the 'hospitalName' is part of the endpoint
-    const name = request.params.hospitalName;
-
+const getAttributeOfHospitalIdentifier = (attribute, response, identifier, idval) => {
     // SELECT statement that allows you to GET any attribute from a hospital by name
-    const strQuery = 'SELECT ' + attribute + ' FROM hospitals WHERE name = $1;';
+    const strQuery = 'SELECT ' + attribute + ' FROM hospitals WHERE ' + identifier + ' = $1;';
 
     pool.query(
         strQuery, 
-        [name],
+        [idval],
         
         (err, result) => {
             if (err) {
@@ -117,12 +114,18 @@ NOTE: %20 == ' ' in URL formatting
 */
 const getHospitalBedsByName = (request, response) => {
     // http://localhost:3000/getBettenanzahl/Klinkum%20Rechts%20der%20Isar
-    getAttributeOfHospital("BedCount", request, response);
+
+    // This is assuming that the 'hospitalName' is part of the endpoint
+    const name = request.params.hospitalName;
+    getAttributeOfHospitalIdentifier("BedCount", response, "name", name);
 }
 
 const getFreeHospitalBedsByName = (request, response) => {
     // http://localhost:3000/getFreieBetten/Klinkum%20Rechts%20der%20Isar
-    getAttributeOfHospital("FreeBeds", request, response);
+
+    // This is assuming that the 'hospitalName' is part of the endpoint
+    const name = request.params.hospitalName;
+    getAttributeOfHospitalIdentifier("FreeBeds", response, "name", name);
 }
 
 const getTopTenHospitalBedCounts = (request, response) => {
@@ -137,17 +140,49 @@ const getTopTenHospitalFreeBedCounts = (request, response) => {
     topValsOfHospitalAttribute(10, "FreeBeds", request, response);
 }
 
-const getSpecificHospital = (request, response) => {
-    
-    
 
+const getUserHospitalBeds = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied")
+        return;
+    }
+    
+    const id = request.user.hospitalid;
+
+    getAttributeOfHospitalIdentifier("BedCount", response, "hospitalid", id);
+}
+
+const getUserFreeHospitalBeds = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied");
+        return;
+    }
+
+    const id = request.user.hospitalid;
+    getAttributeOfHospitalIdentifier("FreeBeds", response, "hospitalid", id);
+}
+
+const getUserHospitalName = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied");
+        return;
+    }
+
+    const id = request.user.hospitalid;
+    getAttributeOfHospitalIdentifier("name", response, "hospitalid", id);
+}
+
+
+
+
+const getSpecificHospital = (request, response) => {
     const region = request.params.region;
     
     const direction = request.params.direction;
     const attribute = request.params.attribute;
-
-
-    // console.log(city + " | " + direction + " | " + attribute)
 
     const getDirection = (strInp) => {
         if (strInp == "asc") {
@@ -159,12 +194,15 @@ const getSpecificHospital = (request, response) => {
         return null;
     }
 
-
     const strDir = getDirection(direction);
     
     // localhost:3000/hospitals/Munich/asc/freebeds
     const strQuery = 'SELECT hospitals.name, hospitals.bedcount, hospitals.freebeds, hospitals.website FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid LEFT JOIN countries ON cities.CountryID = countries.CountryID WHERE cities.state = $1 OR countries.Name = $2 ORDER BY ' + attribute + ' ' + strDir + ';';
-    console.log("REGION is: " + region);
+    // console.log("REGION is: " + region);
+    // console.log(strQuery);
+
+    // "SELECT hospitals.name, hospitals.bedcount, hospitals.freebeds, hospitals.website FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid LEFT JOIN countries ON cities.CountryID = countries.CountryID WHERE cities.state = 'Bayern' OR countries.Name = 'Bayern' ORDER BY name ASC;";
+
     pool.query(strQuery,
         [region,region],
         (err, res) => {
@@ -178,7 +216,64 @@ const getSpecificHospital = (request, response) => {
         });
 }
 
+const httpGetUser = (request, response) => {
+    const { username } = request.params;
+    const password = "kennywort";
 
+    // this is temporary
+    const makeString = (errorValue, resultValue) => { return JSON.stringify({ "err":errorValue, "res":resultValue}); };
+    const done = (errorValue, resultValue) => { response.send( makeString(errorValue, resultValue)); }
+
+    fillVerifiedUser(username, password, done);
+};
+
+const fillUserByAttribute = (attribute, value, next) => {
+    const strQuery = 'SELECT * FROM employee WHERE ' + attribute + ' = $1;';
+
+    pool.query(strQuery,
+        [ value ],
+        (err, res) => {
+            // console.log(res);
+
+            // if an error... return the error
+            if (err) { return next(err, null); }
+
+            const { rows } = res;
+            // if the response is empty... that means no user
+            if (rows.length != 1) { return next(null, false); }
+
+            // there should always only be one row
+            const user = rows[0];
+            return next(null, user);
+        }
+    )
+}
+
+// acts as middleware by the LocalStrategy
+const fillVerifiedUser = (username, password, next) => {
+    const passwordCheckNext = (err, user) => {
+        if (err) { 
+            console.error(err);
+            return next(err); 
+        }
+        if (!user) { 
+            console.log("No user found");
+            return next(null, false); 
+        }
+        if (user.passwordhash != password) { 
+            console.log("Password incorrect");
+            return next(null, false); 
+        }
+        return next(null, user);
+    }
+
+    fillUserByAttribute("name", username, passwordCheckNext);
+}
+
+const fillUserById = (id, done) => {
+    // NOTE: The user should always be returned...
+    fillUserByAttribute("employeeid", id, done);
+}
 
 
 
@@ -218,15 +313,23 @@ module.exports = {
     getHospitalBedsByName,
     getFreeHospitalBedsByName,
 
+    getUserHospitalName,
+    getUserHospitalBeds,
+    getUserFreeHospitalBeds,
+
     getTopTenHospitalBedCounts,
     getTopTenHospitalFreeBedCounts,
 
     getSpecificHospital,
+
+    httpGetUser,
+    fillVerifiedUser,
+    fillUserById,
 
 
     setHospitalBedsByName,
     setFreeHospitalBedsByName,
 
     incrementHospitalBedsByName,
-    incrementFreeHospitalBedsByName
+    incrementFreeHospitalBedsByName,
 }

@@ -27,6 +27,7 @@ NOTE: make sure you are in the `app` directory
 <br></br>
 * login into PostGreSQL
     * `sudo -u postgres psql`
+    * NOTE: If psql server is not running, it can be started with `sudo service postgresql start`
 * create the public_user (FOLLOW EVERY LINE WITH `;`)
 
    NOTE: You can see what users you have with the command `\du`
@@ -38,6 +39,7 @@ NOTE: make sure you are in the `app` directory
     * `GRANT ALL PRIVILEGES ON TABLE hospitals TO public_user;`
     * `GRANT ALL PRIVILEGES ON TABLE cities TO public_user;`
     * `GRANT ALL PRIVILEGES ON TABLE countries TO public_user;`
+    * `GRANT ALL PRIVILEGES ON TABLE employee TO public_user;`
     
 
 * update the database

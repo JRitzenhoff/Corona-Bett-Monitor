@@ -25,6 +25,9 @@
   "homepage": "https://github.com/JRitzenhoff/Corona-Bett-Monitor#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "pg": "^7.18.2"
   },
   "devDependencies": {

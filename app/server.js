@@ -18,7 +18,7 @@ Node Package Manager (NPM) allows for an easy way to:
 	1. install modules from a verified database (code written by other developers) -- npm install {name of package}
 		1.1. get an existing project environment on your local computer easily -- npm install
 	2. initialize a basic node project (with all necessary folders/files) -- npm init
-	3. run the project in different environments -- npm start {name of script}
+	3. run the project in different environments -- npm run {name of script}
 		3.1. using nodemon to relaunch server everytime that the backend files are saved -- (see package.json "scripts")
 		3.2. running tests -- (see package.json "scripts")
 
@@ -42,6 +42,7 @@ Wraps the HTTP handling provided by node
 	Look at this to see how annoying it is to handle them by default: https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/ 
 */
 const express = require('express');
+const session = require('express-session');
 
 /* https://github.com/expressjs/body-parser
 
@@ -51,6 +52,10 @@ Translations the request.body (multi-line-strings) into requested format
 */
 const bodyParser = require('body-parser');
 
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+
 /* middleware NOTES:
 https://expressjs.com/en/guide/using-middleware.html
 
@@ -58,6 +63,9 @@ Term apparently coined by express.
 Is name for software that you can plop in-between function calls
 	- accepts inputs and a next() function
 	- edits inputs and passes them to the next() function
+
+NOTE: The middleware is called in the order that it is declared 
+	i.e changing the order of two 'use()' calls can potentially break the code
 */
 
 // does nothing to the inputs and prints the time & method & path of an http request to the backend
@@ -76,13 +84,38 @@ const loggerMiddleware = (req, resp, next) => {
 const app = express();
 const port = 3000;
 
+// initialize the key for a session
+// should not have secret key here either
+app.use( session({ secret: 'secret session key', resave: true, saveUninitialized: true }) ); 
+
+// initialize the passport module (not sure what exactly this does)
+app.use(passport.initialize());
+// initialize the session
+app.use(passport.session());
+
+
+/* strategy NOTES:
+Translates HTTP messages into "username" and "password" objects and 
+	calls a provided function with those arguments
+
+i.e. When passport.authenticate() is called (see POST '/login')...
+	the declared strategy is called...
+	which calls the method 'db.fillVerifiedUser' ...
+	which checks the database for a user and returns one if found (or returns an error)
+*/
+passport.use(new LocalStrategy( db.fillVerifiedUser ));
+
+// Adds a userID to a group of actively logged in users
+passport.serializeUser((user, done) => { done(null, user.employeeid); });
+
+// Removes a user (found by id) from a group of actively logged in users
+passport.deserializeUser( db.fillUserById );
+	
+
+
 // Only applies transformation where 'Content-Type' matches 'type'... defaults to 'application/json'
 app.use(bodyParser.json());
-app.use(
-	bodyParser.urlencoded({
-		extended: true,
-	})
-);
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Logging for each request
 app.use(loggerMiddleware);
@@ -117,6 +150,10 @@ The format of the path contain parameter arguments (prefixed by ':') that are ad
 */
 
 // HTTP GET handlers
+app.get('/getHospitalName', db.getUserHospitalName);
+app.get('/getBettenanzahl', db.getUserHospitalBeds);
+app.get('/getFreieBetten', db.getUserFreeHospitalBeds);
+
 app.get('/getBettenanzahl/:hospitalName', db.getHospitalBedsByName);
 app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBedsByName);
 
@@ -124,6 +161,40 @@ app.get('/top10FullBeds', db.getTopTenHospitalBedCounts);
 app.get('/top10FreeBeds', db.getTopTenHospitalFreeBedCounts);
 
 app.get('/hospitals/:region/:direction/:attribute', db.getSpecificHospital);
+
+app.get('/user/:username', db.httpGetUser);
+
+
+
+app.get('/updateBetten', 
+	(req, res) => {
+		// if there IS a user... Load the updateBetten html page
+		if (req.user) {
+			res.redirect('/updateBetten.html');
+		}
+		else {
+			res.redirect('/')
+		}
+	}
+);
+
+app.get('/login', 
+	(req, res) => {
+		// if there is NO user within the request... Load the login html page
+		if (!req.user) {
+			console.log("Redirecting");
+			res.redirect('/new_logIn.html');
+		}
+		else {
+			res.redirect('/');
+		}
+	}
+);
+
+app.get('/logout', (request, response) => { 
+	request.logout(); 
+	response.redirect('/'); 
+});
 
 // HTTP PUT handlers
 app.put('/setBettenanzahl/:hospitalName', db.setHospitalBedsByName);
@@ -134,24 +205,22 @@ app.put('/incrementFreieBetten/:hospitalName', db.incrementFreeHospitalBedsByNam
 
 
 // HTTP POST handlers
-app.post('/login', (request, response) => {
-	const { 
-		firstName, 
-		lastName 
-	} = request.body;
+app.post('/login', 
+	(req, resp, next) => {
+		console.log(req.params);
+		console.log(req.body);
+		next();
+	},
 
-	console.log("Received post from " + firstName + " : " + lastName);
-});
+	// middleware that handles tries to login a user and handles the failure case
+	passport.authenticate('local', { failureRedirect: '/login' }), 
 
-
-/* root directory return NOTES:
-By default 
-
-*/
-
-// NOTE:
-// Overriding prevents the href in the index.html from being called... 
-//	Which never actually points Chrome to the manifest.json file
+	// function that handles a valid login
+	(req, res) => { 
+		console.log(req.user);
+		res.redirect('/'); 
+	}
+);
 
 
 

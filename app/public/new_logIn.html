@@ -66,15 +66,15 @@
           <nav class="main-nav mobileNav">
             <ul>
               <li class="page-collection">
-                <a href="index.html">Kapazitäten</a>
+                <a href="/">Kapazitäten</a>
               </li>
 
               <li class="page-collection">
-                <a href="updateBetten.html">Update Betten</a>
+                <a href="/updateBetten">Update Betten</a>
               </li>
 
               <li class="page-collection active-link">
-                <a href="new_logIn.html">LogIn</a>
+                <a href="/login">LogIn</a>
               </li>
             </ul>
           </nav>
@@ -88,7 +88,7 @@
             <a href="/">COVIDBed</a>
           </h1>
         </div>
-        <script>
+        <!-- <script>
           if (parseInt(Y.one("body").getComputedStyle("width"), 10) <= 640) {
             Y.use("squarespace-ui-base", function(Y) {
               Y.one("#upper-logo .logo").plug(Y.Squarespace.TextShrink, {
@@ -96,7 +96,7 @@
               });
             });
           }
-        </script>
+        </script> -->
 
         
 
@@ -107,13 +107,13 @@
             <a href="/">COVIDBed</a>
           </h1>
         </div>
-        <script>
+        <!-- <script>
           Y.use("squarespace-ui-base", function(Y) {
             Y.one("#lower-logo .logo").plug(Y.Squarespace.TextShrink, {
               parentEl: Y.one("#lower-logo")
             });
           });
-        </script>
+        </script> -->
 
         <div id="topNav">
           <nav class="main-nav" data-content-field="navigation">
@@ -123,11 +123,11 @@
               </li>
 
               <li class="page-collection">
-                <a href="/updateBetten.html">Update Betten</a>
+                <a href="/updateBetten">Update Betten</a>
               </li>
 
               <li class="page-collection active-link">
-                <a href="/new_logIn.html">LogIn</a>
+                <a href="/login">LogIn</a>
               </li>
             </ul>
             <div class="page-divider"></div>
@@ -208,18 +208,18 @@
                         data-success-redirect=""
                         autocomplete="on"
                         method="POST"
-                        action="https://lion-triceratops-eaf5.squarespace.com"
-                        onsubmit="return (function (form) {
-  Y.use('squarespace-form-submit', 'node', function usingFormSubmit(Y) {
-    (new Y.Squarespace.FormSubmit(form)).submit({
-      formId: '5e75dec5c73e22520c71d19e',
-      collectionId: '5e75dec58873f444defda328',
-      objectName: 'page-5e75dec58873f444defda328'
-    });
-  });
-  return false;
-})(this);"
+                        action="/login"
                       >
+                      <!-- onsubmit="return (function (form) {
+                        Y.use('squarespace-form-submit', 'node', function usingFormSubmit(Y) {
+                          (new Y.Squarespace.FormSubmit(form)).submit({
+                            formId: '5e75dec5c73e22520c71d19e',
+                            collectionId: '5e75dec58873f444defda328',
+                            objectName: 'page-5e75dec58873f444defda328'
+                          });
+                        });
+                        return false;
+                      })(this);" -->
                         <div class="field-list clear">
                           <div
                             id="text-yui_3_17_2_1_1584783066375_10084"
@@ -238,22 +238,20 @@
                               id="text-yui_3_17_2_1_1584783066375_10084-field"
                             />
                           </div>
-
-                          <fieldset
-                            id="name-yui_3_17_2_1_1584782611800_7278"
-                            class="form-item fields name required"
-                          >
                             <legend class="title">
                               Name
 
                               <span class="required" aria-hidden="true">*</span>
                             </legend>
 
+                            <fieldset
+                            id="username-fields"
+                            class="form-item fields name required"
+                            >
                             <div class="field first-name">
                               <label class="caption">
                                 <input
                                   class="field-element field-control"
-                                  name="fname"
                                   x-autocompletetype="given-name"
                                   type="text"
                                   spellcheck="false"
@@ -268,7 +266,6 @@
                               <label class="caption">
                                 <input
                                   class="field-element field-control"
-                                  name="lname"
                                   x-autocompletetype="surname"
                                   type="text"
                                   spellcheck="false"
@@ -279,11 +276,14 @@
                                 Nachname
                               </label>
                             </div>
-                          </fieldset>
-
+                            </fieldset>
                           <div
                             id="text-yui_3_17_2_1_1584782611800_7280"
                             class="form-item field text required"
+                          >
+                          <fieldset
+                          id="username-fields"
+                          class="form-item fields name required"
                           >
                             <label
                               class="title"
@@ -297,11 +297,16 @@
                             <input
                               class="field-element text"
                               type="text"
-                              id="text-yui_3_17_2_1_1584782611800_7280-field"
+                              name="username"
+                              id="username-id"
                               aria-required="true"
                             />
                           </div>
-
+                          </fieldset>
+                          <fieldset
+                          id="password-fields"
+                          class="form-item fields name required"
+                          >
                           <div
                             id="password-yui_3_17_2_1_1584783066375_11255"
                             class="form-item field password required"
@@ -318,10 +323,12 @@
                             <input
                               class="field-element"
                               type="password"
-                              id="password-yui_3_17_2_1_1584783066375_11255-field"
+                              name="password"
+                              id="password-id"
                               aria-required="true"
                             />
                           </div>
+                          </fieldset>
                         </div>
 
                         <div
@@ -396,4 +403,15 @@
 
   </body>
 </html>
+
+<!-- <form action="/login" method="POST">
+  <label for="username">Username:</label><br>
+  <input type="text" id="username" name="username"><br>
+
+  <label for="password">Password</label><br>
+  <input type="text" id="password" name="password">
+  <br><br>
+  
+  <input type="submit" value="Submit">
+</form> -->
 

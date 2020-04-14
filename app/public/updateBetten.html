@@ -67,18 +67,18 @@
                     <ul>
                         <li class="page-collection">
 
-                            <a href="/index.html">Kapazitäten</a>
+                            <a href="/">Kapazitäten</a>
                         </li>
 
                         <li class="page-collection active-link">
 
-                            <a href="/updateBetten.html">Update Betten</a>
+                            <a href="/updateBetten">Update Betten</a>
 
                         </li>
 
                         <li class="page-collection">
 
-                            <a href="/new_logIn.html">LogIn</a>
+                            <a href="/login">LogIn</a>
 
                         </li>
 
@@ -114,19 +114,19 @@
                     <ul>
                         <li class="page-collection">
 
-                            <a href="/index.html">Kapazitäten</a>
+                            <a href="/">Kapazitäten</a>
                         </li>
 
                         <li class="page-collection active-link">
 
-                            <a href="/updateBetten.html">Update Betten</a>
+                            <a href="/updateBetten">Update Betten</a>
 
                         </li>
 
                         <li class="page-collection">
 
 
-                            <a href="/new_logIn.html">LogIn</a>
+                            <a href="/login">LogIn</a>
 
                         </li>
 
@@ -152,10 +152,25 @@
                 <label class="" style="white-space:pre-wrap;" type="text">Krankenhaus: </label>
                 
                 <input class="" style="white-space:pre-wrap;" id="krankenhaus" />
-                <p></p>
-                <button style="height:50px;width:500px"
+                <script type="text/javascript">
+
+                    const krankenInp = document.getElementById("krankenhaus");
+
+                    fetch('/getHospitalName')
+                    .then((resp) => resp.json())
+                    .then((resp) => {
+                            respDict = resp[0];
+                            console.log("The value is:", respDict);
+                            krankenInp.value = respDict.name;
+                        }
+                    )
+
+
+                </script>
+                <!-- <p></p> -->
+                <!-- <button style="height:50px;width:500px"
                     class="button sqs-system-button sqs-editable-button" id="krankenhausButt"
-                    type="submit">Krankenhaus bestätigen</button>
+                    type="submit">Krankenhaus bestätigen</button> -->
             </form>
 
             <div class="sqs-layout sqs-grid-12 columns-12" data-type="page" data-updated-on="1584834883947"
