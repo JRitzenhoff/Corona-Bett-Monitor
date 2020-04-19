@@ -120,7 +120,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Logging for each request
 app.use(loggerMiddleware);
 
-
 /* HTTP request NOTES:
 GET - extract data from server
 	* think loading a web-page in a browser (front-end needs to get html from backend)
@@ -197,6 +196,9 @@ app.get('/logout', (request, response) => {
 });
 
 // HTTP PUT handlers
+app.put('/setBettenanzahl', db.setUserHospitalBeds);
+app.put('/setFreieBetten', db.setUserFreeHospitalBeds);
+
 app.put('/setBettenanzahl/:hospitalName', db.setHospitalBedsByName);
 app.put('/setFreieBetten/:hospitalName', db.setFreeHospitalBedsByName);
 

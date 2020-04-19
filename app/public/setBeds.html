@@ -1,64 +1,88 @@
+<!-- Link to all possible HTML elements: https://developer.mozilla.org/en-US/docs/Web/HTML/Element -->
+
+<!-- Before HTML5, there was a standard used by Internet Explorer. !DOCTYPE means "use the newer stuff" -->
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title text>Set Beds</title>
+    <!-- <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+
+    <!-- Text that is written on the Browser TAB -->
+    <title text>Corona Bett Monitor</title>
+
+    <!-- Styling for this page -->
+    <link rel="stylesheet" type="text/css" href="/css/setBeds.css" />
+
+    <!-- This is for the font Unna -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Unna" />
   </head>
 
   <body>
-    <!-- Add a menu that will be shared by all .html files -->
-     <div class="vertical-menu">
-        <a href="/setBeds.html" class="active"></a>
-        <a href="/">Home</a>
-        <a href="/logIn.html">LogIn</a>
+    <div id="content">
+      <!-- Add a header -->
+      <header>
+        <!-- The "logo" id can be referenced within the "main-header" object  -->
+        <h1 id="logo" class="">
+          <a href="/">COVIDBed</a>
+        </h1>
+
+        <!-- The main navigation bar -->
+        <nav id="nav">
+          <a href="/index_old.html">Home Page</a>
+          <a href="/setBeds.html">Set Beds</a>
+          <a href="/logIn.html">Login</a>
+        </nav>
+      </header>
+
+      <div class="section-spacer"></div>
+  ​
+      <main>
+        <!-- Hospital Initialization -->
+        <label class="inline-title">Krankenhaus:</label>
+        <label class="inline-value" id="krankenValue">__krankenhaus__</label>
+        <br>
+        <label class="inline-title">Intensivbetten gesamt:</label>
+        <label class="inline-value" id="gesamtValue">__gesamt betten__</label>
+        <br>
+        <label class="inline-title">Freibettern gesamt:</label>
+        <label class="inline-value" id="freieValue">__freie betten__</label>
+
+        <!-- Initialize Label Values -->
+        <script src="./scripts/setBeds_simple.js"></script>
+
+        <div class="section-spacer"></div>
+
+        <!-- Form for GesamtBett manipulation -->
+        <form>
+          <label>Intensivbetten gesamt:</label>
+          <br>
+          <input id="intensivInput"/>
+          <br>
+          <button id="intensivButton">Aktualisieren</button>
+
+          <script type="text/javascript">
+            document.getElementById("intensivButton").onclick = createbuttonHandler("/setBettenanzahl", document.getElementById("intensivInput"))
+          </script>
+        </form>
+       
+
+        <div class="section-spacer"></div>
+
+        <!-- Form for Freie manipulation -->
+        <form>
+          <label>Freibettern gesamt:</label>
+          <br>
+          <input id="gesamtInput"/>
+          <br>
+          <button id="gesamtButton">Aktualisieren</button>
+
+          <script type="text/javascript">
+            document.getElementById("gesamtButton").onclick = createbuttonHandler("/setFreieBetten", document.getElementById("gesamtInput"))
+          </script>
+        </form>
+
+      </main>
+
     </div>
-
-    <!-- Insert paragraph for spacing -->
-    <p></p>
-​
-    <!-- Hospital Initialization -->
-    <form>
-      <label type="text"><u>Krankenhaus</u>: </label>
-      <!--
-      <label id="krankenhaus" type="text">Kilnkum Rechts der Isar</label>
-      -->
-      <input id="krankenhaus"/>
-      <p></p>
-      <button id="krankenhausButt" type="submit">Get Krankenhaus Datum</button>
-    </form>
-
-    <!-- Insert paragraph for spacing -->
-    <p></p>
-
-
-    <!-- Form for GesamtBett manipulation
-    DON'T ADD ANY ADDITIONAL 'input' OR 'button' TYPES TO FORM
-    -->
-    <form id="gesamtForm">
-      <label type="text">Intensivbetten gesamt: </label>
-      <input id="gesamtBetten"/>
-      
-      <p> </p>
-      <button id="submitGesamt" type="submit">Actualize</button>
-     
-    </form>
-
-    <!-- Insert paragraph for spacing -->
-    <p></p>
-
-    <!-- Form for Freie manipulation
-    DON'T ADD ANY ADDITIONAL 'input' OR 'button' TYPES TO FORM
-    -->
-    <form id="freieForm">
-      <label type="text">Freibettern gesamt: </label>
-      <input id="freieBetten"/>
-      
-      <p> </p>
-      <button id="submitFreie" type="submit">Actualize</button>
-    </form>
-
-      <!-- Initialize Calls Here. Need to somehow get the 'krankenhaus' field into the POST of the buttons -->
-      <script src="./scripts/setBeds.js"></script>
   </body>
 </html>

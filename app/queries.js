@@ -13,7 +13,7 @@ const redirectToError = (response) => {
     response.redirect("/internalServerError");
 }
 
-const getAttributeOfHospitalIdentifier = (attribute, response, identifier, idval) => {
+const getAttributeOfHospitalIdentifier = (response, attribute, identifier, idval) => {
     // SELECT statement that allows you to GET any attribute from a hospital by name
     const strQuery = 'SELECT ' + attribute + ' FROM hospitals WHERE ' + identifier + ' = $1;';
 
@@ -28,11 +28,32 @@ const getAttributeOfHospitalIdentifier = (attribute, response, identifier, idval
             }
             else {
                 response.status(200);
+                // console.log(result.rows);
                 response.json(result.rows);
             }
         }
         
         );
+}
+
+const setAttributeOfHospitalIdentifier = (response, attribute, attrVal, identifier, idVal) => {
+    // UPDATE statement that allows you to SET any attribute of a hospital by name
+    const strPost = 'UPDATE hospitals SET ' + attribute + ' = $1 WHERE ' + identifier + ' = $2;';
+
+    // console.log(strPost, attrVal, idVal);
+
+    pool.query(strPost, 
+        [attrVal, idVal], 
+
+        (err, res) => {
+        if (err) {
+            // response.redirect("/internalServerError")
+            // console.error(err);
+            redirectToError(response);
+        } else {
+            response.status(200).send(`Hospital modified with ${attribute}: ${attrVal}`);
+        }
+    });
 }
 
 const setAttributeOfHospital = (attribute, request, response) => {
@@ -44,21 +65,9 @@ const setAttributeOfHospital = (attribute, request, response) => {
         amount
     } = request.body;
 
-    // UPDATE statement that allows you to SET any attribute of a hospital by name
-    const strPost = 'UPDATE hospitals SET ' + attribute + ' = $1 WHERE name = $2;';
-
-    pool.query(strPost, 
-        [amount, name], 
-
-        (err, res) => {
-        if (err) {
-            // response.redirect("/internalServerError")
-            redirectToError(response);
-        } else {
-            response.status(200).send(`Hospital modified with name: ${name}`);
-        }
-    });
+    setAttributeOfHospitalIdentifier(response, attribute, amount, "name", name);
 }
+
 
 const incrementAttributeOfHospital = (attribute, request, response) => {
     const name = request.params.hospitalName;
@@ -117,7 +126,7 @@ const getHospitalBedsByName = (request, response) => {
 
     // This is assuming that the 'hospitalName' is part of the endpoint
     const name = request.params.hospitalName;
-    getAttributeOfHospitalIdentifier("BedCount", response, "name", name);
+    getAttributeOfHospitalIdentifier(response, "BedCount", "name", name);
 }
 
 const getFreeHospitalBedsByName = (request, response) => {
@@ -125,7 +134,7 @@ const getFreeHospitalBedsByName = (request, response) => {
 
     // This is assuming that the 'hospitalName' is part of the endpoint
     const name = request.params.hospitalName;
-    getAttributeOfHospitalIdentifier("FreeBeds", response, "name", name);
+    getAttributeOfHospitalIdentifier(response, "FreeBeds", "name", name);
 }
 
 const getTopTenHospitalBedCounts = (request, response) => {
@@ -150,7 +159,7 @@ const getUserHospitalBeds = (request, response) => {
     
     const id = request.user.hospitalid;
 
-    getAttributeOfHospitalIdentifier("BedCount", response, "hospitalid", id);
+    getAttributeOfHospitalIdentifier(response, "BedCount", "hospitalid", id);
 }
 
 const getUserFreeHospitalBeds = (request, response) => {
@@ -161,7 +170,7 @@ const getUserFreeHospitalBeds = (request, response) => {
     }
 
     const id = request.user.hospitalid;
-    getAttributeOfHospitalIdentifier("FreeBeds", response, "hospitalid", id);
+    getAttributeOfHospitalIdentifier(response, "FreeBeds", "hospitalid", id);
 }
 
 const getUserHospitalName = (request, response) => {
@@ -172,7 +181,7 @@ const getUserHospitalName = (request, response) => {
     }
 
     const id = request.user.hospitalid;
-    getAttributeOfHospitalIdentifier("name", response, "hospitalid", id);
+    getAttributeOfHospitalIdentifier(response, "name", "hospitalid", id);
 }
 
 
@@ -298,6 +307,32 @@ const setFreeHospitalBedsByName = (request, response) => {
     setAttributeOfHospital("FreeBeds", request, response);
 }
 
+const setUserHospitalBeds = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied");
+        return;
+    }
+
+    const id = request.user.hospitalid;
+    const { amount } = request.body;
+
+    setAttributeOfHospitalIdentifier(response, "BedCount", amount, "hospitalid", id);
+}
+
+const setUserFreeHospitalBeds = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied");
+        return;
+    }
+
+    const id = request.user.hospitalid;
+    const { amount } = request.body;
+    setAttributeOfHospitalIdentifier(response, "FreeBeds", amount, "hospitalid", id);
+}
+
+
 const incrementHospitalBedsByName = (request, response) => {
     // curl -w '\n' -X PUT --data "change=7" http://localhost:3000/incrementBettenanzahl/Klinkum%20Rechts%20der%20Isar
     incrementAttributeOfHospital("BedCount", request, response);
@@ -329,6 +364,9 @@ module.exports = {
 
     setHospitalBedsByName,
     setFreeHospitalBedsByName,
+
+    setUserHospitalBeds,
+    setUserFreeHospitalBeds,
 
     incrementHospitalBedsByName,
     incrementFreeHospitalBedsByName,
