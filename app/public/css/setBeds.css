@@ -17,68 +17,6 @@
       * https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 */
 
-body #content {
-    font-family: "Unna"; /* Font is actually taken from google... Included in HTML page */
-
-    padding-top: 8%;
-    padding-left: 18%;
-    padding-right: 18%;
-    padding-bottom: 6%;
-}
-
-/* START OF HEADER DESCRIPTORS */
-header {
-    text-decoration: none; /* This gets rid of the underline */
-
-    /* Organizes all of the elements */
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-
-    text-transform: none; /* Capitalize, lowercase, etc. */
-    letter-spacing: 0px;
-}
-
-header > #logo {
-    margin-block-start: 0.1em;
-    margin-block-end: 0.1em;
-}
-
-header > #logo > a {
-    color: #c09859;
-    text-decoration: inherit; /* Get from parent */
-
-    /* line-height: 1.2em; 1.2 times the current font size */
-    font-size: 36px; /* px = Pixels */
-    font-weight: normal;
-}
-
-header > #nav {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    padding-inline-start: 0;
-    list-style-type: none;
-}
-
-header > #nav > a {
-    color: #1c2018;
-    text-decoration: inherit; /* Get from parent */
-    letter-spacing: .05em;
-    margin-left: 1.5em;
-    font-size: 14px;
-}
-/* END OF HEADER DESCRIPTORS */
-
-.section-spacer {
-    padding-top: 8%;
-    /* background-color: lawngreen; */
-}
-
 /* START OF MAIN DESCRIPTORS */
 main {
     font-size: 22px;
@@ -99,56 +37,5 @@ main > .inline-value {
     color: rgba(28,32,24,.4);
 }
 
-
-input {
-    font-family: inherit;
-
-    width: 100%;
-    padding: 12px;
-    margin: 6px 0 4px;
-    border: 1px solid #ccc;
-
-    background: #fafafa;
-    color: #000;
-    font-family: sans-serif;
-    font-size: 12px;
-    line-height: normal;
-    box-sizing: border-box;
-    border-radius: 2px;
-}
-
-button {
-    font-family: inherit;
-
-    padding-top: 1em;
-    padding-right: 2.5em;
-    padding-bottom: 1em;
-    padding-left: 2.5em;
-
-    margin-top: 1.5em;
-
-    color: #1c2018;
-    background-color: transparent;
-
-    box-sizing: border-box;
-    border: 1px solid #000000;
-    border-width: 2px;
-    border-style: solid;
-
-    text-align: center;
-    text-transform: uppercase;
-    text-indent: 0px;
-    text-shadow: none;
-
-    letter-spacing: .1em;
-    line-height: 1em;
-
-
-    font-weight: 400;
-    font-style: normal;
-
-
-    text-align: center;
-}
 
 /* END OF MAIN DESCRIPTORS */

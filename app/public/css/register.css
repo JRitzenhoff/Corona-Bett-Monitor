@@ -1,0 +1,35 @@
+#extend-right {
+    padding-right: 8%;
+}
+
+.input-section-spacer {
+    padding-top: 6%;
+}
+
+#krankenhaus-name {
+    width: 98%;
+    margin-right: 5%;
+}
+
+#name-inputs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    justify-content: space-between;
+    align-items: flex-start;
+    
+}
+
+.right-spacer {
+    padding-right: 2%;
+    flex-grow: 1;
+}
+
+.flex-priority {
+    flex-grow: 100;
+}
+
+.small-text {
+    font-size: 12px;
+}

@@ -54,6 +54,7 @@ const bodyParser = require('body-parser');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy3 = require('./passport-local-3').Strategy;
 
 
 /* middleware NOTES:
@@ -103,7 +104,8 @@ i.e. When passport.authenticate() is called (see POST '/login')...
 	which calls the method 'db.fillVerifiedUser' ...
 	which checks the database for a user and returns one if found (or returns an error)
 */
-passport.use(new LocalStrategy( db.fillVerifiedUser ));
+passport.use(new LocalStrategy( /*{ usernameField: 'email', passwordField: 'password' }, */ db.fillVerifiedUser ));
+passport.use(new LocalStrategy3( { parentField: 'krankenhaus' }, db.fillVerifiedUser3 ));
 
 // Adds a userID to a group of actively logged in users
 passport.serializeUser((user, done) => { done(null, user.employeeid); });
@@ -215,12 +217,26 @@ app.post('/login',
 	},
 
 	// middleware that handles tries to login a user and handles the failure case
-	passport.authenticate('local', { failureRedirect: '/login' }), 
+	// passport.authenticate('local', { failureRedirect: '/login' }), 
+	passport.authenticate('local-3', { failureRedirect: '/login' }), 
 
 	// function that handles a valid login
 	(req, res) => { 
 		console.log(req.user);
 		res.redirect('/'); 
+	}
+);
+
+app.post('/register',
+	(req, resp, next) => {
+		console.log(req.params);
+		console.log(req.body);
+		next();
+	},
+	
+	(req, resp) => {
+		resp.status(205);
+		resp.end()
 	}
 );
 

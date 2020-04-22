@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<head>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    
+    <!-- Text that is written on the Browser TAB -->
+    <title>Log In</title>
+
+    <!-- Styling for this page -->
+    <link rel="stylesheet" type="text/css" href="/css/standards.css" />
+    <link rel="stylesheet" type="text/css" href="/css/register.css" />
+
+    <!-- This is for the font Unna -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Unna" />
+</head>
+
+<body>
+    <div id="content">
+        <!-- Add a header -->
+        <header>
+          <!-- The "logo" id can be referenced within the "main-header" object  -->
+          <h1 id="logo" class="">
+            <a href="/">COVIDBed</a>
+          </h1>
+  
+          <!-- The main navigation bar -->
+          <nav id="nav">
+            <a href="/index_old.html">Home Page</a>
+            <a href="/logIn.html">Login</a>
+          </nav>
+        </header>
+  
+        <div class="section-spacer"></div>        
+
+        <main id="extend-right">
+            <h1 class="title-header">Register</h1>
+
+            <div class="section-spacer"></div>
+
+            <!-- Register... With endpoint/action '/register' and of HTTP type 'POST' -->
+            <form action="/register" method="POST">
+                <label for="krankenhaus-name">Krankenhaus Name *</label><br>
+                <input type="text" id="krankenhaus-name" name="krankenhaus-name"><br>
+
+                <div class="input-section-spacer"></div>
+
+                <label>Name *</label><br>
+                <div id="name-inputs">
+                    <div id="fname" class="flex-priority">
+                        <input type="text" name="first-name">
+                        <label for="first-name" class="small-text">Vorname</label>
+                    </div>
+                    <div class="right-spacer"></div>
+                    <div id="lname" class="flex-priority">
+                        <input type="text" name="last-name">
+                        <label for="last-name" class="small-text">Nachname</label>
+                    </div>
+                    <div class="right-spacer"></div>
+                </div>
+                <br>
+                
+                <button type="submit">Register</button>
+            </form>
+        </main>
+    </div>
+</body>
+
+</html>

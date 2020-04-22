@@ -279,6 +279,11 @@ const fillVerifiedUser = (username, password, next) => {
     fillUserByAttribute("name", username, passwordCheckNext);
 }
 
+const fillVerifiedUser3 = (parent, username, password, next) => {
+    console.log("Found values:", parent, '|', username, '|', password);
+    fillVerifiedUser(username, password, next);
+}
+
 const fillUserById = (id, done) => {
     // NOTE: The user should always be returned...
     fillUserByAttribute("employeeid", id, done);
@@ -359,6 +364,7 @@ module.exports = {
 
     httpGetUser,
     fillVerifiedUser,
+    fillVerifiedUser3,
     fillUserById,
 
 
