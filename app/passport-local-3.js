@@ -1,3 +1,9 @@
+/* IMPORTANT: THIS CODE IS NOT USED
+    - This code is copied verbatum from the passport-local module and then manipulated to allow for more input fields upon logging in
+    - It now just serves as a reference for what is actually happening "under the hood" when calling passport-strategies
+*/
+
+
 /**
  * Module dependencies.
  */

@@ -26,8 +26,8 @@
   
           <!-- The main navigation bar -->
           <nav id="nav">
-            <a href="/index_old.html">Home Page</a>
-            <a href="/logIn.html">Login</a>
+            <a href="/">Home Page</a>
+            <a href="/logIn">Login</a>
           </nav>
         </header>
   
@@ -38,27 +38,42 @@
 
             <div class="section-spacer"></div>
 
+            <h3 class="instructions">
+                Bitte Melden sie sich mit den login daten ihres
+                krankenhauses an
+            </h3> 
+
             <!-- Register... With endpoint/action '/register' and of HTTP type 'POST' -->
             <form action="/register" method="POST">
                 <label for="krankenhaus-name">Krankenhaus Name *</label><br>
-                <input type="text" id="krankenhaus-name" name="krankenhaus-name"><br>
+                <input type="text" name="krankenhausName" id="krankenhaus-name"><br>
 
+                <div class="input-section-spacer"></div>
+
+                <label for="krankenhaus-password">Krankenhaus Passwort *</label><br>
+                <input type="password" name="krankenhausPassword" id="krankenhaus-password"><br>
+
+                <div class="input-section-spacer"></div>
                 <div class="input-section-spacer"></div>
 
                 <label>Name *</label><br>
                 <div id="name-inputs">
                     <div id="fname" class="flex-priority">
-                        <input type="text" name="first-name">
-                        <label for="first-name" class="small-text">Vorname</label>
+                        <input type="text" name="userFirstName" id="user-first-name">
+                        <label for="user-first-name" class="small-text">Vorname</label>
                     </div>
                     <div class="right-spacer"></div>
                     <div id="lname" class="flex-priority">
-                        <input type="text" name="last-name">
-                        <label for="last-name" class="small-text">Nachname</label>
+                        <input type="text" name="userLastName" id="user-last-name">
+                        <label for="user-last-name" class="small-text">Nachname</label>
                     </div>
                     <div class="right-spacer"></div>
                 </div>
-                <br>
+
+                <label for="user-password">Password *</label><br>
+                <input type="password" name="userPassword" id="user-password"><br>
+
+                <div class="input-section-spacer"></div>
                 
                 <button type="submit">Register</button>
             </form>

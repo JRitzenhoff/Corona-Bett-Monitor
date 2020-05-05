@@ -1,15 +1,16 @@
-
 .input-spacer {
     padding-top: 6%;
 }
 
-#instructions {
-    color: rgba(28,32,24,.7);
-    font-size: 14px;
-    text-transform: uppercase;
+.centered-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    line-height: 1.5em;
-    letter-spacing: .2em;
-    font-weight: 400;
-    font-style: normal;
+.centered-obj {
+    font-size: 10px;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
 }

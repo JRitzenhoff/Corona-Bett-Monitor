@@ -25,15 +25,11 @@ Node Package Manager (NPM) allows for an easy way to:
 	inf. A lot more stuff that I don't yet know about
 */
 
-
-/* require('./queries') NOTES:
-
-Equivalent to python "import queries as db"
-Allows this file to reference any methods listed in FILE queries.js FIELD module.exports
-*/
-const db = require('./queries');
-
+// file-system package
+const fs = require('fs'); 
 const path = require('path');
+
+const { JSDOM } = require('jsdom');
 
 /* https://expressjs.com/en/starter/hello-world.html
 
@@ -54,7 +50,19 @@ const bodyParser = require('body-parser');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const LocalStrategy3 = require('./passport-local-3').Strategy;
+
+// const LocalStrategy3 = require('./passport-local-3').Strategy;
+// passport.use(new LocalStrategy3( { parentField: 'krankenhaus' }, db.fillVerifiedUser3 ));
+// IN app.get('/login'): passport.authenticate('local', { failureRedirect: '/login' }),
+
+
+/* require('./queries') NOTES:
+
+Equivalent to python "import queries as db"
+Allows this file to reference any methods listed in FILE queries.js FIELD module.exports
+*/
+const db = require('./queries');
+
 
 
 /* middleware NOTES:
@@ -105,7 +113,6 @@ i.e. When passport.authenticate() is called (see POST '/login')...
 	which checks the database for a user and returns one if found (or returns an error)
 */
 passport.use(new LocalStrategy( /*{ usernameField: 'email', passwordField: 'password' }, */ db.fillVerifiedUser ));
-passport.use(new LocalStrategy3( { parentField: 'krankenhaus' }, db.fillVerifiedUser3 ));
 
 // Adds a userID to a group of actively logged in users
 passport.serializeUser((user, done) => { done(null, user.employeeid); });
@@ -150,6 +157,9 @@ The format of the path contain parameter arguments (prefixed by ':') that are ad
 		-- const { hospitalName } = req.params
 */
 
+// // tells express to serve static files from the directory named "public"
+// app.use(express.static('public'));
+
 // HTTP GET handlers
 app.get('/getHospitalName', db.getUserHospitalName);
 app.get('/getBettenanzahl', db.getUserHospitalBeds);
@@ -166,15 +176,51 @@ app.get('/hospitals/:region/:direction/:attribute', db.getSpecificHospital);
 app.get('/user/:username', db.httpGetUser);
 
 
+app.get('/', 
+	(req, res) => {
+		const directoryPath = path.join(__dirname, "public");
+
+		const defaultResponse = () => { res.sendFile("index.html", { root : directoryPath }); }
+
+		// if there is a not user, just return the default index file
+		if (!req.user) {
+			// res.sendFile("index.html", { root : directoryPath });
+			defaultResponse();
+			return;
+		}
+
+		// get the file from the directoryPath
+		fs.readFile(path.join(directoryPath, "index.html"), 
+			'utf8',
+			(err, data) => {
+				if (err) {
+					defaultResponse();
+					return;
+				}
+				
+				// create the "document" object that is accessible in browsers
+				const { document } = (new JSDOM(data)).window;
+
+				// edit the link with id="loginRef"
+				const loginRef = document.getElementById("loginRef");
+				loginRef.innerHTML = "Logout"
+				loginRef.setAttribute("href", "/logout");
+
+				// actually send the file as the response
+				res.send(document.documentElement.outerHTML);
+		});
+	}
+);
 
 app.get('/updateBetten', 
 	(req, res) => {
 		// if there IS a user... Load the updateBetten html page
 		if (req.user) {
-			res.redirect('/updateBetten.html');
+			// res.redirect('/updateBetten.html');
+			res.sendFile('updateBetten.html', { root : path.join(__dirname, "public") });
 		}
 		else {
-			res.redirect('/')
+			res.redirect('/login')
 		}
 	}
 );
@@ -183,8 +229,20 @@ app.get('/login',
 	(req, res) => {
 		// if there is NO user within the request... Load the login html page
 		if (!req.user) {
-			console.log("Redirecting");
-			res.redirect('/new_logIn.html');
+			// res.redirect('/logIn.html');
+			res.sendFile('logIn.html', { root : path.join(__dirname, "public") });
+		}
+		else {
+			res.redirect('/');
+		}
+	}
+);
+
+app.get('/register',
+	(req, res) => {
+		// if there is NO user within the request... Load the register html page
+		if (!req.user) {
+			res.sendFile('register.html', { root : path.join(__dirname, "public") });
 		}
 		else {
 			res.redirect('/');
@@ -217,8 +275,7 @@ app.post('/login',
 	},
 
 	// middleware that handles tries to login a user and handles the failure case
-	// passport.authenticate('local', { failureRedirect: '/login' }), 
-	passport.authenticate('local-3', { failureRedirect: '/login' }), 
+	passport.authenticate('local', { failureRedirect: '/login' }),
 
 	// function that handles a valid login
 	(req, res) => { 
@@ -263,7 +320,7 @@ Can override this functionality with:
 
 // override static file get functionality (i.e. don't get 'facivon.ico' from 'public' folder)
 app.get('/favicon.ico', (req, res) => {
-	res.sendFile(path.resolve(__dirname) + '/favicon.ico');
+	res.sendFile('/favicon.ico', { root : __dirname });
 });
 
 

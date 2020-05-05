@@ -26,8 +26,8 @@
   
           <!-- The main navigation bar -->
           <nav id="nav">
-            <a href="/index_old.html">Home Page</a>
-            <a href="/register.html">Register</a>
+            <a href="/">Home Page</a>
+            <a href="/register">Registrieren</a>
           </nav>
         </header>
   
@@ -35,22 +35,19 @@
 
         <main>
 
-            <h1 class="title-header">Account</h1>
+            <h1 class="title-header">Login</h1>
+
+            <div class="section-spacer"></div>
+            
+            <h3 class="instructions">
+                Wenn sie kienne login daten haben, 
+                bitte registrieren sie sich oben
+            </h3> 
 
             <div class="section-spacer"></div>
 
-            <h3 id="instructions">
-                Bitte Melden sie sich mit den login daten ihres
-                krankenhauses an
-            </h3>
-
             <!-- Create a login page... With endpoint/action '/login' and of HTTP type 'POST' -->
-            <form action="/login" method="POST">               
-                <label for="krankenhaus">Krankenhaus *</label><br>
-                <input type="text" id="krankenhaus" name="krankenhaus"><br>
-
-                <div class="input-spacer"></div>
-
+            <form action="/login" method="POST">
                 <label for="username">Access ID *</label><br>
                 <input type="text" id="username" name="username"><br>
 
@@ -64,6 +61,20 @@
                 
                 <button type="submit">Login</button>
             </form>
+
+            <div class="section-spacer"></div>    
+
+            <div class="centered-div">
+                <script type="text/javascript">
+                    const populateGuest = () => {
+                        console.log("Method called");
+                        document.getElementById("username").value = "Gast";
+                        document.getElementById("password").value = "kennwort"
+                    }
+                </script>
+
+                <button class="centered-obj" onclick="populateGuest();">Gast User Benutzen</button>
+            </div>
         </main>
     </div>
 </body>
