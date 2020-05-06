@@ -27,7 +27,7 @@ const addDataToList = (listObj, data) => {
         bedDataDiv.setAttribute("class", "summary-excerpt");
 
         const bedDataParagraph = document.createElement("p");
-        bedDataDiv.innerHTML = "Intensivbetten verfügbar: " + hospital.freebeds + "<br>" + "Intensivbetten gesamt: " + hospital.bedcount;
+        bedDataDiv.innerHTML = "Intensivbetten gesamt: " + hospital.bedcount + "<br>" + "Intensivbetten verfügbar: " + hospital.freebeds;
         bedDataDiv.appendChild(bedDataParagraph);
 
         listObj.appendChild(hospitalLink);

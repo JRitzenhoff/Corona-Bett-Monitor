@@ -26,8 +26,10 @@
   
           <!-- The main navigation bar -->
           <nav id="nav">
-            <a href="/">Home Page</a>
-            <a href="/logIn">Login</a>
+            <a href="/">Kapazitäten</a>
+            <a href="/updateBetten">Update Betten</a>
+            <a href="/register">Registrieren</a>
+            <a href="/login" id="loginRef">Login</a>
           </nav>
         </header>
   
@@ -70,13 +72,16 @@
                     <div class="right-spacer"></div>
                 </div>
 
-                <label for="user-password">Password *</label><br>
+                <label for="user-password">Passwort *</label><br>
                 <input type="password" name="userPassword" id="user-password"><br>
 
                 <div class="input-section-spacer"></div>
                 
-                <button type="submit">Register</button>
+                
+
+                
             </form>
+            <button class="centered-obj" onclick="window.location.href='/noValidInput' ">Zum Login</button>
         </main>
     </div>
 </body>

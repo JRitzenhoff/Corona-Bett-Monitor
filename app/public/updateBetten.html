@@ -29,32 +29,38 @@
 
         <!-- The main navigation bar -->
         <nav id="nav">
-          <a href="/">Home Page</a>
+          <a href="/">Kapazitäten</a>
+          <a href="/updateBetten">Update Betten</a>
+          <a href="/register">Registrieren</a>
+          <a href="/" id="loginRef">Logout</a>
+          
         </nav>
       </header>
 
       <div class="section-spacer"></div>
   ​
       <main>
-        <h1 class="title-header">Update Betten</h1>
+        <h1 class="title-header" id="krankenValue">__krankenhaus__ Bettenanzahl aktualisieren</h1>
 
-        <div class="section-spacer"></div>
+        <!--<div class="section-spacer"></div>-->
         
         <h3 class="instructions">
-            Bitte neue nummern actualisieren wenn die falsch sind.
+            Bitte aktuelle Bettenanzahl hier angeben
         </h3> 
 
-        <div class="section-spacer"></div>
+        <!--<div class="section-spacer"></div>-->
 
         <!-- Hospital Initialization -->
-        <label class="inline-title">Krankenhaus:</label>
-        <label class="inline-value" id="krankenValue">__krankenhaus__</label>
-        <br>
-        <label class="inline-title">Freibettern gesamt:</label>
-        <label class="inline-value" id="freieValue">__freie betten__</label>
+        <!--<label class="inline-title">Krankenhaus:</label>
+        <label class="inline-value" id="krankenValue">__krankenhaus__</label>-->
         <br>
         <label class="inline-title">Intensivbetten gesamt:</label>
         <label class="inline-value" id="gesamtValue">__gesamt betten__</label>
+        
+        <br>
+        <label class="inline-title">Freie Betten gesamt:&nbsp&nbsp&nbsp&nbsp </label>
+        <label class="inline-value" id="freieValue">__freie betten__</label>
+        
 
         <!-- Initialize Label Values -->
         <script src="./scripts/updateBetten.js"></script>
@@ -63,7 +69,7 @@
 
         <!-- Form for Freie manipulation -->
         <form>
-          <label>Freibettern gesamt:</label><br>
+          <label>Freie Betten gesamt:</label><br>
           <input id="gesamtInput"/><br>
           <button id="gesamtButton">Aktualisieren</button>
 

@@ -220,10 +220,23 @@ app.get('/updateBetten',
 			res.sendFile('updateBetten.html', { root : path.join(__dirname, "public") });
 		}
 		else {
-			res.redirect('/login')
+			res.redirect('/redirectLogin')
 		}
 	}
 );
+
+app.get('/redirectLogin', 
+	(req, res) => {
+		// if there IS a user... Load the updateBetten html page
+		if (!req.user) {
+			// res.redirect('/updateBetten.html');
+			res.sendFile('redirectLogin.html', { root : path.join(__dirname, "public") });
+		}
+		else {
+			res.redirect('/updateBetten')
+		}
+	}
+);	
 
 app.get('/login', 
 	(req, res) => {
@@ -245,10 +258,23 @@ app.get('/register',
 			res.sendFile('register.html', { root : path.join(__dirname, "public") });
 		}
 		else {
-			res.redirect('/');
+			res.sendFile('registerNoU.html', { root : path.join(__dirname, "public") });
+			//res.redirect('/');
 		}
 	}
 );
+
+app.get('/noValidInput',
+	(req, res) => {
+		// if there is NO user within the request... Load the register html page
+		res.sendFile('noValidInput.html', { root : path.join(__dirname, "public") });
+		
+		
+	}
+);
+
+
+
 
 app.get('/logout', (request, response) => { 
 	request.logout(); 
@@ -280,7 +306,7 @@ app.post('/login',
 	// function that handles a valid login
 	(req, res) => { 
 		console.log(req.user);
-		res.redirect('/'); 
+		res.redirect('/updateBetten'); 
 	}
 );
 

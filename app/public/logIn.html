@@ -19,36 +19,39 @@
     <div id="content">
         <!-- Add a header -->
         <header>
-          <!-- The "logo" id can be referenced within the "main-header" object  -->
-          <h1 id="logo" class="">
-            <a href="/">COVIDBed</a>
-          </h1>
+            <!-- The "logo" id can be referenced within the "main-header" object  -->
+            <h1 id="logo" class="">
+              <a href="/">COVIDBed</a>
+            </h1>
+    
+            <!-- The main navigation bar -->
+            <nav id="nav">
+              <a href="/">Kapazitäten</a>
+              <a href="/updateBetten">Update Betten</a>
+              <a href="/register">Registrieren</a>
+              <a href="/login" id="loginRef">Login</a>
+              
+            </nav>
+          </header>
   
-          <!-- The main navigation bar -->
-          <nav id="nav">
-            <a href="/">Home Page</a>
-            <a href="/register">Registrieren</a>
-          </nav>
-        </header>
-  
-        <div class="section-spacer"></div>        
+       <!-- <div class="section-spacer"></div>        -->
 
         <main>
 
             <h1 class="title-header">Login</h1>
 
-            <div class="section-spacer"></div>
+            <!--<div class="section-spacer"></div>-->
             
             <h3 class="instructions">
                 Wenn sie keine login daten haben, 
-                bitte registrieren sie sich oben
+                bitte erst registrieren
             </h3> 
 
             <div class="section-spacer"></div>
 
             <!-- Create a login page... With endpoint/action '/login' and of HTTP type 'POST' -->
             <form action="/login" method="POST">
-                <label for="username">Access ID *</label><br>
+                <label for="username">User ID *</label><br>
                 <input type="text" id="username" name="username"><br>
 
                 <div class="input-spacer"></div>
@@ -68,12 +71,12 @@
                 <script type="text/javascript">
                     const populateGuest = () => {
                         console.log("Method called");
-                        document.getElementById("username").value = "Gast";
+                        document.getElementById("username").value = "Klinkum_Rechts_der_Isar";
                         document.getElementById("password").value = "kennwort"
                     }
                 </script>
 
-                <button class="centered-obj" onclick="populateGuest();">Gast User Benutzen</button>
+                <button class="centered-obj" onclick="populateGuest();">Gast User benutzen</button>
             </div>
         </main>
     </div>
