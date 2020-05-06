@@ -4,7 +4,7 @@ const pool = new Pool({
     user: 'public_user',
     host: 'localhost',
     database: 'postgres',
-    password: 'vUlv2BuDE0tYDY2D4A2q', // this is a terrible idea
+    password: 'vUlv2BuDE0tYDY2D4A2q', // this is a terrible idea (in production) as anyone with access to the github can access our database
     port: 5432,
 });
 
@@ -13,16 +13,13 @@ const redirectToError = (response) => {
     response.redirect("/internalServerError");
 }
 
-const getAttributeOfHospital = (attribute, request, response) => {
-    // This is assuming that the 'hospitalName' is part of the endpoint
-    const name = request.params.hospitalName;
-
+const getAttributeOfHospitalIdentifier = (response, attribute, identifier, idval) => {
     // SELECT statement that allows you to GET any attribute from a hospital by name
-    const strQuery = 'SELECT ' + attribute + ' FROM hospitals WHERE name = $1;';
+    const strQuery = 'SELECT ' + attribute + ' FROM hospitals WHERE ' + identifier + ' = $1;';
 
     pool.query(
         strQuery, 
-        [name],
+        [idval],
         
         (err, result) => {
             if (err) {
@@ -31,11 +28,32 @@ const getAttributeOfHospital = (attribute, request, response) => {
             }
             else {
                 response.status(200);
+                // console.log(result.rows);
                 response.json(result.rows);
             }
         }
         
         );
+}
+
+const setAttributeOfHospitalIdentifier = (response, attribute, attrVal, identifier, idVal) => {
+    // UPDATE statement that allows you to SET any attribute of a hospital by name
+    const strPost = 'UPDATE hospitals SET ' + attribute + ' = $1 WHERE ' + identifier + ' = $2;';
+
+    // console.log(strPost, attrVal, idVal);
+
+    pool.query(strPost, 
+        [attrVal, idVal], 
+
+        (err, res) => {
+        if (err) {
+            // response.redirect("/internalServerError")
+            // console.error(err);
+            redirectToError(response);
+        } else {
+            response.status(200).send(`Hospital modified with ${attribute}: ${attrVal}`);
+        }
+    });
 }
 
 const setAttributeOfHospital = (attribute, request, response) => {
@@ -47,21 +65,9 @@ const setAttributeOfHospital = (attribute, request, response) => {
         amount
     } = request.body;
 
-    // UPDATE statement that allows you to SET any attribute of a hospital by name
-    const strPost = 'UPDATE hospitals SET ' + attribute + ' = $1 WHERE name = $2;';
-
-    pool.query(strPost, 
-        [amount, name], 
-
-        (err, res) => {
-        if (err) {
-            // response.redirect("/internalServerError")
-            redirectToError(response);
-        } else {
-            response.status(200).send(`Hospital modified with name: ${name}`);
-        }
-    });
+    setAttributeOfHospitalIdentifier(response, attribute, amount, "name", name);
 }
+
 
 const incrementAttributeOfHospital = (attribute, request, response) => {
     const name = request.params.hospitalName;
@@ -117,12 +123,18 @@ NOTE: %20 == ' ' in URL formatting
 */
 const getHospitalBedsByName = (request, response) => {
     // http://localhost:3000/getBettenanzahl/Klinkum%20Rechts%20der%20Isar
-    getAttributeOfHospital("BedCount", request, response);
+
+    // This is assuming that the 'hospitalName' is part of the endpoint
+    const name = request.params.hospitalName;
+    getAttributeOfHospitalIdentifier(response, "BedCount", "name", name);
 }
 
 const getFreeHospitalBedsByName = (request, response) => {
     // http://localhost:3000/getFreieBetten/Klinkum%20Rechts%20der%20Isar
-    getAttributeOfHospital("FreeBeds", request, response);
+
+    // This is assuming that the 'hospitalName' is part of the endpoint
+    const name = request.params.hospitalName;
+    getAttributeOfHospitalIdentifier(response, "FreeBeds", "name", name);
 }
 
 const getTopTenHospitalBedCounts = (request, response) => {
@@ -137,17 +149,49 @@ const getTopTenHospitalFreeBedCounts = (request, response) => {
     topValsOfHospitalAttribute(10, "FreeBeds", request, response);
 }
 
-const getSpecificHospital = (request, response) => {
-    
-    
 
+const getUserHospitalBeds = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied")
+        return;
+    }
+    
+    const id = request.user.hospitalid;
+
+    getAttributeOfHospitalIdentifier(response, "BedCount", "hospitalid", id);
+}
+
+const getUserFreeHospitalBeds = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied");
+        return;
+    }
+
+    const id = request.user.hospitalid;
+    getAttributeOfHospitalIdentifier(response, "FreeBeds", "hospitalid", id);
+}
+
+const getUserHospitalName = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied");
+        return;
+    }
+
+    const id = request.user.hospitalid;
+    getAttributeOfHospitalIdentifier(response, "name", "hospitalid", id);
+}
+
+
+
+
+const getSpecificHospital = (request, response) => {
     const region = request.params.region;
     
     const direction = request.params.direction;
     const attribute = request.params.attribute;
-
-
-    // console.log(city + " | " + direction + " | " + attribute)
 
     const getDirection = (strInp) => {
         if (strInp == "asc") {
@@ -159,12 +203,15 @@ const getSpecificHospital = (request, response) => {
         return null;
     }
 
-
     const strDir = getDirection(direction);
     
     // localhost:3000/hospitals/Munich/asc/freebeds
     const strQuery = 'SELECT hospitals.name, hospitals.bedcount, hospitals.freebeds, hospitals.website FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid LEFT JOIN countries ON cities.CountryID = countries.CountryID WHERE cities.state = $1 OR countries.Name = $2 ORDER BY ' + attribute + ' ' + strDir + ';';
-    console.log("REGION is: " + region);
+    // console.log("REGION is: " + region);
+    // console.log(strQuery);
+
+    // "SELECT hospitals.name, hospitals.bedcount, hospitals.freebeds, hospitals.website FROM hospitals LEFT JOIN cities ON hospitals.cityid = cities.cityid LEFT JOIN countries ON cities.CountryID = countries.CountryID WHERE cities.state = 'Bayern' OR countries.Name = 'Bayern' ORDER BY name ASC;";
+
     pool.query(strQuery,
         [region,region],
         (err, res) => {
@@ -178,7 +225,69 @@ const getSpecificHospital = (request, response) => {
         });
 }
 
+const httpGetUser = (request, response) => {
+    const { username } = request.params;
+    const password = "kennywort";
 
+    // this is temporary
+    const makeString = (errorValue, resultValue) => { return JSON.stringify({ "err":errorValue, "res":resultValue}); };
+    const done = (errorValue, resultValue) => { response.send( makeString(errorValue, resultValue)); }
+
+    fillVerifiedUser(username, password, done);
+};
+
+const fillUserByAttribute = (attribute, value, next) => {
+    const strQuery = 'SELECT * FROM employee WHERE ' + attribute + ' = $1;';
+
+    pool.query(strQuery,
+        [ value ],
+        (err, res) => {
+            // console.log(res);
+
+            // if an error... return the error
+            if (err) { return next(err, null); }
+
+            const { rows } = res;
+            // if the response is empty... that means no user
+            if (rows.length != 1) { return next(null, false); }
+
+            // there should always only be one row
+            const user = rows[0];
+            return next(null, user);
+        }
+    )
+}
+
+// acts as middleware by the LocalStrategy
+const fillVerifiedUser = (username, password, next) => {
+    const passwordCheckNext = (err, user) => {
+        if (err) { 
+            console.error(err);
+            return next(err); 
+        }
+        if (!user) { 
+            console.log("No user found");
+            return next(null, false); 
+        }
+        if (user.passwordhash != password) { 
+            console.log("Password incorrect");
+            return next(null, false); 
+        }
+        return next(null, user);
+    }
+
+    fillUserByAttribute("name", username, passwordCheckNext);
+}
+
+const fillVerifiedUser3 = (parent, username, password, next) => {
+    console.log("Found values:", parent, '|', username, '|', password);
+    fillVerifiedUser(username, password, next);
+}
+
+const fillUserById = (id, done) => {
+    // NOTE: The user should always be returned...
+    fillUserByAttribute("employeeid", id, done);
+}
 
 
 
@@ -203,6 +312,32 @@ const setFreeHospitalBedsByName = (request, response) => {
     setAttributeOfHospital("FreeBeds", request, response);
 }
 
+const setUserHospitalBeds = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied");
+        return;
+    }
+
+    const id = request.user.hospitalid;
+    const { amount } = request.body;
+
+    setAttributeOfHospitalIdentifier(response, "BedCount", amount, "hospitalid", id);
+}
+
+const setUserFreeHospitalBeds = (request, response) => {
+    if (!request.user) {
+        response.status(400);
+        response.send("No user supplied");
+        return;
+    }
+
+    const id = request.user.hospitalid;
+    const { amount } = request.body;
+    setAttributeOfHospitalIdentifier(response, "FreeBeds", amount, "hospitalid", id);
+}
+
+
 const incrementHospitalBedsByName = (request, response) => {
     // curl -w '\n' -X PUT --data "change=7" http://localhost:3000/incrementBettenanzahl/Klinkum%20Rechts%20der%20Isar
     incrementAttributeOfHospital("BedCount", request, response);
@@ -218,15 +353,27 @@ module.exports = {
     getHospitalBedsByName,
     getFreeHospitalBedsByName,
 
+    getUserHospitalName,
+    getUserHospitalBeds,
+    getUserFreeHospitalBeds,
+
     getTopTenHospitalBedCounts,
     getTopTenHospitalFreeBedCounts,
 
     getSpecificHospital,
 
+    httpGetUser,
+    fillVerifiedUser,
+    fillVerifiedUser3,
+    fillUserById,
+
 
     setHospitalBedsByName,
     setFreeHospitalBedsByName,
 
+    setUserHospitalBeds,
+    setUserFreeHospitalBeds,
+
     incrementHospitalBedsByName,
-    incrementFreeHospitalBedsByName
+    incrementFreeHospitalBedsByName,
 }

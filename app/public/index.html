@@ -1,467 +1,101 @@
-<!doctype html>
-<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" lang="de-DE">
+<!DOCTYPE html>
 
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-    <!-- This is Squarespace. -->
-    <!-- lion-triceratops-eaf5 -->
-    <base href="">
-    <meta charset="utf-8" />
-    <title>BettenVerfügbarkeit</title>
-   
-
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
     
-    <meta property="og:site_name" content="BettenVerfügbarkeit" />
-    <meta property="og:title" content="BettenVerfügbarkeit" />
-    
-    <meta property="og:type" content="website" />
-    <meta itemprop="name" content="BettenVerfügbarkeit" />
-    
-    <meta name="twitter:title" content="BettenVerfügbarkeit" />
-   
-    <meta name="twitter:card" content="summary" />
-    <meta name="description" content="" />
-    <link rel="stylesheet" type="text/css"
-        href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,700normal,700italic|Unna:400,400italic,700normal,700italic" />
-    <script type="text/javascript">
-        SQUARESPACE_ROLLUPS = {};
-    </script>
-    
-    
+    <!-- Text that is written on the Browser TAB -->
+    <title>Corona Bett Monitor</title>
 
-    <!--This Block is crucial for the design-->        
-    <link rel="stylesheet" type="text/css"
-        href="//static1.squarespace.com/static/sitecss/5e75dd05d485ac5ecd82fb4e/0/50521cf884aeb45fa5cfdb80/5e75dd05d485ac5ecd82fb68/950-05142015/1584835133797/site.css?&filterFeatures=false" />
-    
+    <!-- Styling for this page -->
+    <link rel="stylesheet" type="text/css" href="/css/standards.css" />
+    <link rel="stylesheet" type="text/css" href="/css/index.css" />
 
-    <!-- Added a bunch of links for the Progressive Web App -->
-    <!-- Link the Manifest -->
-    <link rel="manifest" href="/manifest.json">
-
-    <!-- Add iOS meta tags and icons -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="CoronaBett PWA">
-    <link rel="apple-touch-icon" href="/images/icon_152.png">
-
-    <!-- Add meta description here... Same thing as in Manifest -->
-    <meta name="description" content="Application that lets you see how many beds are free for coronvirus patients">
-
-    <!-- Add meta theme-color... Same thing as in Manifest -->
-    <meta name="theme-color" content="#2F3BA2" />
-
-    <meta name="viewport" content="initial-scale=1">
+    <!-- This is for the font Unna -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Unna" />
 </head>
 
-<body
-    class="show-products-category-navigation   page-borders-none canvas-style-masthead-logo-left  header-subtitle-none banner-alignment-center blog-layout-center project-layout-left-sidebar thumbnails-on-open-page-show-all social-icon-style-normal    hide-page-title   hide-article-author    event-thumbnails event-thumbnail-size-32-standard event-date-label  event-list-show-cats event-list-date event-list-time event-list-address     event-excerpts  event-item-back-link    product-list-titles-under product-list-alignment-center product-item-size-32-standard  product-gallery-size-11-square product-gallery-auto-crop show-product-price show-product-item-nav product-social-sharing tweak-v1-related-products-image-aspect-ratio-11-square tweak-v1-related-products-details-alignment-center newsletter-style-dark  opentable-style-light small-button-style-outline small-button-shape-square medium-button-style-outline medium-button-shape-square large-button-style-outline large-button-shape-square image-block-poster-text-alignment-center image-block-card-dynamic-font-sizing image-block-card-content-position-center image-block-card-text-alignment-left image-block-overlap-dynamic-font-sizing image-block-overlap-content-position-center image-block-overlap-text-alignment-left image-block-collage-dynamic-font-sizing image-block-collage-content-position-top image-block-collage-text-alignment-left image-block-stack-dynamic-font-sizing image-block-stack-text-alignment-left button-style-outline button-corner-style-square tweak-product-quick-view-button-style-floating tweak-product-quick-view-button-position-bottom tweak-product-quick-view-lightbox-excerpt-display-truncate tweak-product-quick-view-lightbox-show-arrows tweak-product-quick-view-lightbox-show-close-button tweak-product-quick-view-lightbox-controls-weight-light native-currency-code-usd collection-type-page collection-layout-default collection-5e75dd518873f444defd9074 homepage mobile-style-available site-title"
-    id="collection-5e75dd518873f444defd9074">
-
-    <div id="canvas">
-
-        <div id="mobileNav" class="">
-            <div class="wrapper">
-                <nav class="main-nav mobileNav">
-                    <ul>
-
-                        <li class="page-collection active-link">
-
-                            <a href="/">Kapazitäten</a>
-
-                        </li>
-
-                        <li class="page-collection">
-
-                            <a href="/updateBetten.html">Update Betten</a>
-
-                        </li>
-
-                        <li class="page-collection">
-
-                            <a href="/new_logIn.html">LogIn</a>
-
-                        </li>
-
-                    </ul>
-                </nav>
-
-            </div>
-        </div>
-<!--        <div id="mobileMenuLink"><a>Menu</a></div> -->
-
-        <header id="header" class="clear">
-
-            <div id="upper-logo">
-                <h1 class="logo" data-content-field="site-title">
-                    <a href="/">BettenVerfügbarkeit</a>
-                </h1>
-            </div>
-
-            <!-- <script>
-                if (parseInt(Y.one('body').getComputedStyle('width'), 10) <= 640) {
-                    Y.use('squarespace-ui-base', function (Y) {
-                        Y.one("#upper-logo .logo").plug(Y.Squarespace.TextShrink, {
-                            parentEl: Y.one('#upper-logo')
-                        });
-                    });
-                }
-            </script> -->
-
-            <div class="site-info" data-content-field="business-information">
-                <div class="site-address">Street Address</div>
-                <div class="site-city-state">City, State, Zip</div>
-                <div class="site-phone">Phone Number</div>
-            </div>
-
-            <div class="site-tag-line">
-
-            </div>
-
-            <div class="custom-info">
-                <div class="sqs-layout sqs-grid-12 columns-12" data-layout-label="Header Subtitle: Custom Content"
-                    data-type="block-field" id="customInfoBlock">
-                    <div class="row sqs-row">
-                        <div class="col sqs-col-12 span-12">
-                            <div class="sqs-block html-block sqs-block-html" data-block-type="2"
-                                id="block-d174cbec43c389e0e5aa">
-                                <div class="sqs-block-content">
-                                    <p class="text-align-center">Dein benutzerdefinierter Text hier</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="lower-logo">
-                <h1 class="logo" data-content-field="site-title"><a href="/">COVIDBed</a></h1>
-            </div>
-
-            <!-- <script>
-                Y.use('squarespace-ui-base', function (Y) {
-                    Y.one("#lower-logo .logo").plug(Y.Squarespace.TextShrink, {
-                        parentEl: Y.one('#lower-logo')
-                    });
-                });
-            </script> -->
-
-            <div id="topNav">
-                <nav class="main-nav" data-content-field="navigation">
-                    <ul>
-
-                        <li class="page-collection active-link">
-
-                            <a href="/">Kapazitäten</a>
-
-                        </li>
-
-                        <li class="page-collection">
-
-                            <a href="/updateBetten.html">Update Betten</a>
-
-                        </li>
-
-                        <li class="page-collection">
-
-                            <a href="/new_logIn.html">LogIn</a>
-
-                        </li>
-
-                    </ul>
-                    <div class="page-divider"></div>
-                </nav>
-            </div>
-
+<body>
+    <div id="content">
+        <!-- Add a header -->
+        <header>
+          <!-- The "logo" id can be referenced within the "main-header" object  -->
+          <h1 id="logo" class="">
+            <a href="/">COVIDBed</a>
+          </h1>
+  
+          <!-- The main navigation bar -->
+          <nav id="nav">
+            <a href="/updateBetten">Update Betten</a>
+            <a href="/login" id="loginRef">Login</a>
+          </nav>
         </header>
-
-        <div class="page-divider top-divider"></div>
-
-        <!-- // page image or divider -->
-
-        <section id="page" class="clear" role="main" data-content-field="main-content"
-            data-collection-id="5e75dd518873f444defd9074" data-collection-id="5e75dd518873f444defd9074"
-            data-edit-main-image="Banner">
-
-            <!-- // CATEGORY NAV -->
-
-            <div class="sqs-layout sqs-grid-12 columns-12" data-type="page" data-updated-on="1584836433523"
-                id="page-5e75dd518873f444defd9074">
-                <div class="row sqs-row">
-                    <div class="col sqs-col-12 span-12">
-                        <div class="row sqs-row">
-                            <div class="col sqs-col-6 span-6">
-                                <div class="sqs-block code-block sqs-block-code" data-block-type="23"
-                                    id="block-yui_3_17_2_1_1584821334616_45897">
-                                    <div class="sqs-block-content">
-                                        <label for="Region" class="summary-title-link">Region auswählen</label>
-
-                                        <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
-                                        
-                                        <select style="font-family:Unna" id="selected-region" onchange="updateList();">
-                                            <option value="Deutschland">Deutschland</option>
-                                            <option value="Baden-Württemberg">Baden-Württemberg</option>
-                                            <option value="Bayern">Bayern</option>
-                                            <option value="Berlin">Berlin</option>
-                                            <option value="Brandenburg">Brandenburg</option>
-                                            <option value="Bremen">Bremen</option>
-                                            <option value="Hamburg">Hamburg</option>
-                                            <option value="Hessen">Hessen</option>
-                                            <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</option>
-                                            <option value="Niedersachsen">Niedersachsen</option>
-                                            <option value="Nordrhein-Westfalen">Nordrhein-Westfalen</option>
-                                            <option value="Rheinland-Pfalz">Rheinland-Pfalz</option>
-                                            <option value="Saarland">Saarland</option>
-                                            <option value="Sachsen">Sachsen</option>
-                                            <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
-                                            <option value="Schleswig-Holstein">Schleswig-Holstein</option>
-                                            <option value="Thüringen">Thüringen</option>
-                                            
-                                        </select>
-                                            <!--
-                                        <select style="font-family:Unna" id="selected-city" onchange="updateList();">
-                                            <option value="Munich">München</option>
-                                            <option value="Marburg">Marburg</option>
-                                            <option value="Frankfurt">Frankfurt</option>
-                                            <option value="Berlin">Berlin</option>
-                                            <option value="Köln">Köln</option>
-                                            <option value="Bremen">Bremen</option>
-                                            <option value="Hamburg">Hamburg</option>
-                                            <option value="Kiel">Kiel</option>
-                                        </select>
-                                        -->
-                                    </div>
-                                </div>
-
-                                <div class="sqs-block spacer-block sqs-block-spacer sized vsize-1" data-block-type="21"
-                                    id="block-yui_3_17_2_1_1584821334616_29688">
-                                    <div class="sqs-block-content">&nbsp;</div>
-                                </div>
-                                <div class="sqs-block html-block sqs-block-html" data-block-type="2"
-                                    id="block-5e75dd518873f444defd9075">
-                                    <div class="sqs-block-content">
-                                        <h1 style="white-space:pre-wrap;">Kapazitäten</h1>
-                                    </div>
-                                </div>
-                                <div class="sqs-block spacer-block sqs-block-spacer sized vsize-1" data-block-type="21"
-                                    id="block-yui_3_17_2_1_1584835501241_5874">
-                                    <div class="sqs-block-content">&nbsp;</div>
-                                </div>
-                            </div>
-                            <div class="col sqs-col-6 span-6">
-                                <div class="sqs-block code-block sqs-block-code" data-block-type="23"
-                                    id="block-yui_3_17_2_1_1584821334616_37806">
-                                    <div class="sqs-block-content">
-                                        <label for="filters">Sortieren nach:</label>
-
-                                        <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
-                                        <select style="font-family:Unna" id="selected-filter" onchange="updateList();">
-                                            <option value="Freie Betten aufsteigend">Freie Betten aufsteigend </option>
-                                            <option value="Freie Betten absteigend">Freie Betten absteigend</option>
-                                            <option value="Anzahl Betten ">Anzahl Betten aufsteigend </option>
-                                            <option value="Anzahl Betten down">Anzahl Betten absteigend</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sqs-block summary-v2-block sqs-block-summary-v2"
-                            data-block-json="&#123;&quot;hSize&quot;:null,&quot;floatDir&quot;:null,&quot;collectionId&quot;:&quot;&quot;,&quot;design&quot;:&quot;list&quot;,&quot;headerText&quot;:&quot;Featured&quot;,&quot;textSize&quot;:&quot;medium&quot;,&quot;pageSize&quot;:10,&quot;imageAspectRatio&quot;:&quot;1.5&quot;,&quot;columnWidth&quot;:270,&quot;gutter&quot;:60,&quot;listImageSize&quot;:10,&quot;listImageAlignment&quot;:&quot;left&quot;,&quot;slidesPerRow&quot;:3,&quot;textAlignment&quot;:&quot;left&quot;,&quot;showTitle&quot;:true,&quot;showThumbnail&quot;:false,&quot;showExcerpt&quot;:true,&quot;showReadMoreLink&quot;:false,&quot;showPrice&quot;:true,&quot;productQuickViewEnabled&quot;:false,&quot;showPastOrUpcomingEvents&quot;:&quot;upcoming&quot;,&quot;metadataPosition&quot;:&quot;above-title&quot;,&quot;primaryMetadata&quot;:&quot;none&quot;,&quot;secondaryMetadata&quot;:&quot;none&quot;,&quot;filter&quot;:&#123;&#125;,&quot;autoCrop&quot;:true,&quot;lightbox&quot;:false,&quot;mixedContent&quot;:true,&quot;blockId&quot;:&quot;dc9314d1ab5b216753c7&quot;&#125;"
-                            data-block-type="55" id="block-yui_3_17_2_1_1584821334616_7077">
-                            <div class="sqs-block-content">
-
-                                <div class="sqs-blockStatus sqs-blockStatus--overlayMode" data-state="uninitialized">
-
-                                    <div class="sqs-blockStatus-disclosure"></div>
-
-                                    <div class="sqs-blockStatus-box">
-                                        <div class="sqs-blockStatus-box-title">Übersicht-Block</div>
-
-                                        <div class="sqs-blockStatus-box-message">
-                                            Dies ist Beispielinhalt. Hier doppelklicken und Seite auswählen um deren
-                                            Inhalt anzuzeigen.
-
-                                            <a class="sqs-blockStatus-box-kbArticleLink"
-                                                href="https://support.squarespace.com/hc/articles/206543337"
-                                                target="_blank">Mehr erfahren</a>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="
-  summary-block-wrapper
-
-  summary-block-collection-type-generic
-
-  summary-block-setting-text-size-medium
-  summary-block-setting-text-align-left
-
-  summary-block-setting-design-list
-  summary-block-setting-design-list-thumbnail-left
-
-  summary-block-setting-metadata-position-above-title
-  summary-block-setting-primary-metadata-none
-  summary-block-setting-secondary-metadata-none
-
-  summary-block-setting-show-title
-  summary-block-setting-show-price
-  summary-block-setting-show-excerpt
-
-  sqs-gallery-design-list
-
-  sqs-block-is-placeholder
-  " data-block-state="uninitialized">
-
-                                    <div class="summary-item-list-container sqs-gallery-container">
-
-                                        <header class="summary-block-header">
-
-                                            <!-- Collection Title -->
-                                            <div class="summary-heading">
-
-                                                <span class="summary-header-text">Featured</span>
-
-                                            </div>
-
-                                            <!-- Carousel Nav -->
-                                            <div class="summary-carousel-pager sqs-gallery-controls">
-                                                <span class="summary-carousel-pager-next next"></span>
-                                                <span class="summary-carousel-pager-prev previous"></span>
-                                            </div>
-
-                                        </header>
-
-                                        <div class="summary-item-list sqs-gallery">
-
-                                            <div class="
-          summary-item
-          summary-item-record-type-text
-          sqs-gallery-design-list-slide
-
-           summary-item-has-thumbnail
-           summary-item-has-excerpt
-          summary-item-has-cats
-          summary-item-has-tags
-          summary-item-has-author
-          summary-item-has-comments-enabled
-          summary-item-has-location">
-
-                                                <div class="summary-content sqs-gallery-meta-container">
-
-                                                    <!-- Metadata (Above Title) -->
-                                                    <div
-                                                        class="summary-metadata-container summary-metadata-container--above-title">
-
-                                                        <div class="summary-metadata summary-metadata--primary">
-
-                                                        </div>
-
-                                                        <div class="summary-metadata summary-metadata--secondary">
-
-                                                        </div>
-                                                    </div>
-
-                                                    
-                                                    <!-- dynamic data -->
-                                                    <div id="hospital-list">
-                                                    </div>
-
-                                                    <!-- This needs to be AFTER the div declaration... Otherwise the object hasn't been created-->
-                                                    <script src="scripts/loadHospitals.js"></script>
-
-
-                                                    <!-- Metadata (Below Content) -->
-                                                    <div
-                                                        class="summary-metadata-container summary-metadata-container--below-content">
-
-                                                        <div class="summary-metadata summary-metadata--primary">
-
-                                                        </div>
-
-                                                        <div class="summary-metadata summary-metadata--secondary">
-
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <!-- End .summary-content -->
-
-                                            </div>
-                                            <!-- End .summary-item -->
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-        </section>
-
-        <div class="sqs-layout sqs-grid-12 columns-12 empty" data-layout-label="Kapazitäten Footer Content"
-            data-type="block-field" id="collection-5e75dd518873f444defd9074">
-            <div class="row sqs-row">
-                <div class="col sqs-col-12 span-12"></div>
-            </div>
-        </div>
-
-        <!-- <div class="page-divider bottom-divider"></div> -->
-
-        <div class="info-footer-wrapper clear">
-            <div class="info-footer">
-                <div class="sqs-layout sqs-grid-12 columns-12 empty" data-layout-label="Info Footer Content"
-                    data-type="block-field" data-updated-on="1584821367292" id="infoFooterBlock">
-                    <div class="row sqs-row">
-                        <div class="col sqs-col-12 span-12"></div>
-                    </div>
+  
+        <div class="section-spacer"></div>   
+        
+        <main>
+            <div id="selectors">    
+                <div id="region" class="flex-priority">
+                    <label for="region-selector">Region auswählen:</label><br>
+                    <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
+                    <select id="region-selector" onchange="updateList();">
+                        <option value="Deutschland">Deutschland</option>
+                        <option value="Baden-Württemberg">Baden-Württemberg</option>
+                        <option value="Bayern">Bayern</option>
+                        <option value="Berlin">Berlin</option>
+                        <option value="Brandenburg">Brandenburg</option>
+                        <option value="Bremen">Bremen</option>
+                        <option value="Hamburg">Hamburg</option>
+                        <option value="Hessen">Hessen</option>
+                        <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</option>
+                        <option value="Niedersachsen">Niedersachsen</option>
+                        <option value="Nordrhein-Westfalen">Nordrhein-Westfalen</option>
+                        <option value="Rheinland-Pfalz">Rheinland-Pfalz</option>
+                        <option value="Saarland">Saarland</option>
+                        <option value="Sachsen">Sachsen</option>
+                        <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
+                        <option value="Schleswig-Holstein">Schleswig-Holstein</option>
+                        <option value="Thüringen">Thüringen</option>
+                    </select>
                 </div>
-
-            </div>
-        </div>
-
-        <footer id="footer" class="clear">
-            <div class="sqs-layout sqs-grid-12 columns-12 empty" data-layout-label="Footer Content"
-                data-type="block-field" data-updated-on="1584821353024" id="footerBlock">
-                <div class="row sqs-row">
-                    <div class="col sqs-col-12 span-12"></div>
+                <div id="sort-instruction" class="flex-priority">
+                    <label for="instruction-selector">Sortieren nach:</label><br>
+                    <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
+                    <select id="instruction-selector" onchange="updateList();">
+                        <option value="freie-betten-absteigend">Freie Betten absteigend</option>
+                        <option value="freie-betten-aufsteigend">Freie Betten aufsteigend</option>
+                        <option value="anzahl-betten-absteigend">Anzahl Betten absteigend</option>
+                        <option value="anzahl-betten-aufsteigend">Anzahl Betten aufsteigend</option>
+                    </select>
                 </div>
             </div>
-        </footer>
 
+            <div class="section-spacer"></div>
+
+            <h1 class="title-header">Kapazitäten</h1>
+
+            <div class="section-spacer"></div>
+
+            <!-- Is populated by selection logic -->
+            <div id="hospital-list">
+            </div>
+
+            <script src="scripts/loadHospitals.js"></script>
+        </main>
     </div>
-
-    <div></div>
-
-    <script type="text/javascript" data-sqs-type="imageloader-bootstrapper">
-        (function () {
-            if (window.ImageLoader) {
-                window.ImageLoader.bootstrap({}, document);
-            }
-        })();
-    </script>
-
-   
-
 
     <!-- Add a serviceworker that can take care of offline rendering -->
     <script>
         // Register service worker.
         if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js')
+            navigator.serviceWorker.register('/scripts/service-worker.js')
                 .then((reg) => {
                 console.log('Service worker registered.', reg);
                 });
         });
         }
     </script>
-    
-    
-
 </body>
 
 </html>

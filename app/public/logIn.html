@@ -1,31 +1,82 @@
 <!DOCTYPE html>
 
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    
+    <!-- Text that is written on the Browser TAB -->
     <title>Log In</title>
+
+    <!-- Styling for this page -->
+    <link rel="stylesheet" type="text/css" href="/css/standards.css" />
+    <link rel="stylesheet" type="text/css" href="/css/logIn.css" />
+
+    <!-- This is for the font Unna -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Unna" />
 </head>
 
 <body>
-    <!-- Add a menu that will be shared by all .html files -->
-    <div class="vertical-menu">
-        <a href="/logIn.html" class="active"></a>
-        <a href="/">Home</a>
-        <a href="/setBeds.html">Update-Betten-Anzahl</a>
+    <div id="content">
+        <!-- Add a header -->
+        <header>
+          <!-- The "logo" id can be referenced within the "main-header" object  -->
+          <h1 id="logo" class="">
+            <a href="/">COVIDBed</a>
+          </h1>
+  
+          <!-- The main navigation bar -->
+          <nav id="nav">
+            <a href="/">Home Page</a>
+            <a href="/register">Registrieren</a>
+          </nav>
+        </header>
+  
+        <div class="section-spacer"></div>        
+
+        <main>
+
+            <h1 class="title-header">Login</h1>
+
+            <div class="section-spacer"></div>
+            
+            <h3 class="instructions">
+                Wenn sie kienne login daten haben, 
+                bitte registrieren sie sich oben
+            </h3> 
+
+            <div class="section-spacer"></div>
+
+            <!-- Create a login page... With endpoint/action '/login' and of HTTP type 'POST' -->
+            <form action="/login" method="POST">
+                <label for="username">Access ID *</label><br>
+                <input type="text" id="username" name="username"><br>
+
+                <div class="input-spacer"></div>
+
+                <label for="password">Access Password *</label><br>
+                <input type="password" id="password" name="password">
+                <br>
+
+                <div class="input-spacer"></div>
+                
+                <button type="submit">Login</button>
+            </form>
+
+            <div class="section-spacer"></div>    
+
+            <div class="centered-div">
+                <script type="text/javascript">
+                    const populateGuest = () => {
+                        console.log("Method called");
+                        document.getElementById("username").value = "Gast";
+                        document.getElementById("password").value = "kennwort"
+                    }
+                </script>
+
+                <button class="centered-obj" onclick="populateGuest();">Gast User Benutzen</button>
+            </div>
+        </main>
     </div>
-    
-
-
-
-    <form action="/login" method="POST">
-        <label for="fname">Username:</label><br>
-        <input type="text" id="fname" name="firstName" value="John"><br>
-
-        <label for="lname">Password</label><br>
-        <input type="text" id="lname" name="lastName" value="Doe"><br><br>
-        
-        <input type="submit" value="Submit">
-    </form>
 </body>
 
 </html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<head>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    
+    <!-- Text that is written on the Browser TAB -->
+    <title>Log In</title>
+
+    <!-- Styling for this page -->
+    <link rel="stylesheet" type="text/css" href="/css/standards.css" />
+    <link rel="stylesheet" type="text/css" href="/css/register.css" />
+
+    <!-- This is for the font Unna -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Unna" />
+</head>
+
+<body>
+    <div id="content">
+        <!-- Add a header -->
+        <header>
+          <!-- The "logo" id can be referenced within the "main-header" object  -->
+          <h1 id="logo" class="">
+            <a href="/">COVIDBed</a>
+          </h1>
+  
+          <!-- The main navigation bar -->
+          <nav id="nav">
+            <a href="/">Home Page</a>
+            <a href="/logIn">Login</a>
+          </nav>
+        </header>
+  
+        <div class="section-spacer"></div>        
+
+        <main id="extend-right">
+            <h1 class="title-header">Register</h1>
+
+            <div class="section-spacer"></div>
+
+            <h3 class="instructions">
+                Bitte Melden sie sich mit den login daten ihres
+                krankenhauses an
+            </h3> 
+
+            <!-- Register... With endpoint/action '/register' and of HTTP type 'POST' -->
+            <form action="/register" method="POST">
+                <label for="krankenhaus-name">Krankenhaus Name *</label><br>
+                <input type="text" name="krankenhausName" id="krankenhaus-name"><br>
+
+                <div class="input-section-spacer"></div>
+
+                <label for="krankenhaus-password">Krankenhaus Passwort *</label><br>
+                <input type="password" name="krankenhausPassword" id="krankenhaus-password"><br>
+
+                <div class="input-section-spacer"></div>
+                <div class="input-section-spacer"></div>
+
+                <label>Name *</label><br>
+                <div id="name-inputs">
+                    <div id="fname" class="flex-priority">
+                        <input type="text" name="userFirstName" id="user-first-name">
+                        <label for="user-first-name" class="small-text">Vorname</label>
+                    </div>
+                    <div class="right-spacer"></div>
+                    <div id="lname" class="flex-priority">
+                        <input type="text" name="userLastName" id="user-last-name">
+                        <label for="user-last-name" class="small-text">Nachname</label>
+                    </div>
+                    <div class="right-spacer"></div>
+                </div>
+
+                <label for="user-password">Password *</label><br>
+                <input type="password" name="userPassword" id="user-password"><br>
+
+                <div class="input-section-spacer"></div>
+                
+                <button type="submit">Register</button>
+            </form>
+        </main>
+    </div>
+</body>
+
+</html>

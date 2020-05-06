@@ -18,22 +18,18 @@ Node Package Manager (NPM) allows for an easy way to:
 	1. install modules from a verified database (code written by other developers) -- npm install {name of package}
 		1.1. get an existing project environment on your local computer easily -- npm install
 	2. initialize a basic node project (with all necessary folders/files) -- npm init
-	3. run the project in different environments -- npm start {name of script}
+	3. run the project in different environments -- npm run {name of script}
 		3.1. using nodemon to relaunch server everytime that the backend files are saved -- (see package.json "scripts")
 		3.2. running tests -- (see package.json "scripts")
 
 	inf. A lot more stuff that I don't yet know about
 */
 
-
-/* require('./queries') NOTES:
-
-Equivalent to python "import queries as db"
-Allows this file to reference any methods listed in FILE queries.js FIELD module.exports
-*/
-const db = require('./queries');
-
+// file-system package
+const fs = require('fs'); 
 const path = require('path');
+
+const { JSDOM } = require('jsdom');
 
 /* https://expressjs.com/en/starter/hello-world.html
 
@@ -42,6 +38,7 @@ Wraps the HTTP handling provided by node
 	Look at this to see how annoying it is to handle them by default: https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/ 
 */
 const express = require('express');
+const session = require('express-session');
 
 /* https://github.com/expressjs/body-parser
 
@@ -51,6 +48,23 @@ Translations the request.body (multi-line-strings) into requested format
 */
 const bodyParser = require('body-parser');
 
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+// const LocalStrategy3 = require('./passport-local-3').Strategy;
+// passport.use(new LocalStrategy3( { parentField: 'krankenhaus' }, db.fillVerifiedUser3 ));
+// IN app.get('/login'): passport.authenticate('local', { failureRedirect: '/login' }),
+
+
+/* require('./queries') NOTES:
+
+Equivalent to python "import queries as db"
+Allows this file to reference any methods listed in FILE queries.js FIELD module.exports
+*/
+const db = require('./queries');
+
+
+
 /* middleware NOTES:
 https://expressjs.com/en/guide/using-middleware.html
 
@@ -58,6 +72,9 @@ Term apparently coined by express.
 Is name for software that you can plop in-between function calls
 	- accepts inputs and a next() function
 	- edits inputs and passes them to the next() function
+
+NOTE: The middleware is called in the order that it is declared 
+	i.e changing the order of two 'use()' calls can potentially break the code
 */
 
 // does nothing to the inputs and prints the time & method & path of an http request to the backend
@@ -76,17 +93,41 @@ const loggerMiddleware = (req, resp, next) => {
 const app = express();
 const port = 3000;
 
+// initialize the key for a session
+// should not have secret key here either
+app.use( session({ secret: 'secret session key', resave: true, saveUninitialized: true }) ); 
+
+// initialize the passport module (not sure what exactly this does)
+app.use(passport.initialize());
+// initialize the session
+app.use(passport.session());
+
+
+/* strategy NOTES:
+Translates HTTP messages into "username" and "password" objects and 
+	calls a provided function with those arguments
+
+i.e. When passport.authenticate() is called (see POST '/login')...
+	the declared strategy is called...
+	which calls the method 'db.fillVerifiedUser' ...
+	which checks the database for a user and returns one if found (or returns an error)
+*/
+passport.use(new LocalStrategy( /*{ usernameField: 'email', passwordField: 'password' }, */ db.fillVerifiedUser ));
+
+// Adds a userID to a group of actively logged in users
+passport.serializeUser((user, done) => { done(null, user.employeeid); });
+
+// Removes a user (found by id) from a group of actively logged in users
+passport.deserializeUser( db.fillUserById );
+	
+
+
 // Only applies transformation where 'Content-Type' matches 'type'... defaults to 'application/json'
 app.use(bodyParser.json());
-app.use(
-	bodyParser.urlencoded({
-		extended: true,
-	})
-);
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Logging for each request
 app.use(loggerMiddleware);
-
 
 /* HTTP request NOTES:
 GET - extract data from server
@@ -116,7 +157,14 @@ The format of the path contain parameter arguments (prefixed by ':') that are ad
 		-- const { hospitalName } = req.params
 */
 
+// // tells express to serve static files from the directory named "public"
+// app.use(express.static('public'));
+
 // HTTP GET handlers
+app.get('/getHospitalName', db.getUserHospitalName);
+app.get('/getBettenanzahl', db.getUserHospitalBeds);
+app.get('/getFreieBetten', db.getUserFreeHospitalBeds);
+
 app.get('/getBettenanzahl/:hospitalName', db.getHospitalBedsByName);
 app.get('/getFreieBetten/:hospitalName', db.getFreeHospitalBedsByName);
 
@@ -125,7 +173,92 @@ app.get('/top10FreeBeds', db.getTopTenHospitalFreeBedCounts);
 
 app.get('/hospitals/:region/:direction/:attribute', db.getSpecificHospital);
 
+app.get('/user/:username', db.httpGetUser);
+
+
+app.get('/', 
+	(req, res) => {
+		const directoryPath = path.join(__dirname, "public");
+
+		const defaultResponse = () => { res.sendFile("index.html", { root : directoryPath }); }
+
+		// if there is a not user, just return the default index file
+		if (!req.user) {
+			// res.sendFile("index.html", { root : directoryPath });
+			defaultResponse();
+			return;
+		}
+
+		// get the file from the directoryPath
+		fs.readFile(path.join(directoryPath, "index.html"), 
+			'utf8',
+			(err, data) => {
+				if (err) {
+					defaultResponse();
+					return;
+				}
+				
+				// create the "document" object that is accessible in browsers
+				const { document } = (new JSDOM(data)).window;
+
+				// edit the link with id="loginRef"
+				const loginRef = document.getElementById("loginRef");
+				loginRef.innerHTML = "Logout"
+				loginRef.setAttribute("href", "/logout");
+
+				// actually send the file as the response
+				res.send(document.documentElement.outerHTML);
+		});
+	}
+);
+
+app.get('/updateBetten', 
+	(req, res) => {
+		// if there IS a user... Load the updateBetten html page
+		if (req.user) {
+			// res.redirect('/updateBetten.html');
+			res.sendFile('updateBetten.html', { root : path.join(__dirname, "public") });
+		}
+		else {
+			res.redirect('/login')
+		}
+	}
+);
+
+app.get('/login', 
+	(req, res) => {
+		// if there is NO user within the request... Load the login html page
+		if (!req.user) {
+			// res.redirect('/logIn.html');
+			res.sendFile('logIn.html', { root : path.join(__dirname, "public") });
+		}
+		else {
+			res.redirect('/');
+		}
+	}
+);
+
+app.get('/register',
+	(req, res) => {
+		// if there is NO user within the request... Load the register html page
+		if (!req.user) {
+			res.sendFile('register.html', { root : path.join(__dirname, "public") });
+		}
+		else {
+			res.redirect('/');
+		}
+	}
+);
+
+app.get('/logout', (request, response) => { 
+	request.logout(); 
+	response.redirect('/'); 
+});
+
 // HTTP PUT handlers
+app.put('/setBettenanzahl', db.setUserHospitalBeds);
+app.put('/setFreieBetten', db.setUserFreeHospitalBeds);
+
 app.put('/setBettenanzahl/:hospitalName', db.setHospitalBedsByName);
 app.put('/setFreieBetten/:hospitalName', db.setFreeHospitalBedsByName);
 
@@ -134,24 +267,35 @@ app.put('/incrementFreieBetten/:hospitalName', db.incrementFreeHospitalBedsByNam
 
 
 // HTTP POST handlers
-app.post('/login', (request, response) => {
-	const { 
-		firstName, 
-		lastName 
-	} = request.body;
+app.post('/login', 
+	(req, resp, next) => {
+		console.log(req.params);
+		console.log(req.body);
+		next();
+	},
 
-	console.log("Received post from " + firstName + " : " + lastName);
-});
+	// middleware that handles tries to login a user and handles the failure case
+	passport.authenticate('local', { failureRedirect: '/login' }),
 
+	// function that handles a valid login
+	(req, res) => { 
+		console.log(req.user);
+		res.redirect('/'); 
+	}
+);
 
-/* root directory return NOTES:
-By default 
-
-*/
-
-// NOTE:
-// Overriding prevents the href in the index.html from being called... 
-//	Which never actually points Chrome to the manifest.json file
+app.post('/register',
+	(req, resp, next) => {
+		console.log(req.params);
+		console.log(req.body);
+		next();
+	},
+	
+	(req, resp) => {
+		resp.status(205);
+		resp.end()
+	}
+);
 
 
 
@@ -176,7 +320,7 @@ Can override this functionality with:
 
 // override static file get functionality (i.e. don't get 'facivon.ico' from 'public' folder)
 app.get('/favicon.ico', (req, res) => {
-	res.sendFile(path.resolve(__dirname) + '/favicon.ico');
+	res.sendFile('/favicon.ico', { root : __dirname });
 });
 
 

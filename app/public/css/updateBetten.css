@@ -1,0 +1,41 @@
+/* NOTES: 
+    * Hover over any element in Visual Studio Code to get a description
+
+    * Elements can be specified by listing them one after the other (i.e One Two Three Four descriptors)
+    * element type -- just write it out and make an open bracket (i.e. body OR li OR a OR div ... etc.)
+    * element by id -- preface by # (i.e. #main-menu)
+    * elements by class -- preface by .
+
+    i.e. 
+        * header        -- points to all <header></header> elements
+        * #canvas       -- points to the elements with { id="canvas" }
+        * header > #logo  -- points to the SUBELEMENT of header with { id="logo" }
+            NOTE: can also be referenced with just #logo
+        * header > #nav > a -- points to the SUBELEMENT of header with { id="logo" } ALL SUB <a></a> ELEMENTS
+
+    FLEX Commands:
+      * https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+*/
+
+/* START OF MAIN DESCRIPTORS */
+main {
+    font-size: 22px;
+    color: rgba(28,32,24,.85);
+    /* color: #1c2018; */
+
+    line-height: 1.6em;
+    text-transform: none;
+    font-weight: 400;
+    font-style: normal;
+}
+
+main > .inline-title {
+    margin-right: 1.2em;
+}
+
+main > .inline-value {
+    color: rgba(28,32,24,.4);
+}
+
+
+/* END OF MAIN DESCRIPTORS */
