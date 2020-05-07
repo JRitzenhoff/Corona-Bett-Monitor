@@ -1,5 +1,12 @@
 .input-spacer {
-    padding-top: 6%;
+    padding-top: 4%;
+}
+
+main {
+    padding-top: 0;
+    padding-left: 5;
+    padding-right: 5;
+    padding-bottom: 0;
 }
 
 .centered-div {
@@ -14,3 +21,4 @@
     background-color: black;
     color: white;
 }
+

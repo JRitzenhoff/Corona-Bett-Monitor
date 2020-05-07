@@ -3,7 +3,7 @@
 <head>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-    
+
     <!-- Text that is written on the Browser TAB -->
     <title>Log In</title>
 
@@ -21,33 +21,33 @@
         <header>
             <!-- The "logo" id can be referenced within the "main-header" object  -->
             <h1 id="logo" class="">
-              <a href="/">COVIDBed</a>
+                <a href="/">COVIDBed</a>
             </h1>
-    
+
             <!-- The main navigation bar -->
             <nav id="nav">
-              <a href="/">Kapazitäten</a>
-              <a href="/updateBetten">Update Betten</a>
-              <a href="/register">Registrieren</a>
-              <a href="/login" id="loginRef">Login</a>
-              
+                <a href="/">Kapazitäten</a>
+                <a href="/updateBetten">Update Betten</a>
+                <a href="/register">Registrieren</a>
+                <a href="/login" id="loginRef">Login</a>
+
             </nav>
-          </header>
-  
-       <!-- <div class="section-spacer"></div>        -->
+        </header>
+
+        <!-- <div class="section-spacer"></div>        -->
 
         <main>
-
+            <div class="section-spacer"></div>
             <h1 class="title-header">Login</h1>
 
             <!--<div class="section-spacer"></div>-->
-            
-            <h3 class="instructions">
-                Wenn sie keine login daten haben, 
-                bitte erst registrieren
-            </h3> 
 
-            <div class="section-spacer"></div>
+            <h3 class="instructions">
+                Wenn sie keine login daten haben,
+                bitte zuerst registrieren
+            </h3>
+
+           
 
             <!-- Create a login page... With endpoint/action '/login' and of HTTP type 'POST' -->
             <form action="/login" method="POST">
@@ -56,16 +56,15 @@
 
                 <div class="input-spacer"></div>
 
-                <label for="password">Access Password *</label><br>
+                <label for="password">Access Passwort *</label><br>
                 <input type="password" id="password" name="password">
                 <br>
 
                 <div class="input-spacer"></div>
-                
+
                 <button type="submit">Login</button>
             </form>
 
-            <div class="section-spacer"></div>    
 
             <div class="centered-div">
                 <script type="text/javascript">
@@ -77,6 +76,7 @@
                 </script>
 
                 <button class="centered-obj" onclick="populateGuest();">Gast User benutzen</button>
+                <div class="section-spacer"></div>
             </div>
         </main>
     </div>

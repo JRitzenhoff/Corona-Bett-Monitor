@@ -2,8 +2,17 @@
     padding-right: 8%;
 }
 
+
+
+main {
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
 .input-section-spacer {
-    padding-top: 6%;
+    padding-top: 3%;
 }
 
 #krankenhaus-name {

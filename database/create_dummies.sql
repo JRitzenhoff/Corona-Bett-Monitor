@@ -7,7 +7,7 @@ INSERT INTO cities VALUES (3, 'Stuttgart', 'Baden-Württemberg', 0);
 INSERT INTO cities VALUES (4, 'Hamburg', 'Hamburg', 0);
 
 INSERT INTO employee VALUES(0,'Klinkum_Rechts_der_Isar','Kein Addresse','Kein email','kennwort',1);
-INSERT INTO employee VALUES(1,'Meister','Ludwigstraße 23, 85375 Neufahrn b. Freising','hanz@meier.de','lalala',1);
+INSERT INTO employee VALUES(1,'Meister','Ludwigstraße 23, 85375 Neufahrn b. Freising','hanz@meier.de','lalala',2);
 
 INSERT INTO hospitals VALUES (0,'Universitätsklinikum Hamburg-Eppendorf','Martinstrasse 52', 4, 'https://www.uke.de/index.html',120,17);
 INSERT INTO hospitals VALUES (1,'Klinkum Rechts der Isar','Ismaninger Str. 22', 0, 'https://www.mri.tum.de/',150,130);

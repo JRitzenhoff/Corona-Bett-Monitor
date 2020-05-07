@@ -19,6 +19,13 @@
 
 /* START OF MAIN DESCRIPTORS */
 main {
+
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+
+
     font-size: 22px;
     color: rgba(28,32,24,.85);
     /* color: #1c2018; */
