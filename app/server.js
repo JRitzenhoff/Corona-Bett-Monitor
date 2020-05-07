@@ -181,11 +181,20 @@ app.get('/',
 		
 		const directoryPath = path.join(__dirname, "public");
 
-		const defaultResponse = () => { res.sendFile("index.html", { root : directoryPath }); }
+		const noUserResponse = () => { res.sendFile("index.html", { root : directoryPath }); }
+		const UserResponse = () => { res.sendFile("indexU.html", { root : directoryPath }); }
+
+		if(req.user){
+			UserResponse();
+		}else{
+			noUserResponse();
+		}
+
+
+
 
 		// if there is a not user, just return the default index file
 		// res.sendFile("index.html", { root : directoryPath });
-		defaultResponse();
 		/*
 		if (!req.user) {
 		return;
@@ -280,8 +289,19 @@ app.get('/noValidInput',
 
 app.get('/logout', (request, response) => { 
 	request.logout(); 
+	response.redirect('/login'); 
+});
+
+app.get('/logoutRegister', (request, response) => { 
+	request.logout(); 
+	response.redirect('/register'); 
+});
+
+app.get('/logoutIndex', (request, response) => { 
+	request.logout(); 
 	response.redirect('/'); 
 });
+
 
 // HTTP PUT handlers
 app.put('/setBettenanzahl', db.setUserHospitalBeds);

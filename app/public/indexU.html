@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<head>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    
+    <!-- Text that is written on the Browser TAB -->
+    <title>Corona Bett Monitor</title>
+
+    <!-- Styling for this page -->
+    <link rel="stylesheet" type="text/css" href="/css/standards.css" />
+    <link rel="stylesheet" type="text/css" href="/css/index.css" />
+
+    <!-- This is for the font Unna -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Unna" />
+</head>
+
+<body>
+    <div id="content">
+        <!-- Add a header -->
+        <header>
+          <!-- The "logo" id can be referenced within the "main-header" object  -->
+          <h1 id="logo" class="">
+            <a href="/">COVIDBed</a>
+          </h1>
+  
+          <!-- The main navigation bar -->
+          <nav id="nav">
+            <a href="/">Kapazitäten</a>
+            <a href="/updateBetten">Update Betten</a>
+            <a href="/register">Registrieren</a>
+            <a href="/logoutIndex" id="loginRef">Logout</a>
+            
+          </nav>
+        </header>
+  
+        <div class="section-spacer"></div>   
+        
+        <main>
+            <div id="selectors">    
+                <div id="region" class="flex-priority">
+                    <label for="region-selector">Region auswählen:</label><br>
+                    <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
+                    <select id="region-selector" onchange="updateList();">
+                        <option value="Deutschland">Deutschland</option>
+                        <option value="Baden-Württemberg">Baden-Württemberg</option>
+                        <option value="Bayern">Bayern</option>
+                        <option value="Berlin">Berlin</option>
+                        <option value="Brandenburg">Brandenburg</option>
+                        <option value="Bremen">Bremen</option>
+                        <option value="Hamburg">Hamburg</option>
+                        <option value="Hessen">Hessen</option>
+                        <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</option>
+                        <option value="Niedersachsen">Niedersachsen</option>
+                        <option value="Nordrhein-Westfalen">Nordrhein-Westfalen</option>
+                        <option value="Rheinland-Pfalz">Rheinland-Pfalz</option>
+                        <option value="Saarland">Saarland</option>
+                        <option value="Sachsen">Sachsen</option>
+                        <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
+                        <option value="Schleswig-Holstein">Schleswig-Holstein</option>
+                        <option value="Thüringen">Thüringen</option>
+                    </select>
+                </div>
+                <div id="sort-instruction" class="flex-priority">
+                    <label for="instruction-selector">Sortieren nach:</label><br>
+                    <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
+                    <select id="instruction-selector" onchange="updateList();">
+                        <option value="freie-betten-absteigend">Freie Betten absteigend</option>
+                        <option value="freie-betten-aufsteigend">Freie Betten aufsteigend</option>
+                        <option value="anzahl-betten-absteigend">Anzahl Betten absteigend</option>
+                        <option value="anzahl-betten-aufsteigend">Anzahl Betten aufsteigend</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="section-spacer"></div>
+
+            <h1 class="title-header">Kapazitäten</h1>
+
+            <div class="section-spacer"></div>
+
+            <!-- Is populated by selection logic -->
+            <div id="hospital-list">
+            </div>
+
+            <script src="scripts/loadHospitals.js"></script>
+        </main>
+    </div>
+
+    <!-- Add a serviceworker that can take care of offline rendering -->
+    <script>
+        // Register service worker.
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/scripts/service-worker.js')
+                .then((reg) => {
+                console.log('Service worker registered.', reg);
+                });
+        });
+        }
+    </script>
+</body>
+
+</html>

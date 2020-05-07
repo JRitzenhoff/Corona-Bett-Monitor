@@ -32,7 +32,7 @@
           <a href="/">Kapazitäten</a>
           <a href="/updateBetten">Update Betten</a>
           <a href="/register">Registrieren</a>
-          <a href="/" id="loginRef">Logout</a>
+          <a href="/logout" >Logout</a>
           
         </nav>
       </header>
@@ -67,6 +67,20 @@
 
         <div class="section-spacer"></div>
 
+          <!-- Form for GesamtBett manipulation -->
+        <form>
+          <label>Intensivbetten gesamt:</label><br>
+          <input id="intensivInput"/><br>
+          <button id="intensivButton">Aktualisieren</button>
+
+          <script type="text/javascript">
+            // assign the "onclick" event of the button to a method created by "createButtonHandler" (defined in "setBeds_simple.js")
+            document.getElementById("intensivButton").onclick = createButtonHandler("/setBettenanzahl", document.getElementById("intensivInput"))
+          </script>
+        </form>
+
+        <div class="section-spacer"></div>
+
         <!-- Form for Freie manipulation -->
         <form>
           <label>Freie Betten gesamt:</label><br>
@@ -78,19 +92,9 @@
           </script>
         </form>
 
-        <div class="section-spacer"></div>
+        
 
-        <!-- Form for GesamtBett manipulation -->
-        <form>
-          <label>Intensivbetten gesamt:</label><br>
-          <input id="intensivInput"/><br>
-          <button id="intensivButton">Aktualisieren</button>
-
-          <script type="text/javascript">
-            // assign the "onclick" event of the button to a method created by "createButtonHandler" (defined in "setBeds_simple.js")
-            document.getElementById("intensivButton").onclick = createButtonHandler("/setBettenanzahl", document.getElementById("intensivInput"))
-          </script>
-        </form>
+        
       </main>
 
     </div>
