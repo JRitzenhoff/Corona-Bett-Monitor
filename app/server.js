@@ -29,7 +29,7 @@ Node Package Manager (NPM) allows for an easy way to:
 const fs = require('fs'); 
 const path = require('path');
 
-const { JSDOM } = require('jsdom');
+//const { JSDOM } = require('jsdom');
 
 /* https://expressjs.com/en/starter/hello-world.html
 
@@ -178,17 +178,18 @@ app.get('/user/:username', db.httpGetUser);
 
 app.get('/', 
 	(req, res) => {
+		
 		const directoryPath = path.join(__dirname, "public");
 
 		const defaultResponse = () => { res.sendFile("index.html", { root : directoryPath }); }
 
 		// if there is a not user, just return the default index file
+		// res.sendFile("index.html", { root : directoryPath });
+		defaultResponse();
+		/*
 		if (!req.user) {
-			// res.sendFile("index.html", { root : directoryPath });
-			defaultResponse();
-			return;
-		}
-
+		return;
+	}
 		// get the file from the directoryPath
 		fs.readFile(path.join(directoryPath, "index.html"), 
 			'utf8',
@@ -209,6 +210,7 @@ app.get('/',
 				// actually send the file as the response
 				res.send(document.documentElement.outerHTML);
 		});
+		*/
 	}
 );
 
