@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 
 <head>
+
+    <!-- Link to manifest-->
+    <link rel="manifest" href="/manifest.json">
+
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-    
+
     <!-- Text that is written on the Browser TAB -->
     <title>Log In</title>
 
@@ -19,43 +23,46 @@
     <div id="content">
         <!-- Add a header -->
         <header>
-          <!-- The "logo" id can be referenced within the "main-header" object  -->
-          <h1 id="logo" class="">
-            <a href="/">COVIDBed</a>
-          </h1>
-  
-          <!-- The main navigation bar -->
-          <nav id="nav">
-            <a href="/">Kapazitäten</a>
-            <a href="/redirectLogin">Update Betten</a>
-            <a href="/register">Registrieren</a>
-            <a href="/login" id="loginRef">Login</a>
-          </nav>
+
+
+
+            <!-- The "logo" id can be referenced within the "main-header" object  -->
+            <h1 id="logo" class="">
+                <a href="/">COVIDBed</a>
+            </h1>
+
+            <!-- The main navigation bar -->
+            <nav id="nav">
+                <a href="/">Kapazitäten</a>
+                <a href="/redirectLogin">Update Betten</a>
+                <a href="/register">Registrieren</a>
+                <a href="/login" id="loginRef">Login</a>
+            </nav>
         </header>
-  
-        <div class="section-spacer"></div>        
+
+        <div class="section-spacer"></div>
 
         <main>
             <h1 class="title-header"> No Valid Input</h1>
-    
+
             <!--<div class="section-spacer"></div>-->
-            
+
             <h3 class="instructions">
                 Bitte geben Sie die ihrem Krankenhaus zugesendeten Daten ein
-            </h3> 
-    
-            
-    
-    
+            </h3>
+
+
+
+
             <div class="centered-div">
                 <button class="centered-obj" onclick="window.location.href='register' ">Erneut versuchen</button>
-    
-    
-              
+
+
+
             </div>
-            
-            
-    
+
+
+
         </main>
     </div>
 </body>

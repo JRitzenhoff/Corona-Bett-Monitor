@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 
 <head>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-    
-    <!-- Text that is written on the Browser TAB -->
-    <title>Corona Bett Monitor</title>
 
     <!-- Styling for this page -->
     <link rel="stylesheet" type="text/css" href="/css/standards.css" />
@@ -13,38 +8,70 @@
 
     <!-- This is for the font Unna -->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Unna" />
+
+    <!--Information for the PWA-->
+    <!--Link to install.js-->
+   <!-- <script src="/scripts/install.js"></script> -->
+
+    <!-- Link to manifest-->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- PWA: Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="CoronaBett PWA">
+    <link rel="apple-touch-icon" href="/images/icon_152.png">
+
+
+    <!-- Add meta description here... Same thing as in Manifest -->
+    <meta name="description" content="Application that lets you see how many beds are free for coronvirus patients">
+
+    <!-- Meta data for PWA-->
+
+    <meta name="theme-color" content="#2F3BA2" />
+    <meta name="viewport" content="initial-scale=0.5">
+
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+
+    <!-- Text that is written on the Browser TAB -->
+    <title>Corona Bett Monitor</title>
+
+    
 </head>
 
 <body>
     <div id="content">
         <!-- Add a header -->
         <header>
-          <!-- The "logo" id can be referenced within the "main-header" object  -->
-          <h1 id="logo" class="">
-            <a href="/">COVIDBed</a>
-          </h1>
-  
-          <!-- The main navigation bar -->
-          <nav id="nav">
-            <a href="/">Kapazitäten</a>
-            <a href="/updateBetten">Update Betten</a>
-            <a href="/register">Registrieren</a>
-            <a href="/login" id="loginRef">Login</a>
-            
-          </nav>
+            <!-- The "logo" id can be referenced within the "main-header" object  -->
+            <h1 id="logo" class="">
+                <a href="/">COVIDBed</a>
+            </h1>
+
+
+
+            <!-- The main navigation bar -->
+            <nav id="nav">
+                <a href="/">Kapazitäten</a>
+                <a href="/updateBetten">Update Betten</a>
+                <a href="/register">Registrieren</a>
+                <a href="/login" id="loginRef">Login</a>
+
+            </nav>
         </header>
-  
-        <div class="section-spacer"></div>   
-        
+
+        <div class="section-spacer"></div>
+
         <main>
 
-            
-            <h1 class="title-header">Kapazitäten</h1>
-            
-            <!--<div class="section-spacer"></div> -->
-            
 
-            <div id="selectors">    
+            <h1 class="title-header">Kapazitäten</h1>
+
+            <!--<div class="section-spacer"></div> -->
+
+
+            <div id="selectors">
                 <div id="region" class="flex-priority">
                     <label for="region-selector">Region auswählen:</label><br>
                     <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
@@ -81,7 +108,7 @@
             </div>
 
             <div class="section-spacer"></div>
-            
+
 
             <!-- Is populated by selection logic -->
             <div id="hospital-list">
@@ -93,16 +120,22 @@
 
     <!-- Add a serviceworker that can take care of offline rendering -->
     <script>
-        // Register service worker.
+        //Register service worker.
         if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/scripts/service-worker.js')
-                .then((reg) => {
-                console.log('Service worker registered.', reg);
-                });
-        });
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((reg) => {
+                        console.log('Service worker registered.', reg);
+                    });
+            });
         }
     </script>
+
+
+
+
+
+
 </body>
 
 </html>

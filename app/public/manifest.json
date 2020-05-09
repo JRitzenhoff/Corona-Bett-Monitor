@@ -1,6 +1,6 @@
 {
-    "name": "Corona: Can I get a bed",
-    "short_name": "corona-bett-monitor",
+    "name": "COVIDBed",
+    "short_name": "COVIDBed",
     "description": "Application that lets you see how many beds are free for coronvirus patients",
     "icons": [{
         "src": "/images/icon_128.png",

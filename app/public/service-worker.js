@@ -6,7 +6,7 @@ const CACHE_NAME = 'static-cache-v1';
 
 const FILES_TO_CACHE = [
     '/offline.html',
-    
+
 ];
 
 self.addEventListener('install', (evt) => {
@@ -38,26 +38,27 @@ self.addEventListener('activate', (evt) => {
             }));
         })
     );
-
     // Allows the service-worker to take control immediately (at offline event)
     self.clients.claim();
 });
 
 self.addEventListener('fetch', (evt) => {
     console.log('[ServiceWorker] Fetch', evt.request.url);
-  
+
     // Fetch event handler here.
     if (evt.request.mode !== 'navigate') {
         // Not a page navigation, bail.
         return;
-    }
+      }
+      evt.respondWith(
+          fetch(evt.request)
+              .catch(() => {
+                return caches.open(CACHE_NAME)
+                    .then((cache) => {
+                      return cache.match('offline.html');
+                    });
+              })
+      );
 
-    // If the fetch fails, then the offline mode is immediately checked for information
-    evt.respondWith(
-        fetch(evt.request).catch(() => {
-            return caches.open(CACHE_NAME).then((cache) => {
-                    return cache.match('offline.html');
-                });
-        })
-    );
+      evt.respondWith();
 });

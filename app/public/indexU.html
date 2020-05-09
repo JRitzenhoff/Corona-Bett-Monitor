@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 
 <head>
+
+    <!-- Link to manifest-->
+    <link rel="manifest" href="/manifest.json">
+
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-    
+
     <!-- Text that is written on the Browser TAB -->
     <title>Corona Bett Monitor</title>
 
@@ -19,32 +23,35 @@
     <div id="content">
         <!-- Add a header -->
         <header>
-          <!-- The "logo" id can be referenced within the "main-header" object  -->
-          <h1 id="logo" class="">
-            <a href="/">COVIDBed</a>
-          </h1>
-  
-          <!-- The main navigation bar -->
-          <nav id="nav">
-            <a href="/">Kapazitäten</a>
-            <a href="/updateBetten">Update Betten</a>
-            <a href="/register">Registrieren</a>
-            <a href="/logoutIndex" id="loginRef">Logout</a>
-            
-          </nav>
+            <!-- Link to manifest-->
+            <link rel="manifest" href="/manifest.json">
+
+            <!-- The "logo" id can be referenced within the "main-header" object  -->
+            <h1 id="logo" class="">
+                <a href="/">COVIDBed</a>
+            </h1>
+
+            <!-- The main navigation bar -->
+            <nav id="nav">
+                <a href="/">Kapazitäten</a>
+                <a href="/updateBetten">Update Betten</a>
+                <a href="/register">Registrieren</a>
+                <a href="/logoutIndex" id="loginRef">Logout</a>
+
+            </nav>
         </header>
-  
-        <div class="section-spacer"></div>   
-        
+
+        <div class="section-spacer"></div>
+
         <main>
 
-            
-            <h1 class="title-header">Kapazitäten</h1>
-            
-            <!--<div class="section-spacer"></div> -->
-            
 
-            <div id="selectors">    
+            <h1 class="title-header">Kapazitäten</h1>
+
+            <!--<div class="section-spacer"></div> -->
+
+
+            <div id="selectors">
                 <div id="region" class="flex-priority">
                     <label for="region-selector">Region auswählen:</label><br>
                     <!-- The updateList() method is found within the src javascript file (loadHospitals.js) -->
@@ -81,7 +88,7 @@
             </div>
 
             <div class="section-spacer"></div>
-            
+
 
             <!-- Is populated by selection logic -->
             <div id="hospital-list">
@@ -91,18 +98,7 @@
         </main>
     </div>
 
-    <!-- Add a serviceworker that can take care of offline rendering -->
-    <script>
-        // Register service worker.
-        if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/scripts/service-worker.js')
-                .then((reg) => {
-                console.log('Service worker registered.', reg);
-                });
-        });
-        }
-    </script>
+    
 </body>
 
 </html>
