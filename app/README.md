@@ -58,6 +58,7 @@ NOTE: make sure you are in the `app` directory
 ## Running the code locally
 1. `node server.js`
     * Runs the code on _localhost:3000_
+    * NOTE: Can also run the code using `nodemon` which will update the backend automatically whenever changes are saved
 
 # NOTE TO SELF:
 
